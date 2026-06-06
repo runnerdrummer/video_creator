@@ -1,43 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Random Video Creator — YouTube Shorts</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#16161a;--surf:#1f1f28;--brd:#2e2e3a;--acc:#7f77dd;--acc2:#4cc9f0;--fg:#e8e8f0;--fg2:#9898b0;--grn:#1d9e75;--red:#d85a30;--amb:#ef9f27}
+:root{--bg:#16161a;--surf:#1f1f28;--brd:#2e2e3a;--acc:#7f77dd;--acc2:#4cc9f0;--fg:#e8e8f0;--fg2:#9898b0;--grn:#1d9e75;--red:#d85a30}
 body{background:var(--bg);color:var(--fg);font-family:'Segoe UI',system-ui,sans-serif;padding:12px;font-size:13px}
 
-/* ── Shared panel style ───────────────────────────────── */
-.panel{background:var(--surf);border:.5px solid var(--brd);border-radius:10px;padding:12px 14px;margin-bottom:10px;display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}
-.phead{width:100%;font-size:10px;color:var(--fg2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:2px;display:flex;align-items:center;gap:8px}
-.phead span{opacity:.5;font-weight:400}
+#cfg{background:var(--surf);border:.5px solid var(--brd);border-radius:10px;padding:12px 14px;margin-bottom:12px;display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}
 .cg{display:flex;flex-direction:column;gap:3px}
 .cl{font-size:10px;color:var(--fg2);text-transform:uppercase;letter-spacing:.06em}
 input[type=number],select{background:var(--bg);color:var(--fg);border:.5px solid var(--brd);border-radius:6px;padding:5px 7px;font-size:13px;outline:none;width:70px}
-select{width:120px}
+select{width:130px}
 input:focus,select:focus{border-color:var(--acc)}
 .rg{display:flex;gap:8px;align-items:center}
 .rg label{display:flex;gap:4px;align-items:center;cursor:pointer}
 input[type=radio]{accent-color:var(--acc)}
-input[type=checkbox]{accent-color:var(--amb);cursor:pointer}
-
-/* ── Sliders ─────────────────────────────────────────── */
-.sw{display:flex;flex-direction:column;gap:3px;min-width:130px}
-.srow{display:flex;align-items:center;gap:7px}
-.srow input[type=range]{-webkit-appearance:none;height:4px;border-radius:2px;background:var(--brd);outline:none;flex:1;cursor:pointer;min-width:90px}
-.srow input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;height:13px;border-radius:50%;background:var(--acc)}
-.srow input[type=range]::-moz-range-thumb{width:13px;height:13px;border-radius:50%;background:var(--acc);border:none}
-.srow input[type=range].amb::-webkit-slider-thumb{background:var(--amb)}
-.srow input[type=range].amb::-moz-range-thumb{background:var(--amb)}
-.slbl{font-size:12px;font-weight:700;min-width:36px;text-align:right;color:var(--acc2)}
-.slbl.amb{color:var(--amb)}
-.sublbl{display:flex;justify-content:space-between;font-size:9px;color:var(--fg2);padding:0 1px}
-
-/* ── Buttons ─────────────────────────────────────────── */
+.rw{display:flex;flex-direction:column;gap:3px}
+.rrow{display:flex;align-items:center;gap:8px}
+input[type=range]{-webkit-appearance:none;height:4px;border-radius:2px;background:var(--brd);outline:none;width:110px;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--acc)}
+input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--acc);border:none}
+#rlbl{font-size:12px;color:var(--acc2);font-weight:700;min-width:20px}
 .btn{border:none;border-radius:8px;padding:7px 16px;font-size:13px;font-weight:600;cursor:pointer;transition:filter .15s}
 .btn:hover:not(:disabled){filter:brightness(1.2)}
 .btn:disabled{opacity:.35;cursor:not-allowed}
 #bgen{background:var(--acc);color:#fff}
 #bstp{background:var(--red);color:#fff}
-#arnd{background:var(--surf);border:.5px solid var(--amb);color:var(--amb);padding:6px 14px;font-size:12px}
 
-/* ── Preview + status ────────────────────────────────── */
 #top{display:flex;gap:14px;align-items:flex-start;margin-bottom:12px}
 #pvcol{flex-shrink:0}
 #cvw{width:160px;height:284px;background:#000;border-radius:8px;overflow:hidden;border:.5px solid var(--brd);position:relative}
@@ -52,7 +44,6 @@ input[type=checkbox]{accent-color:var(--amb);cursor:pointer}
 #lbox{background:var(--surf);border:.5px solid var(--brd);border-radius:8px;padding:8px 10px;height:200px;overflow-y:auto;font-family:monospace;font-size:11px;color:var(--fg2);line-height:1.6}
 .lok{color:var(--grn)}.lerr{color:var(--red)}.lhi{color:var(--acc2)}
 
-/* ── Downloads ───────────────────────────────────────── */
 #dlsec{border-top:.5px solid var(--brd);padding-top:12px;margin-top:4px}
 .dh{font-size:10px;color:var(--fg2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;display:flex;align-items:center;gap:8px}
 .dcnt{background:var(--acc);color:#fff;border-radius:10px;padding:1px 7px;font-size:10px;font-weight:700}
@@ -66,10 +57,10 @@ input[type=checkbox]{accent-color:var(--amb);cursor:pointer}
 .empty{font-size:12px;color:var(--fg2);text-align:center;padding:20px;grid-column:1/-1}
 .fmt{font-size:10px;color:var(--fg2);margin-top:8px}
 </style>
+</head>
+<body>
 
-<!-- ── Visual config ──────────────────────────────────────── -->
-<div class="panel">
-  <div class="phead">Visual</div>
+<div id="cfg">
   <div class="cg"><span class="cl">Videos</span><input type="number" id="cn" value="30" min="1" max="100"></div>
   <div class="cg"><span class="cl">Duration (s)</span><input type="number" id="cd" value="30" min="5" max="120"></div>
   <div class="cg"><span class="cl">FPS</span>
@@ -79,10 +70,13 @@ input[type=checkbox]{accent-color:var(--amb);cursor:pointer}
     <select id="cr"><option value="720x1280">720 × 1280</option><option value="1080x1920" selected>1080 × 1920 ★</option></select>
   </div>
   <div class="cg"><span class="cl">Shapes / group</span><input type="number" id="cs" value="3" min="1" max="12"></div>
-  <div class="sw">
-    <span class="cl">Randomness — rotation · colour · drift</span>
-    <div class="srow"><input type="range" id="crnd" min="1" max="10" value="5"><span class="slbl" id="rlbl">5</span></div>
-    <div class="sublbl"><span>Calm</span><span>Chaotic</span></div>
+  <div class="rw">
+    <span class="cl">Randomness — varied per video</span>
+    <div class="rrow">
+      <input type="range" id="crnd" min="1" max="10" value="5">
+      <span id="rlbl">5</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--fg2)"><span>Calm</span><span>Chaotic</span></div>
   </div>
   <div class="cg"><span class="cl">Seed</span>
     <div class="rg">
@@ -97,55 +91,6 @@ input[type=checkbox]{accent-color:var(--amb);cursor:pointer}
   </div>
 </div>
 
-<!-- ── Audio config ───────────────────────────────────────── -->
-<div class="panel">
-  <div class="phead">Audio <span>— affects all generated videos</span></div>
-
-  <div class="sw">
-    <span class="cl">BPM &nbsp;<label style="font-weight:400;color:var(--amb)"><input type="checkbox" id="abpmrnd" checked> vary per video</label></span>
-    <div class="srow"><input type="range" id="abpm" min="60" max="160" value="90" class="amb"><span class="slbl amb" id="abpmlbl">90</span></div>
-    <div class="sublbl"><span>60</span><span>160</span></div>
-  </div>
-
-  <div class="sw">
-    <span class="cl">Drone pitch</span>
-    <div class="srow"><input type="range" id="apitch" min="40" max="220" value="100" class="amb"><span class="slbl amb" id="apitchlbl">100 Hz</span></div>
-    <div class="sublbl"><span>Bass</span><span>Treble</span></div>
-  </div>
-
-  <div class="sw">
-    <span class="cl">Beat strength</span>
-    <div class="srow"><input type="range" id="abeat" min="0" max="10" value="5" class="amb"><span class="slbl amb" id="abeatlbl">5</span></div>
-    <div class="sublbl"><span>Silent</span><span>Heavy</span></div>
-  </div>
-
-  <div class="cg">
-    <span class="cl">Waveform</span>
-    <select id="awav">
-      <option value="sine" selected>Sine</option>
-      <option value="triangle">Triangle</option>
-      <option value="sawtooth">Sawtooth</option>
-      <option value="square">Square</option>
-      <option value="random">Random per video</option>
-    </select>
-  </div>
-
-  <div class="sw">
-    <span class="cl">Ambient ↔ Beat mix</span>
-    <div class="srow"><input type="range" id="amix" min="0" max="10" value="5" class="amb"><span class="slbl amb" id="amixlbl">5</span></div>
-    <div class="sublbl"><span>All ambient</span><span>All beats</span></div>
-  </div>
-
-  <div class="sw">
-    <span class="cl">Reverb / decay</span>
-    <div class="srow"><input type="range" id="areverb" min="0" max="10" value="3" class="amb"><span class="slbl amb" id="areverblbl">3</span></div>
-    <div class="sublbl"><span>Dry</span><span>Wet</span></div>
-  </div>
-
-  <button class="btn" id="arnd">⚄ Randomise audio</button>
-</div>
-
-<!-- ── Preview + log ──────────────────────────────────────── -->
 <div id="top">
   <div id="pvcol">
     <div id="cvw">
@@ -163,11 +108,12 @@ input[type=checkbox]{accent-color:var(--amb);cursor:pointer}
   </div>
 </div>
 
-<!-- ── Downloads grid ────────────────────────────────────── -->
 <div id="dlsec">
-  <div class="dh">Downloads <span class="dcnt" id="dlcnt">0</span></div>
-  <div id="dlgrid"><div class="empty">Generated videos will appear here</div></div>
-  <div class="fmt">Right-click any video → <strong>Save video as</strong> &nbsp;·&nbsp; convert: <code>ffmpeg -i in.webm out.mp4</code></div>
+  <div class="dh">
+    Downloads <span class="dcnt" id="dlcnt">0</span>
+  </div>
+  <div id="dlgrid"><div class="empty">Generated videos will appear here — each auto-saves to your Downloads folder</div></div>
+  <div class="fmt">Format: WebM · convert to MP4: <code>ffmpeg -i in.webm out.mp4</code></div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -184,20 +130,27 @@ const mkRng = s0 => {
 };
 
 const PALS = [
-  [0xFF6B6B,0xFFE66D,0x4ECDC4,0x1A535C],[0xE63946,0x457B9D,0xA8DADC,0xF1FAEE],
-  [0xF72585,0x7209B7,0x3A0CA3,0x4CC9F0],[0xFFBE0B,0xFB5607,0xFF006E,0x8338EC],
-  [0x06D6A0,0x118AB2,0xFFD166,0xEF476F],[0x2D00F7,0x6A00F4,0xBC00DD,0xF20089],
+  [0xFF6B6B,0xFFE66D,0x4ECDC4,0x1A535C],
+  [0xE63946,0x457B9D,0xA8DADC,0xF1FAEE],
+  [0xF72585,0x7209B7,0x3A0CA3,0x4CC9F0],
+  [0xFFBE0B,0xFB5607,0xFF006E,0x8338EC],
+  [0x06D6A0,0x118AB2,0xFFD166,0xEF476F],
+  [0x2D00F7,0x6A00F4,0xBC00DD,0xF20089],
   [0xFF9F1C,0xFFBF69,0x2EC4B6,0x073B4C],
 ];
 const GEOMS = [
-  r=>new THREE.TetrahedronGeometry(r,0), r=>new THREE.OctahedronGeometry(r,0),
-  r=>new THREE.IcosahedronGeometry(r,0), r=>new THREE.DodecahedronGeometry(r,0),
-  r=>new THREE.IcosahedronGeometry(r,1), r=>new THREE.TorusKnotGeometry(r*.7,r*.25,20,5),
-  r=>new THREE.TorusGeometry(r*.7,r*.3,8,10), r=>new THREE.CylinderGeometry(r*.3,r*.8,r*1.6,6),
+  r=>new THREE.TetrahedronGeometry(r,0),
+  r=>new THREE.OctahedronGeometry(r,0),
+  r=>new THREE.IcosahedronGeometry(r,0),
+  r=>new THREE.DodecahedronGeometry(r,0),
+  r=>new THREE.IcosahedronGeometry(r,1),
+  r=>new THREE.TorusKnotGeometry(r*.7,r*.25,20,5),
+  r=>new THREE.TorusGeometry(r*.7,r*.3,8,10),
+  r=>new THREE.CylinderGeometry(r*.3,r*.8,r*1.6,6),
   r=>new THREE.SphereGeometry(r,5,4),
 ];
 
-function buildScene(rng, scene, numShapes, aspect) {
+function buildScene(rng,scene,numShapes,aspect){
   const pal=PALS[Math.floor(rng()*PALS.length)];
   scene.add(new THREE.AmbientLight(0xffffff,0.35));
   const p1=new THREE.PointLight(0xffffff,1.2,100); p1.position.set(6,8,5);
@@ -212,17 +165,17 @@ function buildScene(rng, scene, numShapes, aspect) {
       const mesh=new THREE.Mesh(g,m);
       mesh.position.set((rng()-.5)*sX,(rng()-.5)*sY,(rng()-.5)*1.5);
       mesh.rotation.set(rng()*Math.PI*2,rng()*Math.PI*2,rng()*Math.PI*2);
-      grp.add(mesh); mats.push(m);
+      grp.add(mesh);mats.push(m);
     }
-    grp.position.set(ox,oy,0); grp.userData.bx=ox; grp.userData.by=oy;
-    scene.add(grp); return{grp,mats,pal};
+    grp.position.set(ox,oy,0);grp.userData.bx=ox;grp.userData.by=oy;
+    scene.add(grp);return{grp,mats,pal};
   };
-  const ox=(rng()-.5)*sX, oy=(rng()-.5)*sY;
-  const dpA=rng()*Math.PI*2, dpB=rng()*Math.PI*2;
+  const ox=(rng()-.5)*sX,oy=(rng()-.5)*sY;
+  const dpA=rng()*Math.PI*2,dpB=rng()*Math.PI*2;
   return{gA:makeGroup(0,0),gB:makeGroup(ox,oy),dpA,dpB};
 }
 
-function disposeScene(scene) {
+function disposeScene(scene){
   scene.traverse(o=>{
     if(o.geometry)o.geometry.dispose();
     if(o.material)[].concat(o.material).forEach(m=>m.dispose());
@@ -230,78 +183,35 @@ function disposeScene(scene) {
   while(scene.children.length)scene.remove(scene.children[0]);
 }
 
-// ── Audio engine ──────────────────────────────────────────────
-// ap = { bpm, rootFreq, beatStrength, waveform, ambientMix, reverbAmt }
-function buildAudio(rng, ap, ctx, dest) {
-  const {bpm, rootFreq, beatStrength, waveform, ambientMix, reverbAmt} = ap;
-  const tone = 80 + rng()*500;
-
-  // Master out
-  const master = ctx.createGain(); master.gain.value = 0.6;
-  master.connect(dest); master.connect(ctx.destination);
-
-  // Reverb — two delay+feedback lines feeding a wet bus
-  const reverbWet = ctx.createGain(); reverbWet.gain.value = reverbAmt * 0.55;
-  const reverbDry = ctx.createGain(); reverbDry.gain.value = 1.0;
-  reverbWet.connect(master); reverbDry.connect(master);
-
-  function makeDelay(dt, fb) {
-    const d=ctx.createDelay(2.0), f=ctx.createGain();
-    d.delayTime.value=dt; f.gain.value=fb;
-    d.connect(f); f.connect(d); d.connect(reverbWet);
-    return d;
-  }
-  const dl1=makeDelay(0.03+reverbAmt*0.08, reverbAmt*0.55);
-  const dl2=makeDelay(0.05+reverbAmt*0.11, reverbAmt*0.45);
-
-  function connectToReverb(node) {
-    node.connect(reverbDry);
-    node.connect(dl1);
-    node.connect(dl2);
-  }
-
-  // Ambient/beat mix levels: ambientMix 0=all-ambient, 1=all-beats
-  const ambGain = ctx.createGain(); ambGain.gain.value = 1 - ambientMix * 0.88;
-  const beatGain = ctx.createGain(); beatGain.gain.value = beatStrength * (0.1 + ambientMix * 0.9);
-  connectToReverb(ambGain);
-  connectToReverb(beatGain);
-
-  // Drone oscillators
+function buildAudio(rng,bpm,ctx,dest){
+  const root=50+rng()*130,tone=100+rng()*500;
+  const master=ctx.createGain();master.gain.value=0.55;
+  master.connect(dest);master.connect(ctx.destination);
   const oscs=[];
   for(let i=0;i<5;i++){
-    const osc=ctx.createOscillator(), g=ctx.createGain();
-    const lfo=ctx.createOscillator(), lg=ctx.createGain();
-    osc.type = waveform === 'random'
-      ? ['sine','triangle','sawtooth','square'][Math.floor(rng()*4)]
-      : waveform;
-    osc.frequency.value = rootFreq*(i+1)*(0.985+rng()*.03);
-    g.gain.value = (0.07+rng()*.13)/(i+1);
-    lfo.type='sine'; lfo.frequency.value=0.08+rng()*.42;
+    const osc=ctx.createOscillator(),g=ctx.createGain();
+    const lfo=ctx.createOscillator(),lg=ctx.createGain();
+    osc.type=i<3?'sine':'triangle';
+    osc.frequency.value=root*(i+1)*(0.985+rng()*.03);
+    g.gain.value=(0.07+rng()*.13)/(i+1);
+    lfo.type='sine';lfo.frequency.value=0.08+rng()*.42;
     lg.gain.value=g.gain.value*.5;
-    lfo.connect(lg); lg.connect(g.gain);
-    osc.connect(g); g.connect(ambGain);
-    osc.start(); lfo.start(); oscs.push(osc,lfo);
+    lfo.connect(lg);lg.connect(g.gain);osc.connect(g);g.connect(master);
+    osc.start();lfo.start();oscs.push(osc,lfo);
   }
-
-  // Rhythmic beats
-  const bsec=60/bpm;
-  const decayT = 0.08 + reverbAmt * 0.35; // longer decay with more reverb
-  let nxt=ctx.currentTime+0.05;
+  const bsec=60/bpm;let nxt=ctx.currentTime+0.05;
   const sched=()=>{
     while(nxt<ctx.currentTime+0.3){
-      const v=0.3+Math.random()*.55;
+      const v=0.3+Math.random()*.5;
       const o=ctx.createOscillator(),e=ctx.createGain();
-      o.type='sine'; o.frequency.value=tone;
-      e.gain.setValueAtTime(v,nxt);
-      e.gain.exponentialRampToValueAtTime(0.001,nxt+decayT);
-      o.connect(e); e.connect(beatGain); o.start(nxt); o.stop(nxt+decayT+0.05);
+      o.type='sine';o.frequency.value=tone;
+      e.gain.setValueAtTime(v,nxt);e.gain.exponentialRampToValueAtTime(0.001,nxt+.1);
+      o.connect(e);e.connect(master);o.start(nxt);o.stop(nxt+.12);
       if(Math.random()<.35){
-        const t2=nxt+bsec/2;
-        const o2=ctx.createOscillator(),e2=ctx.createGain();
-        o2.type='sine'; o2.frequency.value=tone*1.5;
-        e2.gain.setValueAtTime(v*.4,t2);
-        e2.gain.exponentialRampToValueAtTime(0.001,t2+decayT*.7);
-        o2.connect(e2); e2.connect(beatGain); o2.start(t2); o2.stop(t2+decayT+0.05);
+        const t2=nxt+bsec/2,o2=ctx.createOscillator(),e2=ctx.createGain();
+        o2.type='sine';o2.frequency.value=tone*1.5;
+        e2.gain.setValueAtTime(v*.4,t2);e2.gain.exponentialRampToValueAtTime(0.001,t2+.07);
+        o2.connect(e2);e2.connect(master);o2.start(t2);o2.stop(t2+.09);
       }
       nxt+=bsec;
     }
@@ -311,10 +221,23 @@ function buildAudio(rng, ap, ctx, dest) {
   return{stop(){clearInterval(tid);oscs.forEach(o=>{try{o.stop()}catch(_){}});master.disconnect();}};
 }
 
+// ── Shared persistent renderer — created once, reused per video
+const renderCanvas = document.createElement('canvas');
+let sharedRenderer = null;
+
+function getRenderer(w, h) {
+  renderCanvas.width = w;
+  renderCanvas.height = h;
+  if (!sharedRenderer) {
+    sharedRenderer = new THREE.WebGLRenderer({ canvas: renderCanvas, antialias: true });
+    sharedRenderer.setPixelRatio(1);
+  }
+  sharedRenderer.setSize(w, h, false);
+  return sharedRenderer;
+}
+
 const MIME=['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm']
   .find(t=>MediaRecorder.isTypeSupported(t))||'video/webm';
-
-function lerpPal(pal,pos){
   const p=((pos%pal.length)+pal.length)%pal.length;
   const a=Math.floor(p)%pal.length,b=(a+1)%pal.length,f=p-Math.floor(p);
   const ca=new THREE.Color(pal[a]),cb=new THREE.Color(pal[b]);
@@ -323,36 +246,22 @@ function lerpPal(pal,pos){
 
 let stopReq=false;
 
-// ── Read audio params from UI ─────────────────────────────────
-function getAudioParams(rng) {
-  const bpmRnd = $('abpmrnd').checked;
-  return {
-    bpm:         bpmRnd ? (60+rng()*100) : parseInt($('abpm').value),
-    rootFreq:    parseInt($('apitch').value),
-    beatStrength:parseInt($('abeat').value)/10,
-    waveform:    $('awav').value,
-    ambientMix:  parseInt($('amix').value)/10,
-    reverbAmt:   parseInt($('areverb').value)/10,
-  };
-}
-
 async function genVideo(seed,dur,fps,w,h,numShapes,randLevel){
-  const R=randLevel/10, aspect=w/h;
+  const R=randLevel/10,aspect=w/h;
   const rng=mkRng(seed);
+  const bpm=70+rng()*58;
   const rotBase=0.003+R*0.035;
-  const sA=(0.6+rng()*0.8)*rotBase, sB=-(0.6+rng()*0.8)*rotBase;
-  const meshSpin=R*0.02, colSpeed=0.15+R*4.85;
-  const driftAmp=R*(aspect<1?3.0:2.0), driftFreq=0.12+R*0.55;
+  const sA= (0.6+rng()*0.8)*rotBase;
+  const sB=-(0.6+rng()*0.8)*rotBase;
+  const meshSpin=R*0.02;
+  const colSpeed=0.15+R*4.85;
+  const driftAmp=R*(aspect<1?3.0:2.0);
+  const driftFreq=0.12+R*0.55;
   const bgPh=rng()*Math.PI*2;
 
-  // Offscreen full-res render canvas
-  const rc=document.createElement('canvas');
-  rc.width=w; rc.height=h;
-  const pc=document.getElementById('cv');
-  const pctx=pc.getContext('2d');
-
-  const renderer=new THREE.WebGLRenderer({canvas:rc,antialias:true});
-  renderer.setSize(w,h,false); renderer.setPixelRatio(1);
+  // Reuse shared renderer — avoids WebGL context limit on repeated calls
+  const renderer = getRenderer(w, h);
+  const rc = renderCanvas;
 
   const scene=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(60,aspect,0.1,100);
@@ -360,11 +269,9 @@ async function genVideo(seed,dur,fps,w,h,numShapes,randLevel){
 
   const{gA,gB,dpA,dpB}=buildScene(rng,scene,numShapes,aspect);
 
-  // Audio — read from UI controls (bpm may vary per video via rng)
-  const ap=getAudioParams(rng);
   const actx=new(window.AudioContext||window.webkitAudioContext)();
   const aDest=actx.createMediaStreamDestination();
-  const audio=buildAudio(rng,ap,actx,aDest);
+  const audio=buildAudio(rng,bpm,actx,aDest);
 
   const vs=rc.captureStream(fps);
   let stream;
@@ -375,21 +282,21 @@ async function genVideo(seed,dur,fps,w,h,numShapes,randLevel){
   const chunks=[];
   rec.ondataavailable=e=>{if(e.data.size>0)chunks.push(e.data);};
 
-  const durMs=dur*1000, t0=performance.now(), fMs=1000/fps;
+  const durMs=dur*1000,t0=performance.now(),fMs=1000/fps;
   rec.start(200);
 
   await new Promise(resolve=>{
     rec.onstop=resolve;
     function frame(){
-      const now=performance.now(), elapsed=now-t0;
+      const now=performance.now(),elapsed=now-t0;
       if(elapsed>=durMs||stopReq){rec.stop();return;}
       const t=elapsed/1000;
       const br=Math.round(5+12*(.5+.5*Math.sin(t*.5+bgPh)));
       const bg=Math.round(5+12*(.5+.5*Math.sin(t*.5+bgPh+2.1)));
       const bb=Math.round(5+12*(.5+.5*Math.sin(t*.5+bgPh+4.2)));
       renderer.setClearColor(new THREE.Color(`rgb(${br},${bg},${bb})`),1);
-      gA.grp.rotation.y+=sA; gA.grp.rotation.x+=sA*.4;
-      gB.grp.rotation.y+=sB; gB.grp.rotation.x+=sB*.4;
+      gA.grp.rotation.y+=sA;gA.grp.rotation.x+=sA*.4;
+      gB.grp.rotation.y+=sB;gB.grp.rotation.x+=sB*.4;
       gA.grp.children.forEach((m,i)=>{m.rotation.z+=meshSpin*(i%2===0?1:-1);});
       gB.grp.children.forEach((m,i)=>{m.rotation.x+=meshSpin*(i%2===0?-1:1);});
       gA.grp.position.x=gA.grp.userData.bx+driftAmp*Math.sin(2*Math.PI*driftFreq*t+dpA);
@@ -401,84 +308,85 @@ async function genVideo(seed,dur,fps,w,h,numShapes,randLevel){
       gB.mats.forEach((m,i)=>m.color.copy(lerpPal(gB.pal,pI*gB.pal.length+i+2)));
       renderer.render(scene,cam);
       pctx.drawImage(rc,0,0,pc.width,pc.height);
-      setTimeout(frame,Math.max(0,fMs-(performance.now()-now)));
+      const spent=performance.now()-now;
+      setTimeout(frame,Math.max(0,fMs-spent));
     }
     setTimeout(frame,0);
   });
 
-  audio.stop(); await actx.close();
-  disposeScene(scene); renderer.dispose();
+  audio.stop();
+  actx.close(); // don't await — can hang with active nodes
+  disposeScene(scene);
+  // Don't dispose renderer — reused across videos
+  await new Promise(r => setTimeout(r, 300)); // brief pause for GC
   return new Blob(chunks,{type:MIME});
 }
 
-// ── UI helpers ────────────────────────────────────────────────
+// ── Download helper — works on a real page (no sandbox) ───────
+function triggerDownload(blob, fname) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = fname;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  // Revoke after a short delay to allow the download to start
+  setTimeout(() => URL.revokeObjectURL(url), 5000);
+}
+
+// ── UI ────────────────────────────────────────────────────────
 const $=id=>document.getElementById(id);
-let dlFirst=true, dlCount=0;
+let dlFirst=true,dlCount=0;
 
-// Slider live labels
-const sliders=[
-  ['crnd','rlbl',v=>v],
-  ['abpm','abpmlbl',v=>v],
-  ['apitch','apitchlbl',v=>v+' Hz'],
-  ['abeat','abeatlbl',v=>v],
-  ['amix','amixlbl',v=>v],
-  ['areverb','areverblbl',v=>v],
-];
-sliders.forEach(([id,lbl,fmt])=>{
-  const el=$( id);
-  el.addEventListener('input',()=>{ $(lbl).textContent=fmt(el.value); });
-});
-
-// BPM slider dims when "vary per video" is checked
-$('abpmrnd').addEventListener('change',()=>{
-  $('abpm').style.opacity=$('abpmrnd').checked?'0.35':'1';
-});
-$('abpm').style.opacity='0.35'; // starts checked
-
-// Randomise audio button
-$('arnd').addEventListener('click',()=>{
-  const rv=v=>Math.floor(Math.random()*(v[1]-v[0]+1))+v[0];
-  $('abpm').value=rv([60,160]);    $('abpmlbl').textContent=$('abpm').value;
-  $('apitch').value=rv([40,220]);  $('apitchlbl').textContent=$('apitch').value+' Hz';
-  $('abeat').value=rv([0,10]);     $('abeatlbl').textContent=$('abeat').value;
-  $('amix').value=rv([0,10]);      $('amixlbl').textContent=$('amix').value;
-  $('areverb').value=rv([0,10]);   $('areverblbl').textContent=$('areverb').value;
-  const wavs=['sine','triangle','sawtooth','square','random'];
-  $('awav').value=wavs[Math.floor(Math.random()*wavs.length)];
-  log('⚄ Audio randomised','lhi');
-});
+$('crnd').addEventListener('input',()=>{$('rlbl').textContent=$('crnd').value;});
 
 function log(msg,cls){
   const lb=$('lbox'),d=document.createElement('div');
-  d.textContent=msg; if(cls)d.className=cls;
-  lb.appendChild(d); lb.scrollTop=lb.scrollHeight;
+  d.textContent=msg;if(cls)d.className=cls;
+  lb.appendChild(d);lb.scrollTop=lb.scrollHeight;
 }
+
 function setSt(txt,pct){
   $('st').textContent=txt;
   if(pct!==undefined)$('pgfill').style.width=pct+'%';
 }
 
-function addDl(blob,seed,w,h,rLvl,ap){
+function addDl(blob,seed,w,h,rLvl){
   if(dlFirst){$('dlgrid').innerHTML='';dlFirst=false;}
-  dlCount++; $('dlcnt').textContent=dlCount;
+  dlCount++;
+  $('dlcnt').textContent=dlCount;
+
   const fname=`shorts_seed${seed}_r${rLvl}_${w}x${h}.webm`;
   const mb=(blob.size/1048576).toFixed(1);
+  const url=URL.createObjectURL(blob);
 
-  const card=document.createElement('div'); card.className='dli';
-  const nm=document.createElement('div'); nm.className='dn'; nm.textContent=fname;
-  const mt=document.createElement('div'); mt.className='dm';
-  mt.textContent=`rand ${rLvl}/10 · ${ap.bpm.toFixed(0)}bpm · ${ap.rootFreq}Hz · ${mb} MB`;
+  const card=document.createElement('div');
+  card.className='dli';
+
+  const nameEl=document.createElement('div');
+  nameEl.className='dn';nameEl.textContent=fname;
+
+  const metaEl=document.createElement('div');
+  metaEl.className='dm';metaEl.textContent=`randomness ${rLvl}/10 · ${mb} MB`;
+
   const vid=document.createElement('video');
-  vid.controls=true; vid.playsInline=true;
-  vid.src=URL.createObjectURL(blob);
-  const hint=document.createElement('div'); hint.className='dm';
-  hint.innerHTML='💾 Right-click → <strong>Save video as</strong>';
-  card.append(nm,mt,vid,hint);
+  vid.controls=true;vid.playsInline=true;
+  vid.src=url;
+
+  const btn=document.createElement('button');
+  btn.className='dd';btn.textContent='↓ Download';
+  btn.onclick=()=>triggerDownload(blob,fname);
+
+  card.appendChild(nameEl);
+  card.appendChild(metaEl);
+  card.appendChild(vid);
+  card.appendChild(btn);
   $('dlgrid').appendChild(card);
   card.scrollIntoView({behavior:'smooth',block:'nearest'});
+  // No auto-download — browsers block multiple automatic downloads
 }
 
-// ── Run loop ──────────────────────────────────────────────────
 async function run(){
   const n    =Math.max(1,parseInt($('cn').value)||30);
   const dur  =Math.max(5,parseInt($('cd').value)||30);
@@ -488,62 +396,66 @@ async function run(){
   const mode =document.querySelector('input[name=sm]:checked').value;
   const fixS =parseInt($('cseed').value)||42000;
 
-  $('bgen').disabled=true; $('bstp').disabled=false;
-  stopReq=false; $('ov').classList.add('hidden');
+  $('bgen').disabled=true;$('bstp').disabled=false;
+  stopReq=false;
+  $('ov').classList.add('hidden');
 
   const seeds=Array.from({length:n},(_,i)=>
     mode==='fix'?fixS+i:Math.floor(Math.random()*90000)+10000
   );
 
   for(let i=0;i<n;i++){
-    if(stopReq){log('⚠ Stopped.','lerr');break;}
+    if(stopReq){log('⚠ Stopped by user.','lerr');break;}
     const seed=seeds[i];
     const rLvl=Math.floor(Math.random()*10)+1;
-    // Preview audio params for the log (bpm may be random, so sample it)
-    const previewRng=mkRng(seed);
-    const ap=getAudioParams(previewRng);
-    log(`[${i+1}/${n}] seed ${seed} · rand ${rLvl}/10 · ${ap.bpm.toFixed(0)}bpm · ${ap.rootFreq}Hz · ${['sine','triangle','sawtooth','square'].includes(ap.waveform)?ap.waveform:'rnd'} wave`,'lhi');
+    log(`[${i+1}/${n}] seed ${seed} · randomness ${rLvl}/10`,'lhi');
     const t0=Date.now();
     const pi=setInterval(()=>{
-      const el=Date.now()-t0, vp=Math.min(1,el/(dur*1000));
+      const el=Date.now()-t0,vp=Math.min(1,el/(dur*1000));
       setSt(`Video ${i+1}/${n} · seed ${seed} · ${Math.max(0,dur-el/1000).toFixed(0)}s left`,((i+vp)/n)*100);
     },500);
     try{
       const blob=await genVideo(seed,dur,fps,w,h,nSh,rLvl);
       clearInterval(pi);
       if(blob.size>0){
-        addDl(blob,seed,w,h,rLvl,ap);
-        log(`✅ Video ${i+1} done · ${(blob.size/1048576).toFixed(1)} MB`,'lok');
+        addDl(blob,seed,w,h,rLvl);
+        log(`✅ Video ${i+1} done · ${(blob.size/1048576).toFixed(1)} MB · auto-saved`,'lok');
         setSt(`Video ${i+1}/${n} complete`,((i+1)/n)*100);
       } else {
-        log(`⚠ Empty — use Chrome or Edge`,'lerr');
+        log(`⚠ Video ${i+1} — empty blob (use Chrome/Edge)`,'lerr');
       }
-    }catch(e){clearInterval(pi);log(`❌ ${e.message}`,'lerr');}
+    }catch(e){
+      clearInterval(pi);
+      log(`❌ ${e.message}`,'lerr');
+    }
   }
 
-  $('bgen').disabled=false; $('bstp').disabled=true;
+  $('bgen').disabled=false;$('bstp').disabled=true;
   $('ov').innerHTML=`<span>${stopReq?'⚠ Stopped':'✅ Done!'}</span><div class="badge">9:16 · YouTube Shorts</div>`;
   $('ov').classList.remove('hidden');
-  setSt(stopReq?'Stopped':`Complete — ${n} video(s) ready`,100);
-  log('✨ Generation complete.','lok');
+  setSt(stopReq?'Stopped':`Complete — ${n} video(s) saved`,100);
+  log('✨ All done — check your Downloads folder.','lok');
 }
 
 $('bgen').addEventListener('click',run);
 $('bstp').addEventListener('click',()=>{stopReq=true;$('bstp').disabled=true;setSt('Stopping…');});
 
-// ── Static preview on load ────────────────────────────────────
 window.addEventListener('load',()=>{
   const pc=document.getElementById('cv');
-  const rc=document.createElement('canvas'); rc.width=pc.width; rc.height=pc.height;
+  const rc=document.createElement('canvas');
+  rc.width=pc.width;rc.height=pc.height;
   const rng=mkRng(42000);
   const ren=new THREE.WebGLRenderer({canvas:rc,antialias:true});
   ren.setSize(rc.width,rc.height,false);
-  const sc=new THREE.Scene(), cam=new THREE.PerspectiveCamera(60,rc.width/rc.height,0.1,100);
+  const sc=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(60,rc.width/rc.height,0.1,100);
   cam.position.z=13;
   buildScene(rng,sc,3,rc.width/rc.height);
   ren.setClearColor(new THREE.Color('rgb(10,8,20)'),1);
   ren.render(sc,cam);
   pc.getContext('2d').drawImage(rc,0,0,pc.width,pc.height);
-  disposeScene(sc); ren.dispose();
+  disposeScene(sc);ren.dispose();
 });
 </script>
+</body>
+</html>
