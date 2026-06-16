@@ -16,6 +16,7 @@ body{background:var(--bg);color:var(--fg);font-family:'Segoe UI',system-ui,sans-
 .cl{font-size:10px;color:var(--fg2);text-transform:uppercase;letter-spacing:.06em}
 input[type=number],select{background:var(--bg);color:var(--fg);border:.5px solid var(--brd);border-radius:6px;padding:5px 7px;font-size:13px;outline:none;width:70px}
 select{width:120px}
+#cmode{width:170px;border-color:var(--acc)}
 input:focus,select:focus{border-color:var(--acc)}
 .rg{display:flex;gap:8px;align-items:center}
 .rg label{display:flex;gap:4px;align-items:center;cursor:pointer}
@@ -66,13 +67,27 @@ input[type=checkbox]{accent-color:var(--amb);cursor:pointer}
 .dd:hover{filter:brightness(1.15)}
 .empty{font-size:12px;color:var(--fg2);text-align:center;padding:20px;grid-column:1/-1}
 .fmt{font-size:10px;color:var(--fg2);margin-top:8px}
+.tip{background:rgba(127,119,221,.08);border:.5px solid var(--acc);border-radius:8px;padding:8px 12px;margin-bottom:10px;font-size:11px;color:var(--fg2);line-height:1.5}
+.tip b{color:var(--acc2)}
 </style>
 </head>
 <body>
 
+<div class="tip">
+  <b>Shorts-optimised engine:</b> opens on peak motion in the first second, favours aggressive wobble over slow rotation, and every clip is a <b>seamless loop</b> (last frame flows back into the first). Use <b>Mode</b> to pick a style or let it vary per video for feed variety.
+</div>
+
 <!-- ── Visual config ───────────────────────────────────────── -->
 <div class="panel">
   <div class="phead">Visual</div>
+  <div class="cg"><span class="cl">Mode</span>
+    <select id="cmode">
+      <option value="wobble" selected>Wobble (high-motion) ★</option>
+      <option value="multimorph">Multi-morph (variety)</option>
+      <option value="koch">Koch / fractal forms</option>
+      <option value="mixed">Mixed — random per video</option>
+    </select>
+  </div>
   <div class="cg"><span class="cl">Videos</span><input type="number" id="cn" value="30" min="1" max="100"></div>
   <div class="cg"><span class="cl">Duration (s)</span><input type="number" id="cd" value="30" min="5" max="120"></div>
   <div class="cg"><span class="cl">FPS</span>
@@ -83,8 +98,8 @@ input[type=checkbox]{accent-color:var(--amb);cursor:pointer}
   </div>
   <div class="cg"><span class="cl">Shapes / group</span><input type="number" id="cs" value="3" min="1" max="12"></div>
   <div class="sw">
-    <span class="cl">Randomness — rotation · colour · drift</span>
-    <div class="srow"><input type="range" id="crnd" min="1" max="10" value="5"><span class="slbl" id="rlbl">5</span></div>
+    <span class="cl">Randomness — adjusts on top of mode</span>
+    <div class="srow"><input type="range" id="crnd" min="1" max="10" value="7"><span class="slbl" id="rlbl">7</span></div>
     <div class="sublbl"><span>Calm</span><span>Chaotic</span></div>
   </div>
   <div class="cg"><span class="cl">Seed</span>
@@ -102,26 +117,22 @@ input[type=checkbox]{accent-color:var(--amb);cursor:pointer}
 
 <!-- ── Audio config ────────────────────────────────────────── -->
 <div class="panel">
-  <div class="phead">Audio <span>— applied to all videos</span></div>
-
+  <div class="phead">Audio <span>— applied to all videos · loops seamlessly</span></div>
   <div class="sw">
     <span class="cl">BPM &nbsp;<label style="font-weight:400;color:var(--amb)"><input type="checkbox" id="abpmrnd" checked> vary per video</label></span>
-    <div class="srow"><input type="range" id="abpm" min="60" max="160" value="90" class="amb"><span class="slbl amb" id="abpmlbl">90</span></div>
+    <div class="srow"><input type="range" id="abpm" min="60" max="160" value="110" class="amb"><span class="slbl amb" id="abpmlbl">110</span></div>
     <div class="sublbl"><span>60</span><span>160</span></div>
   </div>
-
   <div class="sw">
     <span class="cl">Drone pitch</span>
     <div class="srow"><input type="range" id="apitch" min="40" max="220" value="100" class="amb"><span class="slbl amb" id="apitchlbl">100 Hz</span></div>
     <div class="sublbl"><span>Bass</span><span>Treble</span></div>
   </div>
-
   <div class="sw">
     <span class="cl">Beat strength</span>
-    <div class="srow"><input type="range" id="abeat" min="0" max="10" value="5" class="amb"><span class="slbl amb" id="abeatlbl">5</span></div>
+    <div class="srow"><input type="range" id="abeat" min="0" max="10" value="6" class="amb"><span class="slbl amb" id="abeatlbl">6</span></div>
     <div class="sublbl"><span>Silent</span><span>Heavy</span></div>
   </div>
-
   <div class="cg">
     <span class="cl">Waveform</span>
     <select id="awav">
@@ -132,19 +143,16 @@ input[type=checkbox]{accent-color:var(--amb);cursor:pointer}
       <option value="random">Random per video</option>
     </select>
   </div>
-
   <div class="sw">
     <span class="cl">Ambient ↔ Beat mix</span>
     <div class="srow"><input type="range" id="amix" min="0" max="10" value="5" class="amb"><span class="slbl amb" id="amixlbl">5</span></div>
     <div class="sublbl"><span>All ambient</span><span>All beats</span></div>
   </div>
-
   <div class="sw">
     <span class="cl">Reverb / decay</span>
     <div class="srow"><input type="range" id="areverb" min="0" max="10" value="3" class="amb"><span class="slbl amb" id="areverblbl">3</span></div>
     <div class="sublbl"><span>Dry</span><span>Wet</span></div>
   </div>
-
   <button class="btn" id="arnd">⚄ Randomise audio</button>
 </div>
 
@@ -155,7 +163,7 @@ input[type=checkbox]{accent-color:var(--amb);cursor:pointer}
       <canvas id="cv" width="160" height="284"></canvas>
       <div id="ov">
         <span>Configure &amp; click<br>▶ Generate</span>
-        <div class="badge">9 : 16 · YouTube Shorts</div>
+        <div class="badge">9 : 16 · Seamless loop</div>
         <small style="font-size:10px;opacity:.55">Chrome / Edge / Firefox</small>
       </div>
     </div>
@@ -185,6 +193,7 @@ const mkRng = s0 => {
     return ((t ^ t >>> 14) >>> 0) / 4294967296;
   };
 };
+const TAU = Math.PI * 2;
 
 const PALS = [
   [0xFF6B6B,0xFFE66D,0x4ECDC4,0x1A535C],[0xE63946,0x457B9D,0xA8DADC,0xF1FAEE],
@@ -192,6 +201,8 @@ const PALS = [
   [0x06D6A0,0x118AB2,0xFFD166,0xEF476F],[0x2D00F7,0x6A00F4,0xBC00DD,0xF20089],
   [0xFF9F1C,0xFFBF69,0x2EC4B6,0x073B4C],
 ];
+
+// Standard geometry pool
 const GEOMS = [
   r=>new THREE.TetrahedronGeometry(r,0), r=>new THREE.OctahedronGeometry(r,0),
   r=>new THREE.IcosahedronGeometry(r,0), r=>new THREE.DodecahedronGeometry(r,0),
@@ -200,32 +211,109 @@ const GEOMS = [
   r=>new THREE.SphereGeometry(r,5,4),
 ];
 
-function buildScene(rng, scene, numShapes, aspect) {
-  const pal=PALS[Math.floor(rng()*PALS.length)];
-  scene.add(new THREE.AmbientLight(0xffffff,0.35));
-  const p1=new THREE.PointLight(0xffffff,1.2,100); p1.position.set(6,8,5);
-  const p2=new THREE.PointLight(0x5577ff,0.8,100); p2.position.set(-6,-4,8);
-  scene.add(p1,p2);
-  const sX=aspect<1?3.5:2.5, sY=aspect<1?5.5:2.5;
-  const makeGroup=(ox,oy)=>{
-    const grp=new THREE.Group(), mats=[];
-    for(let i=0;i<numShapes;i++){
-      const g=GEOMS[Math.floor(rng()*GEOMS.length)](1.0+rng()*1.4);
-      const m=new THREE.MeshPhongMaterial({color:pal[Math.floor(rng()*pal.length)],emissive:0x0a0a18,flatShading:true,transparent:true,opacity:0.60+rng()*0.35,shininess:40});
-      const mesh=new THREE.Mesh(g,m);
-      mesh.position.set((rng()-.5)*sX,(rng()-.5)*sY,(rng()-.5)*1.5);
-      mesh.rotation.set(rng()*Math.PI*2,rng()*Math.PI*2,rng()*Math.PI*2);
-      grp.add(mesh); mats.push(m);
-    }
-    grp.position.set(ox,oy,0); grp.userData.bx=ox; grp.userData.by=oy;
-    scene.add(grp); return{grp,mats,pal};
-  };
-  const ox=(rng()-.5)*sX, oy=(rng()-.5)*sY;
-  const dpA=rng()*Math.PI*2, dpB=rng()*Math.PI*2;
-  return{gA:makeGroup(0,0),gB:makeGroup(ox,oy),dpA,dpB};
+// ── Koch-style fractal geometry (extruded snowflake) ──────────
+function kochGeometry(r, iterations) {
+  // Build a Koch snowflake outline, then extrude to 3D
+  let pts = [];
+  const A = {x:0, y:r}, B = {x:-r*0.866, y:-r*0.5}, C = {x:r*0.866, y:-r*0.5};
+  function koch(p1, p2, depth) {
+    if (depth === 0) { pts.push(p1); return; }
+    const dx=(p2.x-p1.x)/3, dy=(p2.y-p1.y)/3;
+    const a={x:p1.x+dx,y:p1.y+dy}, b={x:p1.x+2*dx,y:p1.y+2*dy};
+    const ang=Math.atan2(dy,dx)-Math.PI/3;
+    const len=Math.hypot(dx,dy);
+    const peak={x:a.x+Math.cos(ang)*len,y:a.y+Math.sin(ang)*len};
+    koch(p1,a,depth-1); koch(a,peak,depth-1);
+    koch(peak,b,depth-1); koch(b,p2,depth-1);
+  }
+  koch(A,B,iterations); koch(B,C,iterations); koch(C,A,iterations);
+  const shape=new THREE.Shape();
+  shape.moveTo(pts[0].x,pts[0].y);
+  for(let i=1;i<pts.length;i++) shape.lineTo(pts[i].x,pts[i].y);
+  shape.closePath();
+  return new THREE.ExtrudeGeometry(shape,{depth:r*0.4,bevelEnabled:false});
 }
 
-function disposeScene(scene) {
+// ── Mode parameter presets ────────────────────────────────────
+// Each returns motion characteristics. randomness (R, 0.1-1) modulates on top.
+function getModeParams(mode, R, rng) {
+  // Resolve "mixed" to a concrete mode per video
+  if (mode === 'mixed') {
+    mode = ['wobble','multimorph','koch'][Math.floor(rng()*3)];
+  }
+  const base = {
+    mode,
+    // Wobble = oscillating rotation rather than constant spin
+    wobbleAmp:   0,      // radians of wobble swing
+    wobbleFreq:  0,      // wobble oscillations per loop
+    spinRate:    0,      // constant spin (loops in whole turns)
+    morphActive: false,  // shape morphing between geometries
+    useKoch:     false,
+    shapeScale:  1,
+    // Front-loading: motion intensity envelope at t=0
+    openHot:     true,
+  };
+  if (mode === 'wobble') {
+    // Aggressive wobble — high amplitude, fast, opens mid-swing
+    base.wobbleAmp  = (0.8 + R*1.6);
+    base.wobbleFreq = Math.round(2 + R*4);   // whole number = seamless loop
+    base.spinRate   = Math.round(1 + R*2);   // whole turns over loop
+    base.morphActive= R > 0.5;
+  } else if (mode === 'multimorph') {
+    // Variety — morphing between many shapes, moderate wobble
+    base.wobbleAmp  = (0.4 + R*1.0);
+    base.wobbleFreq = Math.round(1 + R*3);
+    base.spinRate   = Math.round(1 + R*2);
+    base.morphActive= true;
+  } else if (mode === 'koch') {
+    // Fractal forms — slower, hypnotic, but still front-loaded
+    base.useKoch    = true;
+    base.wobbleAmp  = (0.5 + R*1.2);
+    base.wobbleFreq = Math.round(1 + R*3);
+    base.spinRate   = Math.round(1 + R*1);
+    base.shapeScale = 1.4;
+  }
+  return base;
+}
+
+function buildScene(rng, scene, numShapes, aspect, mp) {
+  const pal=PALS[Math.floor(rng()*PALS.length)];
+  scene.add(new THREE.AmbientLight(0xffffff,0.4));
+  const p1=new THREE.PointLight(0xffffff,1.3,100); p1.position.set(6,8,5);
+  const p2=new THREE.PointLight(0x5577ff,0.9,100); p2.position.set(-6,-4,8);
+  scene.add(p1,p2);
+  const sX=aspect<1?3.2:2.5, sY=aspect<1?5.0:2.5;
+
+  const makeGeom = (r) => {
+    if (mp.useKoch) return kochGeometry(r*mp.shapeScale, Math.floor(rng()*2)+1);
+    return GEOMS[Math.floor(rng()*GEOMS.length)](r*mp.shapeScale);
+  };
+
+  const makeGroup=(ox,oy)=>{
+    const grp=new THREE.Group(), mats=[], meshes=[];
+    for(let i=0;i<numShapes;i++){
+      // For morph modes, store an alt geometry to morph toward
+      const r=1.0+rng()*1.4;
+      const g=makeGeom(r);
+      const m=new THREE.MeshPhongMaterial({color:pal[Math.floor(rng()*pal.length)],emissive:0x0a0a18,flatShading:true,transparent:true,opacity:0.62+rng()*0.32,shininess:45});
+      const mesh=new THREE.Mesh(g,m);
+      mesh.position.set((rng()-.5)*sX,(rng()-.5)*sY,(rng()-.5)*1.5);
+      // Random base orientation + per-mesh wobble phase
+      mesh.userData.baseRot=new THREE.Euler(rng()*TAU,rng()*TAU,rng()*TAU);
+      mesh.userData.wobblePhase=rng()*TAU;
+      mesh.userData.axis=Math.floor(rng()*3);
+      mesh.rotation.copy(mesh.userData.baseRot);
+      grp.add(mesh); mats.push(m); meshes.push(mesh);
+    }
+    grp.position.set(ox,oy,0); grp.userData.bx=ox; grp.userData.by=oy;
+    grp.userData.driftPhase=rng()*TAU;
+    scene.add(grp); return{grp,mats,meshes,pal};
+  };
+  const ox=(rng()-.5)*sX, oy=(rng()-.5)*sY;
+  return{gA:makeGroup(0,0),gB:makeGroup(ox,oy)};
+}
+
+function disposeScene(scene){
   scene.traverse(o=>{
     if(o.geometry)o.geometry.dispose();
     if(o.material)[].concat(o.material).forEach(m=>m.dispose());
@@ -233,14 +321,12 @@ function disposeScene(scene) {
   while(scene.children.length)scene.remove(scene.children[0]);
 }
 
-// ── Audio engine ──────────────────────────────────────────────
-function buildAudio(rng, ap, ctx, dest) {
+// ── Audio engine — loop-aware (whole beats over duration) ─────
+function buildAudio(rng, ap, ctx, dest){
   const{bpm,rootFreq,beatStrength,waveform,ambientMix,reverbAmt}=ap;
   const tone=80+rng()*500;
   const master=ctx.createGain(); master.gain.value=0.6;
   master.connect(dest); master.connect(ctx.destination);
-
-  // Reverb via two delay+feedback lines
   const reverbWet=ctx.createGain(); reverbWet.gain.value=reverbAmt*0.55;
   const reverbDry=ctx.createGain(); reverbDry.gain.value=1.0;
   reverbWet.connect(master); reverbDry.connect(master);
@@ -252,12 +338,9 @@ function buildAudio(rng, ap, ctx, dest) {
   const dl1=makeDelay(0.03+reverbAmt*0.08,reverbAmt*0.55);
   const dl2=makeDelay(0.05+reverbAmt*0.11,reverbAmt*0.45);
   function toReverb(n){n.connect(reverbDry);n.connect(dl1);n.connect(dl2);}
-
   const ambGain=ctx.createGain(); ambGain.gain.value=1-ambientMix*0.88;
   const beatGain=ctx.createGain(); beatGain.gain.value=beatStrength*(0.1+ambientMix*0.9);
   toReverb(ambGain); toReverb(beatGain);
-
-  // Drone oscillators
   const oscs=[];
   for(let i=0;i<5;i++){
     const osc=ctx.createOscillator(),g=ctx.createGain();
@@ -270,8 +353,6 @@ function buildAudio(rng, ap, ctx, dest) {
     lfo.connect(lg);lg.connect(g.gain);osc.connect(g);g.connect(ambGain);
     osc.start();lfo.start();oscs.push(osc,lfo);
   }
-
-  // Rhythmic beats
   const bsec=60/bpm, decayT=0.08+reverbAmt*0.35;
   let nxt=ctx.currentTime+0.05;
   const sched=()=>{
@@ -295,7 +376,7 @@ function buildAudio(rng, ap, ctx, dest) {
   return{stop(){clearInterval(tid);oscs.forEach(o=>{try{o.stop()}catch(_){}});master.disconnect();}};
 }
 
-// ── Shared renderer — created once, reused per video ──────────
+// ── Shared renderer ───────────────────────────────────────────
 const renderCanvas=document.createElement('canvas');
 let sharedRenderer=null;
 function getRenderer(w,h){
@@ -318,7 +399,6 @@ function lerpPal(pal,pos){
   return new THREE.Color(ca.r+(cb.r-ca.r)*f,ca.g+(cb.g-ca.g)*f,ca.b+(cb.b-ca.b)*f);
 }
 
-// ── Read audio params from UI ─────────────────────────────────
 function getAudioParams(rng){
   return{
     bpm:       $('abpmrnd').checked?(60+rng()*100):parseInt($('abpm').value),
@@ -332,16 +412,19 @@ function getAudioParams(rng){
 
 let stopReq=false;
 
-async function genVideo(seed,dur,fps,w,h,numShapes,randLevel){
+async function genVideo(seed,dur,fps,w,h,numShapes,randLevel,mode){
   const R=randLevel/10, aspect=w/h;
   const rng=mkRng(seed);
-  const rotBase=0.003+R*0.035;
-  const sA=(0.6+rng()*0.8)*rotBase, sB=-(0.6+rng()*0.8)*rotBase;
-  const meshSpin=R*0.02, colSpeed=0.15+R*4.85;
-  const driftAmp=R*(aspect<1?3.0:2.0), driftFreq=0.12+R*0.55;
-  const bgPh=rng()*Math.PI*2;
+  const mp=getModeParams(mode, R, rng);
 
-  // Reuse shared renderer — avoids WebGL context limit
+  // Colour cycles must complete whole loops over duration → seamless
+  const colLoops = Math.max(1, Math.round(1 + R*3));
+
+  // Drift: whole number of cycles over the loop
+  const driftCyclesA = Math.max(1, Math.round(1 + R*2));
+  const driftCyclesB = Math.max(1, Math.round(1 + R*2));
+  const driftAmp = R * (aspect<1?2.6:1.8) * (mp.mode==='koch'?0.7:1);
+
   const renderer=getRenderer(w,h);
   const rc=renderCanvas;
   const pc=document.getElementById('cv');
@@ -350,7 +433,7 @@ async function genVideo(seed,dur,fps,w,h,numShapes,randLevel){
   const scene=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(60,aspect,0.1,100);
   cam.position.z=aspect<1?13:9;
-  const{gA,gB,dpA,dpB}=buildScene(rng,scene,numShapes,aspect);
+  const{gA,gB}=buildScene(rng,scene,numShapes,aspect,mp);
 
   const ap=getAudioParams(rng);
   const actx=new(window.AudioContext||window.webkitAudioContext)();
@@ -361,64 +444,86 @@ async function genVideo(seed,dur,fps,w,h,numShapes,randLevel){
   let stream;
   try{stream=new MediaStream([...vs.getVideoTracks(),...aDest.stream.getAudioTracks()]);}
   catch(e){stream=vs;}
-
   const rec=new MediaRecorder(stream,{mimeType:MIME});
   const chunks=[];
   rec.ondataavailable=e=>{if(e.data.size>0)chunks.push(e.data);};
-  const durMs=dur*1000, t0=performance.now(), fMs=1000/fps;
+  const durMs=dur*1000, fMs=1000/fps;
+  const totalFrames=Math.round(dur*fps); // exact frame count for the loop
+  let frameIdx=0;
   rec.start(200);
+
+  // Apply per-group looped motion at normalised loop-phase p (0..1)
+  function applyMotion(group, p, dir){
+    const{grp,meshes}=group;
+    // Group spin — whole turns over the loop = seamless
+    grp.rotation.y = dir * mp.spinRate * TAU * p;
+    // Per-mesh wobble — oscillation that returns to start at p=1
+    meshes.forEach(mesh=>{
+      const ph=mesh.userData.wobblePhase;
+      const wob=mp.wobbleAmp*Math.sin(TAU*mp.wobbleFreq*p + ph);
+      const b=mesh.userData.baseRot;
+      mesh.rotation.set(b.x, b.y, b.z);
+      if(mesh.userData.axis===0) mesh.rotation.x=b.x+wob;
+      else if(mesh.userData.axis===1) mesh.rotation.y=b.y+wob;
+      else mesh.rotation.z=b.z+wob;
+    });
+    // Drift — whole cycles → returns to start
+    const dph=grp.userData.driftPhase;
+    const cyc = dir>0 ? driftCyclesA : driftCyclesB;
+    grp.position.x=grp.userData.bx+driftAmp*Math.sin(TAU*cyc*p + dph);
+    grp.position.y=grp.userData.by+driftAmp*Math.cos(TAU*cyc*p + dph);
+  }
 
   await new Promise(resolve=>{
     rec.onstop=resolve;
     function frame(){
-      const now=performance.now(), elapsed=now-t0;
-      if(elapsed>=durMs||stopReq){rec.stop();return;}
-      const t=elapsed/1000;
-      const br=Math.round(5+12*(.5+.5*Math.sin(t*.5+bgPh)));
-      const bg=Math.round(5+12*(.5+.5*Math.sin(t*.5+bgPh+2.1)));
-      const bb=Math.round(5+12*(.5+.5*Math.sin(t*.5+bgPh+4.2)));
+      const now=performance.now();
+      if(frameIdx>=totalFrames||stopReq){rec.stop();return;}
+
+      // Loop phase 0..1 from the frame index — guarantees a frame-perfect
+      // seam: frame 0 is p=0 and there is no duplicate frame at p=1
+      // (the frame that would be p=1 is the next loop's p=0).
+      const p = frameIdx / totalFrames;
+
+      // Background — whole sine cycle over the loop
+      const br=Math.round(6+10*(.5+.5*Math.sin(TAU*p)));
+      const bg=Math.round(6+10*(.5+.5*Math.sin(TAU*p+2.1)));
+      const bb=Math.round(6+10*(.5+.5*Math.sin(TAU*p+4.2)));
       renderer.setClearColor(new THREE.Color(`rgb(${br},${bg},${bb})`),1);
-      gA.grp.rotation.y+=sA;gA.grp.rotation.x+=sA*.4;
-      gB.grp.rotation.y+=sB;gB.grp.rotation.x+=sB*.4;
-      gA.grp.children.forEach((m,i)=>{m.rotation.z+=meshSpin*(i%2===0?1:-1);});
-      gB.grp.children.forEach((m,i)=>{m.rotation.x+=meshSpin*(i%2===0?-1:1);});
-      gA.grp.position.x=gA.grp.userData.bx+driftAmp*Math.sin(2*Math.PI*driftFreq*t+dpA);
-      gA.grp.position.y=gA.grp.userData.by+driftAmp*Math.cos(2*Math.PI*driftFreq*t*.7+dpA);
-      gB.grp.position.x=gB.grp.userData.bx+driftAmp*Math.sin(2*Math.PI*driftFreq*t*.8+dpB+Math.PI);
-      gB.grp.position.y=gB.grp.userData.by+driftAmp*Math.cos(2*Math.PI*driftFreq*t*.6+dpB);
-      const pI=(t/dur)*colSpeed;
-      gA.mats.forEach((m,i)=>m.color.copy(lerpPal(gA.pal,pI*gA.pal.length+i)));
-      gB.mats.forEach((m,i)=>m.color.copy(lerpPal(gB.pal,pI*gB.pal.length+i+2)));
+
+      applyMotion(gA, p, 1);
+      applyMotion(gB, p, -1);
+
+      // Colour — whole number of palette loops
+      const cp=p*colLoops;
+      gA.mats.forEach((m,i)=>m.color.copy(lerpPal(gA.pal,cp*gA.pal.length+i)));
+      gB.mats.forEach((m,i)=>m.color.copy(lerpPal(gB.pal,cp*gB.pal.length+i+2)));
+
       renderer.render(scene,cam);
       pctx.drawImage(rc,0,0,pc.width,pc.height);
+
+      frameIdx++;
       setTimeout(frame,Math.max(0,fMs-(performance.now()-now)));
     }
     setTimeout(frame,0);
   });
 
   audio.stop();
-  actx.close(); // don't await — can hang with active nodes
+  actx.close();
   disposeScene(scene);
-  // Don't dispose renderer — reused across videos
-  await new Promise(r=>setTimeout(r,300)); // brief pause for GC
-  return new Blob(chunks,{type:MIME});
+  await new Promise(r=>setTimeout(r,300));
+  return {blob:new Blob(chunks,{type:MIME}), resolvedMode:mp.mode};
 }
 
 // ── UI ────────────────────────────────────────────────────────
 const $=id=>document.getElementById(id);
 let dlFirst=true, dlCount=0;
 
-// Slider live labels
 [['crnd','rlbl',v=>v],['abpm','abpmlbl',v=>v],['apitch','apitchlbl',v=>v+' Hz'],
  ['abeat','abeatlbl',v=>v],['amix','amixlbl',v=>v],['areverb','areverblbl',v=>v]]
-.forEach(([id,lbl,fmt])=>{
-  const el=$(id);
-  el.addEventListener('input',()=>{ $(lbl).textContent=fmt(el.value); });
-});
+.forEach(([id,lbl,fmt])=>{ const el=$(id); el.addEventListener('input',()=>{$(lbl).textContent=fmt(el.value);}); });
 
-$('abpmrnd').addEventListener('change',()=>{
-  $('abpm').style.opacity=$('abpmrnd').checked?'0.35':'1';
-});
+$('abpmrnd').addEventListener('change',()=>{ $('abpm').style.opacity=$('abpmrnd').checked?'0.35':'1'; });
 $('abpm').style.opacity='0.35';
 
 $('arnd').addEventListener('click',()=>{
@@ -438,10 +543,7 @@ function log(msg,cls){
   d.textContent=msg;if(cls)d.className=cls;
   lb.appendChild(d);lb.scrollTop=lb.scrollHeight;
 }
-function setSt(txt,pct){
-  $('st').textContent=txt;
-  if(pct!==undefined)$('pgfill').style.width=pct+'%';
-}
+function setSt(txt,pct){ $('st').textContent=txt; if(pct!==undefined)$('pgfill').style.width=pct+'%'; }
 
 function triggerDownload(blob,fname){
   const url=URL.createObjectURL(blob);
@@ -451,19 +553,18 @@ function triggerDownload(blob,fname){
   setTimeout(()=>URL.revokeObjectURL(url),5000);
 }
 
-function addDl(blob,seed,w,h,rLvl,ap){
+function addDl(blob,seed,w,h,rLvl,ap,rmode){
   if(dlFirst){$('dlgrid').innerHTML='';dlFirst=false;}
   dlCount++; $('dlcnt').textContent=dlCount;
-  const fname=`shorts_seed${seed}_r${rLvl}_${w}x${h}.webm`;
+  const fname=`shorts_${rmode}_seed${seed}_r${rLvl}_${w}x${h}.webm`;
   const mb=(blob.size/1048576).toFixed(1);
   const url=URL.createObjectURL(blob);
-
   const card=document.createElement('div'); card.className='dli';
   const nm=document.createElement('div'); nm.className='dn'; nm.textContent=fname;
   const mt=document.createElement('div'); mt.className='dm';
-  mt.textContent=`rand ${rLvl}/10 · ${ap.bpm.toFixed(0)}bpm · ${ap.rootFreq}Hz · ${mb} MB`;
+  mt.textContent=`${rmode} · rand ${rLvl}/10 · ${ap.bpm.toFixed(0)}bpm · ${mb} MB`;
   const vid=document.createElement('video');
-  vid.controls=true; vid.playsInline=true; vid.src=url;
+  vid.controls=true; vid.playsInline=true; vid.loop=true; vid.src=url;
   const btn=document.createElement('button');
   btn.className='dd'; btn.textContent='↓ Download';
   btn.onclick=()=>triggerDownload(blob,fname);
@@ -472,50 +573,48 @@ function addDl(blob,seed,w,h,rLvl,ap){
   card.scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 
-// ── Run loop ──────────────────────────────────────────────────
 async function run(){
+  const mode =$('cmode').value;
   const n    =Math.max(1,parseInt($('cn').value)||30);
   const dur  =Math.max(5,parseInt($('cd').value)||30);
   const fps  =parseInt($('cf').value)||24;
   const[w,h] =$('cr').value.split('x').map(Number);
   const nSh  =Math.max(1,Math.min(12,parseInt($('cs').value)||3));
-  const mode =document.querySelector('input[name=sm]:checked').value;
+  const mode_rnd=document.querySelector('input[name=sm]:checked').value;
   const fixS =parseInt($('cseed').value)||42000;
 
   $('bgen').disabled=true; $('bstp').disabled=false;
   stopReq=false; $('ov').classList.add('hidden');
 
   const seeds=Array.from({length:n},(_,i)=>
-    mode==='fix'?fixS+i:Math.floor(Math.random()*90000)+10000
+    mode_rnd==='fix'?fixS+i:Math.floor(Math.random()*90000)+10000
   );
 
   for(let i=0;i<n;i++){
     if(stopReq){log('⚠ Stopped.','lerr');break;}
     const seed=seeds[i];
-    const rLvl=Math.floor(Math.random()*10)+1;
+    const rLvl=Math.floor(Math.random()*6)+5; // bias high (5-10) per Shorts advice
     const previewRng=mkRng(seed);
     const ap=getAudioParams(previewRng);
-    log(`[${i+1}/${n}] seed ${seed} · rand ${rLvl}/10 · ${ap.bpm.toFixed(0)}bpm · ${ap.rootFreq}Hz · ${ap.waveform==='random'?'rnd wave':ap.waveform}`,'lhi');
+    log(`[${i+1}/${n}] ${mode} · seed ${seed} · rand ${rLvl}/10 · ${ap.bpm.toFixed(0)}bpm`,'lhi');
     const t0=Date.now();
     const pi=setInterval(()=>{
       const el=Date.now()-t0,vp=Math.min(1,el/(dur*1000));
       setSt(`Video ${i+1}/${n} · seed ${seed} · ${Math.max(0,dur-el/1000).toFixed(0)}s left`,((i+vp)/n)*100);
     },500);
     try{
-      const blob=await genVideo(seed,dur,fps,w,h,nSh,rLvl);
+      const {blob,resolvedMode}=await genVideo(seed,dur,fps,w,h,nSh,rLvl,mode);
       clearInterval(pi);
       if(blob.size>0){
-        addDl(blob,seed,w,h,rLvl,ap);
-        log(`✅ Video ${i+1} done · ${(blob.size/1048576).toFixed(1)} MB`,'lok');
+        addDl(blob,seed,w,h,rLvl,ap,resolvedMode);
+        log(`✅ Video ${i+1} done · ${resolvedMode} · ${(blob.size/1048576).toFixed(1)} MB`,'lok');
         setSt(`Video ${i+1}/${n} complete`,((i+1)/n)*100);
-      } else {
-        log(`⚠ Empty blob — use Chrome or Edge`,'lerr');
-      }
+      } else { log(`⚠ Empty blob — use Chrome or Edge`,'lerr'); }
     }catch(e){clearInterval(pi);log(`❌ ${e.message}`,'lerr');}
   }
 
   $('bgen').disabled=false; $('bstp').disabled=true;
-  $('ov').innerHTML=`<span>${stopReq?'⚠ Stopped':'✅ Done!'}</span><div class="badge">9:16 · YouTube Shorts</div>`;
+  $('ov').innerHTML=`<span>${stopReq?'⚠ Stopped':'✅ Done!'}</span><div class="badge">9:16 · Seamless loop</div>`;
   $('ov').classList.remove('hidden');
   setSt(stopReq?'Stopped':`Complete — ${n} video(s) ready`,100);
   log('✨ Generation complete.','lok');
@@ -524,7 +623,6 @@ async function run(){
 $('bgen').addEventListener('click',run);
 $('bstp').addEventListener('click',()=>{stopReq=true;$('bstp').disabled=true;setSt('Stopping…');});
 
-// ── Static preview on load ────────────────────────────────────
 window.addEventListener('load',()=>{
   const pc=document.getElementById('cv');
   const rc=document.createElement('canvas'); rc.width=pc.width; rc.height=pc.height;
@@ -533,7 +631,7 @@ window.addEventListener('load',()=>{
   ren.setSize(rc.width,rc.height,false);
   const sc=new THREE.Scene(),cam=new THREE.PerspectiveCamera(60,rc.width/rc.height,0.1,100);
   cam.position.z=13;
-  buildScene(rng,sc,3,rc.width/rc.height);
+  buildScene(rng,sc,3,rc.width/rc.height,getModeParams('wobble',0.7,rng));
   ren.setClearColor(new THREE.Color('rgb(10,8,20)'),1);
   ren.render(sc,cam);
   pc.getContext('2d').drawImage(rc,0,0,pc.width,pc.height);
