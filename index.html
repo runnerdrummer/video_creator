@@ -376,7 +376,7 @@ function buildAudio(rng, ap, ctx, dest){
   return{stop(){clearInterval(tid);oscs.forEach(o=>{try{o.stop()}catch(_){}});master.disconnect();}};
 }
 
-// ── Shared renderer ───────────────────────────────────────────
+// ── Shared renderer + shared audio context ───────────────────
 const renderCanvas=document.createElement('canvas');
 let sharedRenderer=null;
 function getRenderer(w,h){
@@ -387,6 +387,17 @@ function getRenderer(w,h){
   }
   sharedRenderer.setSize(w,h,false);
   return sharedRenderer;
+}
+
+// One AudioContext for the whole session — avoids the browser's
+// ~6-context limit that caused the hang after the 2nd video.
+let sharedAudioCtx=null;
+function getAudioCtx(){
+  if(!sharedAudioCtx){
+    sharedAudioCtx=new(window.AudioContext||window.webkitAudioContext)();
+  }
+  if(sharedAudioCtx.state==='suspended') sharedAudioCtx.resume();
+  return sharedAudioCtx;
 }
 
 const MIME=['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm']
@@ -436,13 +447,15 @@ async function genVideo(seed,dur,fps,w,h,numShapes,randLevel,mode){
   const{gA,gB}=buildScene(rng,scene,numShapes,aspect,mp);
 
   const ap=getAudioParams(rng);
-  const actx=new(window.AudioContext||window.webkitAudioContext)();
-  const aDest=actx.createMediaStreamDestination();
+  const actx=getAudioCtx();                       // shared, reused
+  const aDest=actx.createMediaStreamDestination(); // cheap — fine per video
   const audio=buildAudio(rng,ap,actx,aDest);
 
   const vs=rc.captureStream(fps);
+  const vTracks=vs.getVideoTracks();
+  const aTracks=aDest.stream.getAudioTracks();
   let stream;
-  try{stream=new MediaStream([...vs.getVideoTracks(),...aDest.stream.getAudioTracks()]);}
+  try{stream=new MediaStream([...vTracks,...aTracks]);}
   catch(e){stream=vs;}
   const rec=new MediaRecorder(stream,{mimeType:MIME});
   const chunks=[];
@@ -475,43 +488,46 @@ async function genVideo(seed,dur,fps,w,h,numShapes,randLevel,mode){
   }
 
   await new Promise(resolve=>{
-    rec.onstop=resolve;
+    let done=false;
+    const finish=()=>{ if(!done){done=true;resolve();} };
+    rec.onstop=finish;
+    // Safety net — if onstop never fires, don't hang the whole batch
+    const watchdog=setTimeout(finish, 3000);
+    const origResolve=resolve;
+    resolve=(...a)=>{clearTimeout(watchdog);origResolve(...a);};
+
     function frame(){
       const now=performance.now();
-      if(frameIdx>=totalFrames||stopReq){rec.stop();return;}
-
-      // Loop phase 0..1 from the frame index — guarantees a frame-perfect
-      // seam: frame 0 is p=0 and there is no duplicate frame at p=1
-      // (the frame that would be p=1 is the next loop's p=0).
+      if(frameIdx>=totalFrames||stopReq){
+        try{rec.stop();}catch(_){finish();}
+        return;
+      }
       const p = frameIdx / totalFrames;
-
-      // Background — whole sine cycle over the loop
       const br=Math.round(6+10*(.5+.5*Math.sin(TAU*p)));
       const bg=Math.round(6+10*(.5+.5*Math.sin(TAU*p+2.1)));
       const bb=Math.round(6+10*(.5+.5*Math.sin(TAU*p+4.2)));
       renderer.setClearColor(new THREE.Color(`rgb(${br},${bg},${bb})`),1);
-
       applyMotion(gA, p, 1);
       applyMotion(gB, p, -1);
-
-      // Colour — whole number of palette loops
       const cp=p*colLoops;
       gA.mats.forEach((m,i)=>m.color.copy(lerpPal(gA.pal,cp*gA.pal.length+i)));
       gB.mats.forEach((m,i)=>m.color.copy(lerpPal(gB.pal,cp*gB.pal.length+i+2)));
-
       renderer.render(scene,cam);
       pctx.drawImage(rc,0,0,pc.width,pc.height);
-
       frameIdx++;
       setTimeout(frame,Math.max(0,fMs-(performance.now()-now)));
     }
     setTimeout(frame,0);
   });
 
-  audio.stop();
-  actx.close();
-  disposeScene(scene);
-  await new Promise(r=>setTimeout(r,300));
+  // ── Release everything tied to this video ──────────────────
+  audio.stop();                          // stop oscillators, disconnect master
+  vTracks.forEach(t=>t.stop());          // stop canvas capture track
+  aTracks.forEach(t=>t.stop());          // stop audio dest track
+  try{aDest.disconnect();}catch(_){}
+  disposeScene(scene);                   // free geometries & materials
+  // NOTE: renderer and audio context are shared — never disposed here
+  await new Promise(r=>setTimeout(r,250)); // brief GC breather
   return {blob:new Blob(chunks,{type:MIME}), resolvedMode:mp.mode};
 }
 
