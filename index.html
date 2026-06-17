@@ -491,17 +491,17 @@ async function genVideo(seed,dur,fps,w,h,numShapes,randLevel,mode){
     let done=false;
     const finish=()=>{ if(!done){done=true;resolve();} };
     rec.onstop=finish;
-    // Safety net — if onstop never fires, don't hang the whole batch
-    const watchdog=setTimeout(finish, 3000);
-    const origResolve=resolve;
-    resolve=(...a)=>{clearTimeout(watchdog);origResolve(...a);};
+
+    function stopRecording(){
+      // Arm a watchdog ONLY now, so a stuck onstop can't hang the batch.
+      // (Earlier this was armed at start, which truncated every video.)
+      setTimeout(finish, 2500);
+      try{ rec.stop(); }catch(_){ finish(); }
+    }
 
     function frame(){
       const now=performance.now();
-      if(frameIdx>=totalFrames||stopReq){
-        try{rec.stop();}catch(_){finish();}
-        return;
-      }
+      if(frameIdx>=totalFrames||stopReq){ stopRecording(); return; }
       const p = frameIdx / totalFrames;
       const br=Math.round(6+10*(.5+.5*Math.sin(TAU*p)));
       const bg=Math.round(6+10*(.5+.5*Math.sin(TAU*p+2.1)));
