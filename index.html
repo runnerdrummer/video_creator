@@ -3,11 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Random Video Creator — YouTube Shorts</title>
+<title>Random Video Creator</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#16161a;--surf:#1f1f28;--brd:#2e2e3a;--acc:#7f77dd;--acc2:#4cc9f0;--fg:#e8e8f0;--fg2:#9898b0;--grn:#1d9e75;--red:#d85a30;--amb:#ef9f27}
+:root{--bg:#16161a;--surf:#1f1f28;--brd:#2e2e3a;--acc:#7f77dd;--acc2:#4cc9f0;--fg:#e8e8f0;--fg2:#9898b0;--grn:#1d9e75;--red:#d85a30;--amb:#ef9f27;--col:#2ec4b6}
 body{background:var(--bg);color:var(--fg);font-family:'Segoe UI',system-ui,sans-serif;padding:12px;font-size:13px}
+
+/* Tabs */
+#tabs{display:flex;gap:4px;margin-bottom:12px;border-bottom:.5px solid var(--brd)}
+.tab{background:none;border:none;color:var(--fg2);padding:9px 18px;font-size:13px;font-weight:600;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
+.tab:hover{color:var(--fg)}
+.tab.active{color:var(--acc2);border-bottom-color:var(--acc)}
 
 .panel{background:var(--surf);border:.5px solid var(--brd);border-radius:10px;padding:12px 14px;margin-bottom:10px;display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}
 .phead{width:100%;font-size:10px;color:var(--fg2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:2px;display:flex;align-items:center;gap:8px}
@@ -16,7 +22,7 @@ body{background:var(--bg);color:var(--fg);font-family:'Segoe UI',system-ui,sans-
 .cl{font-size:10px;color:var(--fg2);text-transform:uppercase;letter-spacing:.06em}
 input[type=number],select{background:var(--bg);color:var(--fg);border:.5px solid var(--brd);border-radius:6px;padding:5px 7px;font-size:13px;outline:none;width:70px}
 select{width:120px}
-#cmode{width:170px;border-color:var(--acc)}
+.modesel{width:170px;border-color:var(--acc)}
 input:focus,select:focus{border-color:var(--acc)}
 .rg{display:flex;gap:8px;align-items:center}
 .rg label{display:flex;gap:4px;align-items:center;cursor:pointer}
@@ -30,21 +36,23 @@ input[type=checkbox]{accent-color:var(--amb);cursor:pointer}
 .srow input[type=range]::-moz-range-thumb{width:13px;height:13px;border-radius:50%;background:var(--acc);border:none}
 .srow input[type=range].amb::-webkit-slider-thumb{background:var(--amb)}
 .srow input[type=range].amb::-moz-range-thumb{background:var(--amb)}
+.srow input[type=range].col::-webkit-slider-thumb{background:var(--col)}
+.srow input[type=range].col::-moz-range-thumb{background:var(--col)}
 .slbl{font-size:12px;font-weight:700;min-width:36px;text-align:right;color:var(--acc2)}
-.slbl.amb{color:var(--amb)}
+.slbl.amb{color:var(--amb)} .slbl.col{color:var(--col)}
 .sublbl{display:flex;justify-content:space-between;font-size:9px;color:var(--fg2);padding:0 1px}
 
 .btn{border:none;border-radius:8px;padding:7px 16px;font-size:13px;font-weight:600;cursor:pointer;transition:filter .15s}
 .btn:hover:not(:disabled){filter:brightness(1.2)}
 .btn:disabled{opacity:.35;cursor:not-allowed}
-#bgen{background:var(--acc);color:#fff}
-#bstp{background:var(--red);color:#fff}
-#arnd{background:var(--surf);border:.5px solid var(--amb);color:var(--amb);padding:6px 14px;font-size:12px}
+.bgen{background:var(--acc);color:#fff}
+.bstp{background:var(--red);color:#fff}
+.arnd{background:var(--surf);border:.5px solid var(--amb);color:var(--amb);padding:6px 14px;font-size:12px}
 
 #top{display:flex;gap:14px;align-items:flex-start;margin-bottom:12px}
 #pvcol{flex-shrink:0}
-#cvw{width:160px;height:284px;background:#000;border-radius:8px;overflow:hidden;border:.5px solid var(--brd);position:relative}
-#cv{display:block;width:160px;height:284px}
+#cvw{background:#000;border-radius:8px;overflow:hidden;border:.5px solid var(--brd);position:relative;transition:width .2s,height .2s}
+#cv{display:block}
 #ov{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(16,16,22,.82);font-size:11px;color:var(--fg2);text-align:center;padding:12px;gap:6px}
 #ov.hidden{display:none}
 .badge{background:var(--surf);border:.5px solid var(--brd);border-radius:4px;padding:2px 8px;font-size:10px;color:var(--acc2)}
@@ -58,112 +66,177 @@ input[type=checkbox]{accent-color:var(--amb);cursor:pointer}
 #dlsec{border-top:.5px solid var(--brd);padding-top:12px;margin-top:4px}
 .dh{font-size:10px;color:var(--fg2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;display:flex;align-items:center;gap:8px}
 .dcnt{background:var(--acc);color:#fff;border-radius:10px;padding:1px 7px;font-size:10px;font-weight:700}
-#dlgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+#dlgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
 .dli{background:var(--surf);border:.5px solid var(--brd);border-radius:8px;padding:8px;display:flex;flex-direction:column;gap:6px}
 .dn{font-size:10px;font-family:monospace;color:var(--fg);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .dm{font-size:10px;color:var(--fg2)}
-.dli video{width:100%;aspect-ratio:9/16;display:block;border-radius:5px;background:#000}
+.dli video{width:100%;display:block;border-radius:5px;background:#000}
 .dd{border:none;border-radius:6px;padding:5px 10px;font-size:11px;font-weight:600;background:var(--acc);color:#fff;cursor:pointer;width:100%}
 .dd:hover{filter:brightness(1.15)}
 .empty{font-size:12px;color:var(--fg2);text-align:center;padding:20px;grid-column:1/-1}
 .fmt{font-size:10px;color:var(--fg2);margin-top:8px}
-.tip{background:rgba(127,119,221,.08);border:.5px solid var(--acc);border-radius:8px;padding:8px 12px;margin-bottom:10px;font-size:11px;color:var(--fg2);line-height:1.5}
+.tip{border-radius:8px;padding:8px 12px;margin-bottom:10px;font-size:11px;color:var(--fg2);line-height:1.5}
+.tip.s{background:rgba(127,119,221,.08);border:.5px solid var(--acc)}
+.tip.l{background:rgba(46,196,182,.08);border:.5px solid var(--col)}
 .tip b{color:var(--acc2)}
+.hidden{display:none}
 </style>
 </head>
 <body>
 
-<div class="tip">
-  <b>Shorts-optimised engine:</b> opens on peak motion in the first second, favours aggressive wobble over slow rotation, and every clip is a <b>seamless loop</b> (last frame flows back into the first). Use <b>Mode</b> to pick a style or let it vary per video for feed variety.
+<div id="tabs">
+  <button class="tab active" data-tab="shorts">▶ Shorts &nbsp;9:16</button>
+  <button class="tab" data-tab="long">▦ Long-form &nbsp;16:9</button>
 </div>
 
-<!-- ── Visual config ───────────────────────────────────────── -->
-<div class="panel">
-  <div class="phead">Visual</div>
-  <div class="cg"><span class="cl">Mode</span>
-    <select id="cmode">
-      <option value="wobble" selected>Wobble (high-motion) ★</option>
-      <option value="multimorph">Multi-morph (variety)</option>
-      <option value="koch">Koch / fractal forms</option>
-      <option value="mixed">Mixed — random per video</option>
-    </select>
+<!-- ════════════════ SHORTS TAB ════════════════ -->
+<div id="tab-shorts">
+  <div class="tip s">
+    <b>Shorts-optimised:</b> opens on peak motion, favours aggressive wobble, and every clip is a <b>seamless loop</b>. Use <b>Mode</b> to pick a style or vary per video.
   </div>
-  <div class="cg"><span class="cl">Videos</span><input type="number" id="cn" value="30" min="1" max="100"></div>
-  <div class="cg"><span class="cl">Duration (s)</span><input type="number" id="cd" value="30" min="5" max="120"></div>
-  <div class="cg"><span class="cl">FPS</span>
-    <select id="cf"><option value="12">12 fps</option><option value="24" selected>24 fps</option><option value="30">30 fps</option></select>
-  </div>
-  <div class="cg"><span class="cl">Resolution</span>
-    <select id="cr"><option value="720x1280">720 × 1280</option><option value="1080x1920" selected>1080 × 1920 ★</option></select>
-  </div>
-  <div class="cg"><span class="cl">Shapes / group</span><input type="number" id="cs" value="3" min="1" max="12"></div>
-  <div class="sw">
-    <span class="cl">Randomness — adjusts on top of mode</span>
-    <div class="srow"><input type="range" id="crnd" min="1" max="10" value="7"><span class="slbl" id="rlbl">7</span></div>
-    <div class="sublbl"><span>Calm</span><span>Chaotic</span></div>
-  </div>
-  <div class="cg"><span class="cl">Seed</span>
-    <div class="rg">
-      <label><input type="radio" name="sm" value="rnd" checked>Random</label>
-      <label><input type="radio" name="sm" value="fix">Fixed</label>
-      <input type="number" id="cseed" value="42000" style="width:76px">
+
+  <div class="panel">
+    <div class="phead">Visual</div>
+    <div class="cg"><span class="cl">Mode</span>
+      <select id="S_mode" class="modesel">
+        <option value="wobble" selected>Wobble (high-motion) ★</option>
+        <option value="multimorph">Multi-morph (variety)</option>
+        <option value="koch">Koch / fractal forms</option>
+        <option value="mixed">Mixed — random per video</option>
+      </select>
+    </div>
+    <div class="cg"><span class="cl">Videos</span><input type="number" id="S_n" value="30" min="1" max="100"></div>
+    <div class="cg"><span class="cl">Duration (s)</span><input type="number" id="S_dur" value="30" min="5" max="120"></div>
+    <div class="cg"><span class="cl">FPS</span>
+      <select id="S_fps"><option value="12">12 fps</option><option value="24" selected>24 fps</option><option value="30">30 fps</option></select>
+    </div>
+    <div class="cg"><span class="cl">Resolution</span>
+      <select id="S_res"><option value="720x1280">720 × 1280</option><option value="1080x1920" selected>1080 × 1920 ★</option></select>
+    </div>
+    <div class="cg"><span class="cl">Shapes / group</span><input type="number" id="S_shapes" value="3" min="1" max="12"></div>
+    <div class="sw">
+      <span class="cl">Randomness</span>
+      <div class="srow"><input type="range" id="S_rnd" min="1" max="10" value="7"><span class="slbl" id="S_rndlbl">7</span></div>
+      <div class="sublbl"><span>Calm</span><span>Chaotic</span></div>
+    </div>
+    <div class="cg"><span class="cl">Seed</span>
+      <div class="rg">
+        <label><input type="radio" name="S_sm" value="rnd" checked>Random</label>
+        <label><input type="radio" name="S_sm" value="fix">Fixed</label>
+        <input type="number" id="S_seed" value="42000" style="width:76px">
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;margin-left:auto">
+      <button class="btn bgen" id="S_gen">▶ Generate</button>
+      <button class="btn bstp" id="S_stp" disabled>■ Stop</button>
     </div>
   </div>
-  <div style="display:flex;gap:8px;align-items:center;margin-left:auto">
-    <button class="btn" id="bgen">▶ Generate</button>
-    <button class="btn" id="bstp" disabled>■ Stop</button>
+
+  <div class="panel">
+    <div class="phead">Audio <span>— loops seamlessly</span></div>
+    <div class="sw"><span class="cl">BPM &nbsp;<label style="font-weight:400;color:var(--amb)"><input type="checkbox" id="S_abpmrnd" checked> vary</label></span>
+      <div class="srow"><input type="range" id="S_abpm" min="60" max="160" value="110" class="amb"><span class="slbl amb" id="S_abpmlbl">110</span></div></div>
+    <div class="sw"><span class="cl">Drone pitch</span>
+      <div class="srow"><input type="range" id="S_apitch" min="40" max="220" value="100" class="amb"><span class="slbl amb" id="S_apitchlbl">100</span></div>
+      <div class="sublbl"><span>Bass</span><span>Treble</span></div></div>
+    <div class="sw"><span class="cl">Beat strength</span>
+      <div class="srow"><input type="range" id="S_abeat" min="0" max="10" value="6" class="amb"><span class="slbl amb" id="S_abeatlbl">6</span></div></div>
+    <div class="cg"><span class="cl">Waveform</span>
+      <select id="S_awav"><option value="sine" selected>Sine</option><option value="triangle">Triangle</option><option value="sawtooth">Sawtooth</option><option value="square">Square</option><option value="random">Random</option></select></div>
+    <div class="sw"><span class="cl">Ambient ↔ Beat</span>
+      <div class="srow"><input type="range" id="S_amix" min="0" max="10" value="5" class="amb"><span class="slbl amb" id="S_amixlbl">5</span></div></div>
+    <div class="sw"><span class="cl">Reverb / decay</span>
+      <div class="srow"><input type="range" id="S_arev" min="0" max="10" value="3" class="amb"><span class="slbl amb" id="S_arevlbl">3</span></div></div>
+    <button class="btn arnd" id="S_arnd">⚄ Randomise audio</button>
   </div>
 </div>
 
-<!-- ── Audio config ────────────────────────────────────────── -->
-<div class="panel">
-  <div class="phead">Audio <span>— applied to all videos · loops seamlessly</span></div>
-  <div class="sw">
-    <span class="cl">BPM &nbsp;<label style="font-weight:400;color:var(--amb)"><input type="checkbox" id="abpmrnd" checked> vary per video</label></span>
-    <div class="srow"><input type="range" id="abpm" min="60" max="160" value="110" class="amb"><span class="slbl amb" id="abpmlbl">110</span></div>
-    <div class="sublbl"><span>60</span><span>160</span></div>
+<!-- ════════════════ LONG-FORM TAB ════════════════ -->
+<div id="tab-long" class="hidden">
+  <div class="tip l">
+    <b>Long-form (8–10 min, 1080p HD):</b> slow, subtle, continuously evolving motion with gradual colour morphing — designed for ambient / background viewing. <b>Note:</b> renders in real time, so a 10-minute video takes ~10 minutes to produce.
   </div>
-  <div class="sw">
-    <span class="cl">Drone pitch</span>
-    <div class="srow"><input type="range" id="apitch" min="40" max="220" value="100" class="amb"><span class="slbl amb" id="apitchlbl">100 Hz</span></div>
-    <div class="sublbl"><span>Bass</span><span>Treble</span></div>
+
+  <div class="panel">
+    <div class="phead">Visual</div>
+    <div class="cg"><span class="cl">Mode</span>
+      <select id="L_mode" class="modesel">
+        <option value="multimorph" selected>Multi-morph (variety)</option>
+        <option value="wobble">Wobble (gentle)</option>
+        <option value="koch">Koch / fractal forms</option>
+        <option value="mixed">Mixed — random per video</option>
+      </select>
+    </div>
+    <div class="cg"><span class="cl">Videos</span><input type="number" id="L_n" value="1" min="1" max="20"></div>
+    <div class="cg"><span class="cl">Duration (min)</span><input type="number" id="L_dur" value="9" min="3" max="20"></div>
+    <div class="cg"><span class="cl">FPS</span>
+      <select id="L_fps"><option value="24">24 fps</option><option value="30" selected>30 fps</option></select>
+    </div>
+    <div class="cg"><span class="cl">Resolution</span>
+      <select id="L_res"><option value="1280x720">1280 × 720</option><option value="1920x1080" selected>1920 × 1080 ★</option></select>
+    </div>
+    <div class="cg"><span class="cl">Shapes / group</span><input type="number" id="L_shapes" value="4" min="1" max="12"></div>
+    <div class="sw">
+      <span class="cl">Randomness</span>
+      <div class="srow"><input type="range" id="L_rnd" min="1" max="10" value="3"><span class="slbl" id="L_rndlbl">3</span></div>
+      <div class="sublbl"><span>Still</span><span>Active</span></div>
+    </div>
+    <div class="cg"><span class="cl">Seed</span>
+      <div class="rg">
+        <label><input type="radio" name="L_sm" value="rnd" checked>Random</label>
+        <label><input type="radio" name="L_sm" value="fix">Fixed</label>
+        <input type="number" id="L_seed" value="71000" style="width:76px">
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;margin-left:auto">
+      <button class="btn bgen" id="L_gen">▶ Generate</button>
+      <button class="btn bstp" id="L_stp" disabled>■ Stop</button>
+    </div>
   </div>
-  <div class="sw">
-    <span class="cl">Beat strength</span>
-    <div class="srow"><input type="range" id="abeat" min="0" max="10" value="6" class="amb"><span class="slbl amb" id="abeatlbl">6</span></div>
-    <div class="sublbl"><span>Silent</span><span>Heavy</span></div>
+
+  <div class="panel">
+    <div class="phead" style="color:var(--col)">Colour evolution <span>— morphs slowly across the full runtime</span></div>
+    <div class="sw"><span class="cl">Palette morph speed</span>
+      <div class="srow"><input type="range" id="L_cmorph" min="1" max="10" value="3" class="col"><span class="slbl col" id="L_cmorphlbl">3</span></div>
+      <div class="sublbl"><span>Glacial</span><span>Flowing</span></div></div>
+    <div class="sw"><span class="cl">Hue rotation (over video)</span>
+      <div class="srow"><input type="range" id="L_hue" min="0" max="360" value="120" class="col"><span class="slbl col" id="L_huelbl">120°</span></div>
+      <div class="sublbl"><span>None</span><span>Full spin</span></div></div>
+    <div class="sw"><span class="cl">Saturation drift</span>
+      <div class="srow"><input type="range" id="L_sat" min="0" max="10" value="4" class="col"><span class="slbl col" id="L_satlbl">4</span></div>
+      <div class="sublbl"><span>Steady</span><span>Breathing</span></div></div>
+    <div class="sw"><span class="cl">Brightness drift</span>
+      <div class="srow"><input type="range" id="L_bri" min="0" max="10" value="3" class="col"><span class="slbl col" id="L_brilbl">3</span></div>
+      <div class="sublbl"><span>Steady</span><span>Pulsing</span></div></div>
   </div>
-  <div class="cg">
-    <span class="cl">Waveform</span>
-    <select id="awav">
-      <option value="sine" selected>Sine</option>
-      <option value="triangle">Triangle</option>
-      <option value="sawtooth">Sawtooth</option>
-      <option value="square">Square</option>
-      <option value="random">Random per video</option>
-    </select>
+
+  <div class="panel">
+    <div class="phead">Audio <span>— retuned for long-form ambient</span></div>
+    <div class="sw"><span class="cl">BPM &nbsp;<label style="font-weight:400;color:var(--amb)"><input type="checkbox" id="L_abpmrnd"> vary</label></span>
+      <div class="srow"><input type="range" id="L_abpm" min="40" max="120" value="64" class="amb"><span class="slbl amb" id="L_abpmlbl">64</span></div></div>
+    <div class="sw"><span class="cl">Drone pitch</span>
+      <div class="srow"><input type="range" id="L_apitch" min="40" max="220" value="80" class="amb"><span class="slbl amb" id="L_apitchlbl">80</span></div>
+      <div class="sublbl"><span>Bass</span><span>Treble</span></div></div>
+    <div class="sw"><span class="cl">Beat strength</span>
+      <div class="srow"><input type="range" id="L_abeat" min="0" max="10" value="3" class="amb"><span class="slbl amb" id="L_abeatlbl">3</span></div></div>
+    <div class="cg"><span class="cl">Waveform</span>
+      <select id="L_awav"><option value="sine" selected>Sine</option><option value="triangle">Triangle</option><option value="sawtooth">Sawtooth</option><option value="square">Square</option><option value="random">Random</option></select></div>
+    <div class="sw"><span class="cl">Ambient ↔ Beat</span>
+      <div class="srow"><input type="range" id="L_amix" min="0" max="10" value="3" class="amb"><span class="slbl amb" id="L_amixlbl">3</span></div></div>
+    <div class="sw"><span class="cl">Reverb / decay</span>
+      <div class="srow"><input type="range" id="L_arev" min="0" max="10" value="6" class="amb"><span class="slbl amb" id="L_arevlbl">6</span></div></div>
+    <button class="btn arnd" id="L_arnd">⚄ Randomise audio</button>
   </div>
-  <div class="sw">
-    <span class="cl">Ambient ↔ Beat mix</span>
-    <div class="srow"><input type="range" id="amix" min="0" max="10" value="5" class="amb"><span class="slbl amb" id="amixlbl">5</span></div>
-    <div class="sublbl"><span>All ambient</span><span>All beats</span></div>
-  </div>
-  <div class="sw">
-    <span class="cl">Reverb / decay</span>
-    <div class="srow"><input type="range" id="areverb" min="0" max="10" value="3" class="amb"><span class="slbl amb" id="areverblbl">3</span></div>
-    <div class="sublbl"><span>Dry</span><span>Wet</span></div>
-  </div>
-  <button class="btn" id="arnd">⚄ Randomise audio</button>
 </div>
 
-<!-- ── Preview + log ──────────────────────────────────────── -->
+<!-- ════════════════ SHARED PREVIEW / LOG / DOWNLOADS ════════════════ -->
 <div id="top">
   <div id="pvcol">
-    <div id="cvw">
+    <div id="cvw" style="width:160px;height:284px">
       <canvas id="cv" width="160" height="284"></canvas>
       <div id="ov">
         <span>Configure &amp; click<br>▶ Generate</span>
-        <div class="badge">9 : 16 · Seamless loop</div>
+        <div class="badge" id="ovbadge">9 : 16 · Seamless loop</div>
         <small style="font-size:10px;opacity:.55">Chrome / Edge / Firefox</small>
       </div>
     </div>
@@ -174,7 +247,6 @@ input[type=checkbox]{accent-color:var(--amb);cursor:pointer}
   </div>
 </div>
 
-<!-- ── Downloads ──────────────────────────────────────────── -->
 <div id="dlsec">
   <div class="dh">Downloads <span class="dcnt" id="dlcnt">0</span></div>
   <div id="dlgrid"><div class="empty">Generated videos will appear here</div></div>
@@ -183,17 +255,14 @@ input[type=checkbox]{accent-color:var(--amb);cursor:pointer}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
-// ── Seeded RNG ────────────────────────────────────────────────
+const $=id=>document.getElementById(id);
+const TAU=Math.PI*2;
+
 const mkRng = s0 => {
   let s = s0 >>> 0;
-  return () => {
-    s = (s + 0x6D2B79F5) >>> 0;
-    let t = Math.imul(s ^ s >>> 15, 1 | s);
-    t = (t + Math.imul(t ^ t >>> 7, 61 | t)) ^ t;
-    return ((t ^ t >>> 14) >>> 0) / 4294967296;
-  };
+  return () => { s=(s+0x6D2B79F5)>>>0; let t=Math.imul(s^s>>>15,1|s);
+    t=(t+Math.imul(t^t>>>7,61|t))^t; return ((t^t>>>14)>>>0)/4294967296; };
 };
-const TAU = Math.PI * 2;
 
 const PALS = [
   [0xFF6B6B,0xFFE66D,0x4ECDC4,0x1A535C],[0xE63946,0x457B9D,0xA8DADC,0xF1FAEE],
@@ -201,8 +270,6 @@ const PALS = [
   [0x06D6A0,0x118AB2,0xFFD166,0xEF476F],[0x2D00F7,0x6A00F4,0xBC00DD,0xF20089],
   [0xFF9F1C,0xFFBF69,0x2EC4B6,0x073B4C],
 ];
-
-// Standard geometry pool
 const GEOMS = [
   r=>new THREE.TetrahedronGeometry(r,0), r=>new THREE.OctahedronGeometry(r,0),
   r=>new THREE.IcosahedronGeometry(r,0), r=>new THREE.DodecahedronGeometry(r,0),
@@ -211,136 +278,81 @@ const GEOMS = [
   r=>new THREE.SphereGeometry(r,5,4),
 ];
 
-// ── Koch-style fractal geometry (extruded snowflake) ──────────
-function kochGeometry(r, iterations) {
-  // Build a Koch snowflake outline, then extrude to 3D
-  let pts = [];
-  const A = {x:0, y:r}, B = {x:-r*0.866, y:-r*0.5}, C = {x:r*0.866, y:-r*0.5};
-  function koch(p1, p2, depth) {
-    if (depth === 0) { pts.push(p1); return; }
-    const dx=(p2.x-p1.x)/3, dy=(p2.y-p1.y)/3;
-    const a={x:p1.x+dx,y:p1.y+dy}, b={x:p1.x+2*dx,y:p1.y+2*dy};
-    const ang=Math.atan2(dy,dx)-Math.PI/3;
-    const len=Math.hypot(dx,dy);
+function kochGeometry(r, iterations){
+  let pts=[];
+  const A={x:0,y:r},B={x:-r*0.866,y:-r*0.5},C={x:r*0.866,y:-r*0.5};
+  function koch(p1,p2,d){
+    if(d===0){pts.push(p1);return;}
+    const dx=(p2.x-p1.x)/3,dy=(p2.y-p1.y)/3;
+    const a={x:p1.x+dx,y:p1.y+dy},b={x:p1.x+2*dx,y:p1.y+2*dy};
+    const ang=Math.atan2(dy,dx)-Math.PI/3,len=Math.hypot(dx,dy);
     const peak={x:a.x+Math.cos(ang)*len,y:a.y+Math.sin(ang)*len};
-    koch(p1,a,depth-1); koch(a,peak,depth-1);
-    koch(peak,b,depth-1); koch(b,p2,depth-1);
+    koch(p1,a,d-1);koch(a,peak,d-1);koch(peak,b,d-1);koch(b,p2,d-1);
   }
-  koch(A,B,iterations); koch(B,C,iterations); koch(C,A,iterations);
+  koch(A,B,iterations);koch(B,C,iterations);koch(C,A,iterations);
   const shape=new THREE.Shape();
   shape.moveTo(pts[0].x,pts[0].y);
-  for(let i=1;i<pts.length;i++) shape.lineTo(pts[i].x,pts[i].y);
+  for(let i=1;i<pts.length;i++)shape.lineTo(pts[i].x,pts[i].y);
   shape.closePath();
   return new THREE.ExtrudeGeometry(shape,{depth:r*0.4,bevelEnabled:false});
 }
 
-// ── Mode parameter presets ────────────────────────────────────
-// Each returns motion characteristics. randomness (R, 0.1-1) modulates on top.
-function getModeParams(mode, R, rng) {
-  // Resolve "mixed" to a concrete mode per video
-  if (mode === 'mixed') {
-    mode = ['wobble','multimorph','koch'][Math.floor(rng()*3)];
-  }
-  const base = {
-    mode,
-    // Wobble = oscillating rotation rather than constant spin
-    wobbleAmp:   0,      // radians of wobble swing
-    wobbleFreq:  0,      // wobble oscillations per loop
-    spinRate:    0,      // constant spin (loops in whole turns)
-    morphActive: false,  // shape morphing between geometries
-    useKoch:     false,
-    shapeScale:  1,
-    // Front-loading: motion intensity envelope at t=0
-    openHot:     true,
-  };
-  if (mode === 'wobble') {
-    // Aggressive wobble — high amplitude, fast, opens mid-swing
-    base.wobbleAmp  = (0.8 + R*1.6);
-    base.wobbleFreq = Math.round(2 + R*4);   // whole number = seamless loop
-    base.spinRate   = Math.round(1 + R*2);   // whole turns over loop
-    base.morphActive= R > 0.5;
-  } else if (mode === 'multimorph') {
-    // Variety — morphing between many shapes, moderate wobble
-    base.wobbleAmp  = (0.4 + R*1.0);
-    base.wobbleFreq = Math.round(1 + R*3);
-    base.spinRate   = Math.round(1 + R*2);
-    base.morphActive= true;
-  } else if (mode === 'koch') {
-    // Fractal forms — slower, hypnotic, but still front-loaded
-    base.useKoch    = true;
-    base.wobbleAmp  = (0.5 + R*1.2);
-    base.wobbleFreq = Math.round(1 + R*3);
-    base.spinRate   = Math.round(1 + R*1);
-    base.shapeScale = 1.4;
-  }
-  return base;
+function resolveStyle(mode,rng){
+  return mode==='mixed'?['wobble','multimorph','koch'][Math.floor(rng()*3)]:mode;
 }
 
-function buildScene(rng, scene, numShapes, aspect, mp) {
+function buildScene(rng, scene, numShapes, aspect, style){
   const pal=PALS[Math.floor(rng()*PALS.length)];
   scene.add(new THREE.AmbientLight(0xffffff,0.4));
   const p1=new THREE.PointLight(0xffffff,1.3,100); p1.position.set(6,8,5);
   const p2=new THREE.PointLight(0x5577ff,0.9,100); p2.position.set(-6,-4,8);
   scene.add(p1,p2);
-  const sX=aspect<1?3.2:2.5, sY=aspect<1?5.0:2.5;
-
-  const makeGeom = (r) => {
-    if (mp.useKoch) return kochGeometry(r*mp.shapeScale, Math.floor(rng()*2)+1);
-    return GEOMS[Math.floor(rng()*GEOMS.length)](r*mp.shapeScale);
-  };
-
+  const sX=aspect<1?3.2:3.4, sY=aspect<1?5.0:2.4;
+  const useKoch=style==='koch', shapeScale=useKoch?1.4:1;
+  const makeGeom=r=>useKoch?kochGeometry(r*shapeScale,Math.floor(rng()*2)+1):GEOMS[Math.floor(rng()*GEOMS.length)](r*shapeScale);
   const makeGroup=(ox,oy)=>{
-    const grp=new THREE.Group(), mats=[], meshes=[];
+    const grp=new THREE.Group(),mats=[],meshes=[];
     for(let i=0;i<numShapes;i++){
-      // For morph modes, store an alt geometry to morph toward
-      const r=1.0+rng()*1.4;
-      const g=makeGeom(r);
+      const r=1.0+rng()*1.4, g=makeGeom(r);
       const m=new THREE.MeshPhongMaterial({color:pal[Math.floor(rng()*pal.length)],emissive:0x0a0a18,flatShading:true,transparent:true,opacity:0.62+rng()*0.32,shininess:45});
       const mesh=new THREE.Mesh(g,m);
       mesh.position.set((rng()-.5)*sX,(rng()-.5)*sY,(rng()-.5)*1.5);
-      // Random base orientation + per-mesh wobble phase
       mesh.userData.baseRot=new THREE.Euler(rng()*TAU,rng()*TAU,rng()*TAU);
       mesh.userData.wobblePhase=rng()*TAU;
       mesh.userData.axis=Math.floor(rng()*3);
       mesh.rotation.copy(mesh.userData.baseRot);
-      grp.add(mesh); mats.push(m); meshes.push(mesh);
+      grp.add(mesh);mats.push(m);meshes.push(mesh);
     }
-    grp.position.set(ox,oy,0); grp.userData.bx=ox; grp.userData.by=oy;
+    grp.position.set(ox,oy,0);grp.userData.bx=ox;grp.userData.by=oy;
     grp.userData.driftPhase=rng()*TAU;
-    scene.add(grp); return{grp,mats,meshes,pal};
+    scene.add(grp);return{grp,mats,meshes,pal,baseHex:pal.slice()};
   };
-  const ox=(rng()-.5)*sX, oy=(rng()-.5)*sY;
+  const ox=(rng()-.5)*sX,oy=(rng()-.5)*sY;
   return{gA:makeGroup(0,0),gB:makeGroup(ox,oy)};
 }
 
 function disposeScene(scene){
-  scene.traverse(o=>{
-    if(o.geometry)o.geometry.dispose();
-    if(o.material)[].concat(o.material).forEach(m=>m.dispose());
-  });
+  scene.traverse(o=>{ if(o.geometry)o.geometry.dispose();
+    if(o.material)[].concat(o.material).forEach(m=>m.dispose()); });
   while(scene.children.length)scene.remove(scene.children[0]);
 }
 
-// ── Audio engine — loop-aware (whole beats over duration) ─────
 function buildAudio(rng, ap, ctx, dest){
   const{bpm,rootFreq,beatStrength,waveform,ambientMix,reverbAmt}=ap;
   const tone=80+rng()*500;
-  const master=ctx.createGain(); master.gain.value=0.6;
-  master.connect(dest); master.connect(ctx.destination);
-  const reverbWet=ctx.createGain(); reverbWet.gain.value=reverbAmt*0.55;
-  const reverbDry=ctx.createGain(); reverbDry.gain.value=1.0;
-  reverbWet.connect(master); reverbDry.connect(master);
-  function makeDelay(dt,fb){
-    const d=ctx.createDelay(2.0),f=ctx.createGain();
-    d.delayTime.value=dt; f.gain.value=fb;
-    d.connect(f); f.connect(d); d.connect(reverbWet); return d;
-  }
+  const master=ctx.createGain();master.gain.value=0.6;
+  master.connect(dest);master.connect(ctx.destination);
+  const reverbWet=ctx.createGain();reverbWet.gain.value=reverbAmt*0.55;
+  const reverbDry=ctx.createGain();reverbDry.gain.value=1.0;
+  reverbWet.connect(master);reverbDry.connect(master);
+  function makeDelay(dt,fb){const d=ctx.createDelay(2.0),f=ctx.createGain();
+    d.delayTime.value=dt;f.gain.value=fb;d.connect(f);f.connect(d);d.connect(reverbWet);return d;}
   const dl1=makeDelay(0.03+reverbAmt*0.08,reverbAmt*0.55);
   const dl2=makeDelay(0.05+reverbAmt*0.11,reverbAmt*0.45);
   function toReverb(n){n.connect(reverbDry);n.connect(dl1);n.connect(dl2);}
-  const ambGain=ctx.createGain(); ambGain.gain.value=1-ambientMix*0.88;
-  const beatGain=ctx.createGain(); beatGain.gain.value=beatStrength*(0.1+ambientMix*0.9);
-  toReverb(ambGain); toReverb(beatGain);
+  const ambGain=ctx.createGain();ambGain.gain.value=1-ambientMix*0.88;
+  const beatGain=ctx.createGain();beatGain.gain.value=beatStrength*(0.1+ambientMix*0.9);
+  toReverb(ambGain);toReverb(beatGain);
   const oscs=[];
   for(let i=0;i<5;i++){
     const osc=ctx.createOscillator(),g=ctx.createGain();
@@ -348,12 +360,11 @@ function buildAudio(rng, ap, ctx, dest){
     osc.type=waveform==='random'?['sine','triangle','sawtooth','square'][Math.floor(rng()*4)]:waveform;
     osc.frequency.value=rootFreq*(i+1)*(0.985+rng()*.03);
     g.gain.value=(0.07+rng()*.13)/(i+1);
-    lfo.type='sine'; lfo.frequency.value=0.08+rng()*.42;
-    lg.gain.value=g.gain.value*.5;
+    lfo.type='sine';lfo.frequency.value=0.08+rng()*.42;lg.gain.value=g.gain.value*.5;
     lfo.connect(lg);lg.connect(g.gain);osc.connect(g);g.connect(ambGain);
     osc.start();lfo.start();oscs.push(osc,lfo);
   }
-  const bsec=60/bpm, decayT=0.08+reverbAmt*0.35;
+  const bsec=60/bpm,decayT=0.08+reverbAmt*0.35;
   let nxt=ctx.currentTime+0.05;
   const sched=()=>{
     while(nxt<ctx.currentTime+0.3){
@@ -376,27 +387,18 @@ function buildAudio(rng, ap, ctx, dest){
   return{stop(){clearInterval(tid);oscs.forEach(o=>{try{o.stop()}catch(_){}});master.disconnect();}};
 }
 
-// ── Shared renderer + shared audio context ───────────────────
+// Shared renderer + audio context
 const renderCanvas=document.createElement('canvas');
 let sharedRenderer=null;
 function getRenderer(w,h){
-  renderCanvas.width=w; renderCanvas.height=h;
-  if(!sharedRenderer){
-    sharedRenderer=new THREE.WebGLRenderer({canvas:renderCanvas,antialias:true});
-    sharedRenderer.setPixelRatio(1);
-  }
-  sharedRenderer.setSize(w,h,false);
-  return sharedRenderer;
+  renderCanvas.width=w;renderCanvas.height=h;
+  if(!sharedRenderer){sharedRenderer=new THREE.WebGLRenderer({canvas:renderCanvas,antialias:true});sharedRenderer.setPixelRatio(1);}
+  sharedRenderer.setSize(w,h,false);return sharedRenderer;
 }
-
-// One AudioContext for the whole session — avoids the browser's
-// ~6-context limit that caused the hang after the 2nd video.
 let sharedAudioCtx=null;
 function getAudioCtx(){
-  if(!sharedAudioCtx){
-    sharedAudioCtx=new(window.AudioContext||window.webkitAudioContext)();
-  }
-  if(sharedAudioCtx.state==='suspended') sharedAudioCtx.resume();
+  if(!sharedAudioCtx)sharedAudioCtx=new(window.AudioContext||window.webkitAudioContext)();
+  if(sharedAudioCtx.state==='suspended')sharedAudioCtx.resume();
   return sharedAudioCtx;
 }
 
@@ -410,108 +412,116 @@ function lerpPal(pal,pos){
   return new THREE.Color(ca.r+(cb.r-ca.r)*f,ca.g+(cb.g-ca.g)*f,ca.b+(cb.b-ca.b)*f);
 }
 
-function getAudioParams(rng){
-  return{
-    bpm:       $('abpmrnd').checked?(60+rng()*100):parseInt($('abpm').value),
-    rootFreq:  parseInt($('apitch').value),
-    beatStrength:parseInt($('abeat').value)/10,
-    waveform:  $('awav').value,
-    ambientMix:parseInt($('amix').value)/10,
-    reverbAmt: parseInt($('areverb').value)/10,
-  };
-}
-
 let stopReq=false;
 
-async function genVideo(seed,dur,fps,w,h,numShapes,randLevel,mode){
+// opts: {seed,dur,fps,w,h,numShapes,randLevel,style,longForm,colour,audio}
+async function genVideo(opts){
+  const{seed,dur,fps,w,h,numShapes,randLevel,style,longForm,colour,audio:ap}=opts;
   const R=randLevel/10, aspect=w/h;
   const rng=mkRng(seed);
-  const mp=getModeParams(mode, R, rng);
+  const rstyle=resolveStyle(style,rng);
 
-  // Colour cycles must complete whole loops over duration → seamless
-  const colLoops = Math.max(1, Math.round(1 + R*3));
+  // ── Motion params ──────────────────────────────────────────
+  let spinRate, wobbleAmp, wobbleFreq, driftCycA, driftCycB, driftAmp, colLoops;
+  let hueRot=0, satDriftAmt=0, briDriftAmt=0;
 
-  // Drift: whole number of cycles over the loop
-  const driftCyclesA = Math.max(1, Math.round(1 + R*2));
-  const driftCyclesB = Math.max(1, Math.round(1 + R*2));
-  const driftAmp = R * (aspect<1?2.6:1.8) * (mp.mode==='koch'?0.7:1);
+  if(longForm){
+    // Slow, subtle, fractional cycles over the whole runtime
+    spinRate   = 0.25 + R*1.0;                  // total turns over video
+    wobbleAmp  = (rstyle==='wobble'?0.25:0.15) + R*0.4;
+    wobbleFreq = 0.5 + R*2.5;                    // few gentle swings
+    driftCycA  = 0.5 + R*1.5;
+    driftCycB  = 0.4 + R*1.3;
+    driftAmp   = R*(aspect>1?1.4:1.6)*(rstyle==='koch'?0.7:1);
+    colLoops   = 0.15 + (colour.morph/10)*1.6;  // glacial → flowing
+    hueRot     = colour.hue/360;                // full-video hue turn
+    satDriftAmt= colour.sat/10;
+    briDriftAmt= colour.bri/10;
+  } else {
+    // Shorts — integer cycles for seamless looping
+    const mp=(()=>{
+      const o={spin:Math.round(1+R*2),wobAmp:0.4,wobFreq:Math.round(1+R*3)};
+      if(rstyle==='wobble'){o.wobAmp=0.8+R*1.6;o.wobFreq=Math.round(2+R*4);o.spin=Math.round(1+R*2);}
+      else if(rstyle==='multimorph'){o.wobAmp=0.4+R*1.0;o.wobFreq=Math.round(1+R*3);}
+      else if(rstyle==='koch'){o.wobAmp=0.5+R*1.2;o.wobFreq=Math.round(1+R*3);o.spin=Math.round(1+R*1);}
+      return o;
+    })();
+    spinRate=mp.spin; wobbleAmp=mp.wobAmp; wobbleFreq=mp.wobFreq;
+    driftCycA=Math.max(1,Math.round(1+R*2)); driftCycB=Math.max(1,Math.round(1+R*2));
+    driftAmp=R*(aspect<1?2.6:1.8)*(rstyle==='koch'?0.7:1);
+    colLoops=Math.max(1,Math.round(1+R*3));
+  }
 
   const renderer=getRenderer(w,h);
   const rc=renderCanvas;
-  const pc=document.getElementById('cv');
+  const pc=$('cv');
   const pctx=pc.getContext('2d');
 
   const scene=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(60,aspect,0.1,100);
-  cam.position.z=aspect<1?13:9;
-  const{gA,gB}=buildScene(rng,scene,numShapes,aspect,mp);
+  cam.position.z=aspect<1?13:(longForm?10:9);
+  const{gA,gB}=buildScene(rng,scene,numShapes,aspect,rstyle);
 
-  const ap=getAudioParams(rng);
-  const actx=getAudioCtx();                       // shared, reused
-  const aDest=actx.createMediaStreamDestination(); // cheap — fine per video
-  const audio=buildAudio(rng,ap,actx,aDest);
+  const actx=getAudioCtx();
+  const aDest=actx.createMediaStreamDestination();
+  const aud=buildAudio(rng,ap,actx,aDest);
 
   const vs=rc.captureStream(fps);
-  const vTracks=vs.getVideoTracks();
-  const aTracks=aDest.stream.getAudioTracks();
+  const vTracks=vs.getVideoTracks(), aTracks=aDest.stream.getAudioTracks();
   let stream;
-  try{stream=new MediaStream([...vTracks,...aTracks]);}
-  catch(e){stream=vs;}
+  try{stream=new MediaStream([...vTracks,...aTracks]);}catch(e){stream=vs;}
   const rec=new MediaRecorder(stream,{mimeType:MIME});
   const chunks=[];
   rec.ondataavailable=e=>{if(e.data.size>0)chunks.push(e.data);};
-  const durMs=dur*1000, fMs=1000/fps;
-  const totalFrames=Math.round(dur*fps); // exact frame count for the loop
-  let frameIdx=0;
-  rec.start(200);
 
-  // Apply per-group looped motion at normalised loop-phase p (0..1)
-  function applyMotion(group, p, dir){
+  const fMs=1000/fps, totalFrames=Math.round(dur*fps);
+  let frameIdx=0;
+  rec.start(1000);
+
+  function applyMotion(group,p,dir){
     const{grp,meshes}=group;
-    // Group spin — whole turns over the loop = seamless
-    grp.rotation.y = dir * mp.spinRate * TAU * p;
-    // Per-mesh wobble — oscillation that returns to start at p=1
+    grp.rotation.y=dir*spinRate*TAU*p;
     meshes.forEach(mesh=>{
-      const ph=mesh.userData.wobblePhase;
-      const wob=mp.wobbleAmp*Math.sin(TAU*mp.wobbleFreq*p + ph);
+      const wob=wobbleAmp*Math.sin(TAU*wobbleFreq*p+mesh.userData.wobblePhase);
       const b=mesh.userData.baseRot;
-      mesh.rotation.set(b.x, b.y, b.z);
-      if(mesh.userData.axis===0) mesh.rotation.x=b.x+wob;
-      else if(mesh.userData.axis===1) mesh.rotation.y=b.y+wob;
+      mesh.rotation.set(b.x,b.y,b.z);
+      if(mesh.userData.axis===0)mesh.rotation.x=b.x+wob;
+      else if(mesh.userData.axis===1)mesh.rotation.y=b.y+wob;
       else mesh.rotation.z=b.z+wob;
     });
-    // Drift — whole cycles → returns to start
-    const dph=grp.userData.driftPhase;
-    const cyc = dir>0 ? driftCyclesA : driftCyclesB;
-    grp.position.x=grp.userData.bx+driftAmp*Math.sin(TAU*cyc*p + dph);
-    grp.position.y=grp.userData.by+driftAmp*Math.cos(TAU*cyc*p + dph);
+    const dph=grp.userData.driftPhase, cyc=dir>0?driftCycA:driftCycB;
+    grp.position.x=grp.userData.bx+driftAmp*Math.sin(TAU*cyc*p+dph);
+    grp.position.y=grp.userData.by+driftAmp*Math.cos(TAU*cyc*p+dph);
+  }
+
+  // Long-form colour: palette lerp + slow hue rotation + sat/bri breathing
+  function colourFor(pal,baseOffset,p){
+    const c=lerpPal(pal,p*colLoops*pal.length+baseOffset);
+    if(longForm){
+      const sd=satDriftAmt*0.25*Math.sin(TAU*1.5*p);
+      const bd=briDriftAmt*0.18*Math.sin(TAU*2.2*p+1.0);
+      c.offsetHSL(hueRot*p, sd, bd);
+    }
+    return c;
   }
 
   await new Promise(resolve=>{
     let done=false;
-    const finish=()=>{ if(!done){done=true;resolve();} };
+    const finish=()=>{if(!done){done=true;resolve();}};
     rec.onstop=finish;
-
-    function stopRecording(){
-      // Arm a watchdog ONLY now, so a stuck onstop can't hang the batch.
-      // (Earlier this was armed at start, which truncated every video.)
-      setTimeout(finish, 2500);
-      try{ rec.stop(); }catch(_){ finish(); }
-    }
-
+    function stopRecording(){ setTimeout(finish,2500); try{rec.stop();}catch(_){finish();} }
     function frame(){
       const now=performance.now();
-      if(frameIdx>=totalFrames||stopReq){ stopRecording(); return; }
-      const p = frameIdx / totalFrames;
-      const br=Math.round(6+10*(.5+.5*Math.sin(TAU*p)));
-      const bg=Math.round(6+10*(.5+.5*Math.sin(TAU*p+2.1)));
-      const bb=Math.round(6+10*(.5+.5*Math.sin(TAU*p+4.2)));
+      if(frameIdx>=totalFrames||stopReq){stopRecording();return;}
+      const p=frameIdx/totalFrames;
+      const lvl=longForm?7:10;
+      const br=Math.round(6+lvl*(.5+.5*Math.sin(TAU*p)));
+      const bg=Math.round(6+lvl*(.5+.5*Math.sin(TAU*p+2.1)));
+      const bb=Math.round(6+lvl*(.5+.5*Math.sin(TAU*p+4.2)));
       renderer.setClearColor(new THREE.Color(`rgb(${br},${bg},${bb})`),1);
-      applyMotion(gA, p, 1);
-      applyMotion(gB, p, -1);
-      const cp=p*colLoops;
-      gA.mats.forEach((m,i)=>m.color.copy(lerpPal(gA.pal,cp*gA.pal.length+i)));
-      gB.mats.forEach((m,i)=>m.color.copy(lerpPal(gB.pal,cp*gB.pal.length+i+2)));
+      applyMotion(gA,p,1); applyMotion(gB,p,-1);
+      gA.mats.forEach((m,i)=>m.color.copy(colourFor(gA.pal,i,p)));
+      gB.mats.forEach((m,i)=>m.color.copy(colourFor(gB.pal,i+2,p)));
       renderer.render(scene,cam);
       pctx.drawImage(rc,0,0,pc.width,pc.height);
       frameIdx++;
@@ -520,139 +530,183 @@ async function genVideo(seed,dur,fps,w,h,numShapes,randLevel,mode){
     setTimeout(frame,0);
   });
 
-  // ── Release everything tied to this video ──────────────────
-  audio.stop();                          // stop oscillators, disconnect master
-  vTracks.forEach(t=>t.stop());          // stop canvas capture track
-  aTracks.forEach(t=>t.stop());          // stop audio dest track
+  aud.stop();
+  vTracks.forEach(t=>t.stop()); aTracks.forEach(t=>t.stop());
   try{aDest.disconnect();}catch(_){}
-  disposeScene(scene);                   // free geometries & materials
-  // NOTE: renderer and audio context are shared — never disposed here
-  await new Promise(r=>setTimeout(r,250)); // brief GC breather
-  return {blob:new Blob(chunks,{type:MIME}), resolvedMode:mp.mode};
+  disposeScene(scene);
+  await new Promise(r=>setTimeout(r,250));
+  return {blob:new Blob(chunks,{type:MIME}), resolvedStyle:rstyle};
 }
 
-// ── UI ────────────────────────────────────────────────────────
-const $=id=>document.getElementById(id);
-let dlFirst=true, dlCount=0;
-
-[['crnd','rlbl',v=>v],['abpm','abpmlbl',v=>v],['apitch','apitchlbl',v=>v+' Hz'],
- ['abeat','abeatlbl',v=>v],['amix','amixlbl',v=>v],['areverb','areverblbl',v=>v]]
-.forEach(([id,lbl,fmt])=>{ const el=$(id); el.addEventListener('input',()=>{$(lbl).textContent=fmt(el.value);}); });
-
-$('abpmrnd').addEventListener('change',()=>{ $('abpm').style.opacity=$('abpmrnd').checked?'0.35':'1'; });
-$('abpm').style.opacity='0.35';
-
-$('arnd').addEventListener('click',()=>{
-  const rv=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
-  $('abpm').value=rv(60,160);   $('abpmlbl').textContent=$('abpm').value;
-  $('apitch').value=rv(40,220); $('apitchlbl').textContent=$('apitch').value+' Hz';
-  $('abeat').value=rv(0,10);    $('abeatlbl').textContent=$('abeat').value;
-  $('amix').value=rv(0,10);     $('amixlbl').textContent=$('amix').value;
-  $('areverb').value=rv(0,10);  $('areverblbl').textContent=$('areverb').value;
-  const wavs=['sine','triangle','sawtooth','square','random'];
-  $('awav').value=wavs[Math.floor(Math.random()*wavs.length)];
-  log('⚄ Audio randomised','lhi');
+// ── Tabs ──────────────────────────────────────────────────────
+let activeTab='shorts';
+document.querySelectorAll('.tab').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    if(busy)return;
+    activeTab=btn.dataset.tab;
+    document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b===btn));
+    $('tab-shorts').classList.toggle('hidden',activeTab!=='shorts');
+    $('tab-long').classList.toggle('hidden',activeTab!=='long');
+    // Resize preview to match aspect
+    const cvw=$('cvw'),cv=$('cv');
+    if(activeTab==='shorts'){cvw.style.width='160px';cvw.style.height='284px';cv.width=160;cv.height=284;$('ovbadge').textContent='9 : 16 · Seamless loop';}
+    else{cvw.style.width='320px';cvw.style.height='180px';cv.width=320;cv.height=180;$('ovbadge').textContent='16 : 9 · 1080p HD';}
+    drawPreview();
+  });
 });
 
-function log(msg,cls){
-  const lb=$('lbox'),d=document.createElement('div');
-  d.textContent=msg;if(cls)d.className=cls;
-  lb.appendChild(d);lb.scrollTop=lb.scrollHeight;
-}
-function setSt(txt,pct){ $('st').textContent=txt; if(pct!==undefined)$('pgfill').style.width=pct+'%'; }
+// ── Slider labels ─────────────────────────────────────────────
+[['S_rnd','S_rndlbl',v=>v],['S_abpm','S_abpmlbl',v=>v],['S_apitch','S_apitchlbl',v=>v],
+ ['S_abeat','S_abeatlbl',v=>v],['S_amix','S_amixlbl',v=>v],['S_arev','S_arevlbl',v=>v],
+ ['L_rnd','L_rndlbl',v=>v],['L_abpm','L_abpmlbl',v=>v],['L_apitch','L_apitchlbl',v=>v],
+ ['L_abeat','L_abeatlbl',v=>v],['L_amix','L_amixlbl',v=>v],['L_arev','L_arevlbl',v=>v],
+ ['L_cmorph','L_cmorphlbl',v=>v],['L_hue','L_huelbl',v=>v+'°'],['L_sat','L_satlbl',v=>v],['L_bri','L_brilbl',v=>v]]
+.forEach(([id,lbl,fmt])=>{const el=$(id);if(el)el.addEventListener('input',()=>{$(lbl).textContent=fmt(el.value);});});
 
-function triggerDownload(blob,fname){
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');
-  a.href=url; a.download=fname;
-  document.body.appendChild(a); a.click(); document.body.removeChild(a);
-  setTimeout(()=>URL.revokeObjectURL(url),5000);
+['S','L'].forEach(P=>{
+  const rnd=$(P+'_abpmrnd');
+  if(rnd){ const upd=()=>{$(P+'_abpm').style.opacity=rnd.checked?'0.35':'1';}; rnd.addEventListener('change',upd); upd(); }
+  $(P+'_arnd').addEventListener('click',()=>{
+    const rv=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+    const set=(id,val,sfx='')=>{$(P+'_'+id).value=val;const l=$(P+'_'+id+'lbl');if(l)l.textContent=val+sfx;};
+    const bmax=P==='L'?120:160, bmin=P==='L'?40:60;
+    set('abpm',rv(bmin,bmax)); set('apitch',rv(40,220)); set('abeat',rv(0,10));
+    set('amix',rv(0,10)); set('arev',rv(0,10));
+    const wavs=['sine','triangle','sawtooth','square','random'];
+    $(P+'_awav').value=wavs[Math.floor(Math.random()*wavs.length)];
+    log('⚄ '+(P==='L'?'Long-form':'Shorts')+' audio randomised','lhi');
+  });
+});
+
+// ── Helpers ───────────────────────────────────────────────────
+let dlFirst=true, dlCount=0, busy=false;
+function log(msg,cls){const lb=$('lbox'),d=document.createElement('div');d.textContent=msg;if(cls)d.className=cls;lb.appendChild(d);lb.scrollTop=lb.scrollHeight;}
+function setSt(txt,pct){$('st').textContent=txt;if(pct!==undefined)$('pgfill').style.width=pct+'%';}
+function triggerDownload(blob,fname){const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=fname;document.body.appendChild(a);a.click();document.body.removeChild(a);setTimeout(()=>URL.revokeObjectURL(url),5000);}
+
+function readAudio(P,rng){
+  const g=id=>$(P+'_'+id);
+  return{
+    bpm: g('abpmrnd').checked?( (P==='L'?40:60)+rng()*(P==='L'?80:100) ):parseInt(g('abpm').value),
+    rootFreq:parseInt(g('apitch').value), beatStrength:parseInt(g('abeat').value)/10,
+    waveform:g('awav').value, ambientMix:parseInt(g('amix').value)/10, reverbAmt:parseInt(g('arev').value)/10,
+  };
 }
 
-function addDl(blob,seed,w,h,rLvl,ap,rmode){
+function addDl(blob,seed,w,h,tag,meta){
   if(dlFirst){$('dlgrid').innerHTML='';dlFirst=false;}
-  dlCount++; $('dlcnt').textContent=dlCount;
-  const fname=`shorts_${rmode}_seed${seed}_r${rLvl}_${w}x${h}.webm`;
+  dlCount++;$('dlcnt').textContent=dlCount;
+  const fname=`${tag}_seed${seed}_${w}x${h}.webm`;
   const mb=(blob.size/1048576).toFixed(1);
   const url=URL.createObjectURL(blob);
-  const card=document.createElement('div'); card.className='dli';
-  const nm=document.createElement('div'); nm.className='dn'; nm.textContent=fname;
-  const mt=document.createElement('div'); mt.className='dm';
-  mt.textContent=`${rmode} · rand ${rLvl}/10 · ${ap.bpm.toFixed(0)}bpm · ${mb} MB`;
-  const vid=document.createElement('video');
-  vid.controls=true; vid.playsInline=true; vid.loop=true; vid.src=url;
-  const btn=document.createElement('button');
-  btn.className='dd'; btn.textContent='↓ Download';
-  btn.onclick=()=>triggerDownload(blob,fname);
-  card.append(nm,mt,vid,btn);
-  $('dlgrid').appendChild(card);
+  const card=document.createElement('div');card.className='dli';
+  const nm=document.createElement('div');nm.className='dn';nm.textContent=fname;
+  const mt=document.createElement('div');mt.className='dm';mt.textContent=`${meta} · ${mb} MB`;
+  const vid=document.createElement('video');vid.controls=true;vid.playsInline=true;vid.loop=true;vid.src=url;
+  const btn=document.createElement('button');btn.className='dd';btn.textContent='↓ Download';btn.onclick=()=>triggerDownload(blob,fname);
+  card.append(nm,mt,vid,btn);$('dlgrid').appendChild(card);
   card.scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 
-async function run(){
-  const mode =$('cmode').value;
-  const n    =Math.max(1,parseInt($('cn').value)||30);
-  const dur  =Math.max(5,parseInt($('cd').value)||30);
-  const fps  =parseInt($('cf').value)||24;
-  const[w,h] =$('cr').value.split('x').map(Number);
-  const nSh  =Math.max(1,Math.min(12,parseInt($('cs').value)||3));
-  const mode_rnd=document.querySelector('input[name=sm]:checked').value;
-  const fixS =parseInt($('cseed').value)||42000;
-
-  $('bgen').disabled=true; $('bstp').disabled=false;
-  stopReq=false; $('ov').classList.add('hidden');
-
-  const seeds=Array.from({length:n},(_,i)=>
-    mode_rnd==='fix'?fixS+i:Math.floor(Math.random()*90000)+10000
-  );
+// ── Run ───────────────────────────────────────────────────────
+async function runShorts(){
+  const n=Math.max(1,parseInt($('S_n').value)||30);
+  const dur=Math.max(5,parseInt($('S_dur').value)||30);
+  const fps=parseInt($('S_fps').value)||24;
+  const[w,h]=$('S_res').value.split('x').map(Number);
+  const nSh=Math.max(1,Math.min(12,parseInt($('S_shapes').value)||3));
+  const style=$('S_mode').value;
+  const md=document.querySelector('input[name=S_sm]:checked').value;
+  const fixS=parseInt($('S_seed').value)||42000;
+  const seeds=Array.from({length:n},(_,i)=>md==='fix'?fixS+i:Math.floor(Math.random()*90000)+10000);
 
   for(let i=0;i<n;i++){
     if(stopReq){log('⚠ Stopped.','lerr');break;}
-    const seed=seeds[i];
-    const rLvl=Math.floor(Math.random()*6)+5; // bias high (5-10) per Shorts advice
-    const previewRng=mkRng(seed);
-    const ap=getAudioParams(previewRng);
-    log(`[${i+1}/${n}] ${mode} · seed ${seed} · rand ${rLvl}/10 · ${ap.bpm.toFixed(0)}bpm`,'lhi');
+    const seed=seeds[i], rLvl=Math.floor(Math.random()*6)+5;
+    const ap=readAudio('S',mkRng(seed));
+    log(`[${i+1}/${n}] ${style} · seed ${seed} · rand ${rLvl}/10 · ${ap.bpm.toFixed(0)}bpm`,'lhi');
     const t0=Date.now();
-    const pi=setInterval(()=>{
-      const el=Date.now()-t0,vp=Math.min(1,el/(dur*1000));
-      setSt(`Video ${i+1}/${n} · seed ${seed} · ${Math.max(0,dur-el/1000).toFixed(0)}s left`,((i+vp)/n)*100);
-    },500);
+    const pi=setInterval(()=>{const el=Date.now()-t0,vp=Math.min(1,el/(dur*1000));setSt(`Video ${i+1}/${n} · ${Math.max(0,dur-el/1000).toFixed(0)}s left`,((i+vp)/n)*100);},500);
     try{
-      const {blob,resolvedMode}=await genVideo(seed,dur,fps,w,h,nSh,rLvl,mode);
+      const{blob,resolvedStyle}=await genVideo({seed,dur,fps,w,h,numShapes:nSh,randLevel:rLvl,style,longForm:false,colour:{},audio:ap});
       clearInterval(pi);
-      if(blob.size>0){
-        addDl(blob,seed,w,h,rLvl,ap,resolvedMode);
-        log(`✅ Video ${i+1} done · ${resolvedMode} · ${(blob.size/1048576).toFixed(1)} MB`,'lok');
-        setSt(`Video ${i+1}/${n} complete`,((i+1)/n)*100);
-      } else { log(`⚠ Empty blob — use Chrome or Edge`,'lerr'); }
+      if(blob.size>0){addDl(blob,seed,w,h,`shorts_${resolvedStyle}`,`${resolvedStyle} · rand ${rLvl}/10 · ${ap.bpm.toFixed(0)}bpm`);
+        log(`✅ Video ${i+1} · ${resolvedStyle} · ${(blob.size/1048576).toFixed(1)} MB`,'lok');
+        setSt(`Video ${i+1}/${n} complete`,((i+1)/n)*100);}
+      else log('⚠ Empty blob — use Chrome/Edge','lerr');
     }catch(e){clearInterval(pi);log(`❌ ${e.message}`,'lerr');}
   }
-
-  $('bgen').disabled=false; $('bstp').disabled=true;
-  $('ov').innerHTML=`<span>${stopReq?'⚠ Stopped':'✅ Done!'}</span><div class="badge">9:16 · Seamless loop</div>`;
-  $('ov').classList.remove('hidden');
-  setSt(stopReq?'Stopped':`Complete — ${n} video(s) ready`,100);
-  log('✨ Generation complete.','lok');
 }
 
-$('bgen').addEventListener('click',run);
-$('bstp').addEventListener('click',()=>{stopReq=true;$('bstp').disabled=true;setSt('Stopping…');});
+async function runLong(){
+  const n=Math.max(1,parseInt($('L_n').value)||1);
+  const durMin=Math.max(3,Math.min(20,parseInt($('L_dur').value)||9));
+  const dur=durMin*60;
+  const fps=parseInt($('L_fps').value)||30;
+  const[w,h]=$('L_res').value.split('x').map(Number);
+  const nSh=Math.max(1,Math.min(12,parseInt($('L_shapes').value)||4));
+  const style=$('L_mode').value;
+  const md=document.querySelector('input[name=L_sm]:checked').value;
+  const fixS=parseInt($('L_seed').value)||71000;
+  const colour={morph:parseInt($('L_cmorph').value),hue:parseInt($('L_hue').value),sat:parseInt($('L_sat').value),bri:parseInt($('L_bri').value)};
+  const seeds=Array.from({length:n},(_,i)=>md==='fix'?fixS+i:Math.floor(Math.random()*90000)+10000);
 
-window.addEventListener('load',()=>{
-  const pc=document.getElementById('cv');
-  const rc=document.createElement('canvas'); rc.width=pc.width; rc.height=pc.height;
-  const rng=mkRng(42000);
+  log(`⏳ Long-form renders in real time — ~${durMin} min per video.`,'lhi');
+
+  for(let i=0;i<n;i++){
+    if(stopReq){log('⚠ Stopped.','lerr');break;}
+    const seed=seeds[i], rLvl=parseInt($('L_rnd').value);
+    const ap=readAudio('L',mkRng(seed));
+    log(`[${i+1}/${n}] ${style} · seed ${seed} · ${durMin}min · ${w}×${h} · hue ${colour.hue}°`,'lhi');
+    const t0=Date.now();
+    const pi=setInterval(()=>{const el=Date.now()-t0,vp=Math.min(1,el/(dur*1000));const rem=Math.max(0,dur-el/1000);setSt(`Video ${i+1}/${n} · ${Math.floor(rem/60)}m ${Math.floor(rem%60)}s left`,((i+vp)/n)*100);},1000);
+    try{
+      const{blob,resolvedStyle}=await genVideo({seed,dur,fps,w,h,numShapes:nSh,randLevel:rLvl,style,longForm:true,colour,audio:ap});
+      clearInterval(pi);
+      if(blob.size>0){addDl(blob,seed,w,h,`long_${resolvedStyle}`,`${resolvedStyle} · ${durMin}min · ${w}×${h}`);
+        log(`✅ Video ${i+1} · ${resolvedStyle} · ${(blob.size/1048576).toFixed(1)} MB`,'lok');
+        setSt(`Video ${i+1}/${n} complete`,((i+1)/n)*100);}
+      else log('⚠ Empty blob — use Chrome/Edge','lerr');
+    }catch(e){clearInterval(pi);log(`❌ ${e.message}`,'lerr');}
+  }
+}
+
+async function startRun(which){
+  if(busy)return; busy=true; stopReq=false;
+  const P=which==='shorts'?'S':'L';
+  $(P+'_gen').disabled=true; $(P+'_stp').disabled=false; $('ov').classList.add('hidden');
+  try{ if(which==='shorts')await runShorts(); else await runLong(); }
+  finally{
+    busy=false;
+    $(P+'_gen').disabled=false; $(P+'_stp').disabled=true;
+    $('ov').innerHTML=`<span>${stopReq?'⚠ Stopped':'✅ Done!'}</span><div class="badge" id="ovbadge">${which==='shorts'?'9 : 16 · Seamless loop':'16 : 9 · 1080p HD'}</div>`;
+    $('ov').classList.remove('hidden');
+    setSt(stopReq?'Stopped':'Complete',100);
+    log('✨ Generation complete.','lok');
+  }
+}
+
+$('S_gen').addEventListener('click',()=>startRun('shorts'));
+$('L_gen').addEventListener('click',()=>startRun('long'));
+$('S_stp').addEventListener('click',()=>{stopReq=true;$('S_stp').disabled=true;setSt('Stopping…');});
+$('L_stp').addEventListener('click',()=>{stopReq=true;$('L_stp').disabled=true;setSt('Stopping…');});
+
+// ── Preview ───────────────────────────────────────────────────
+function drawPreview(){
+  const pc=$('cv');
+  const rc=document.createElement('canvas');rc.width=pc.width;rc.height=pc.height;
+  const rng=mkRng(activeTab==='shorts'?42000:71000);
   const ren=new THREE.WebGLRenderer({canvas:rc,antialias:true});
   ren.setSize(rc.width,rc.height,false);
   const sc=new THREE.Scene(),cam=new THREE.PerspectiveCamera(60,rc.width/rc.height,0.1,100);
-  cam.position.z=13;
-  buildScene(rng,sc,3,rc.width/rc.height,getModeParams('wobble',0.7,rng));
+  cam.position.z=activeTab==='shorts'?13:10;
+  buildScene(rng,sc,activeTab==='shorts'?3:4,rc.width/rc.height,activeTab==='shorts'?'wobble':'multimorph');
   ren.setClearColor(new THREE.Color('rgb(10,8,20)'),1);
   ren.render(sc,cam);
   pc.getContext('2d').drawImage(rc,0,0,pc.width,pc.height);
-  disposeScene(sc); ren.dispose();
-});
+  disposeScene(sc);ren.dispose();
+}
+window.addEventListener('load',drawPreview);
 </script>
 </body>
 </html>
