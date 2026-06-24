@@ -6,15 +6,12 @@
 <title>Random Video Creator</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#16161a;--surf:#1f1f28;--brd:#2e2e3a;--acc:#7f77dd;--acc2:#4cc9f0;--fg:#e8e8f0;--fg2:#9898b0;--grn:#1d9e75;--red:#d85a30;--amb:#ef9f27;--col:#2ec4b6}
+:root{--bg:#16161a;--surf:#1f1f28;--brd:#2e2e3a;--acc:#7f77dd;--acc2:#4cc9f0;--fg:#e8e8f0;--fg2:#9898b0;--grn:#1d9e75;--red:#d85a30;--amb:#ef9f27;--col:#2ec4b6;--flu:#4cc9f0}
 body{background:var(--bg);color:var(--fg);font-family:'Segoe UI',system-ui,sans-serif;padding:12px;font-size:13px}
-
-/* Tabs */
 #tabs{display:flex;gap:4px;margin-bottom:12px;border-bottom:.5px solid var(--brd)}
 .tab{background:none;border:none;color:var(--fg2);padding:9px 18px;font-size:13px;font-weight:600;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
 .tab:hover{color:var(--fg)}
 .tab.active{color:var(--acc2);border-bottom-color:var(--acc)}
-
 .panel{background:var(--surf);border:.5px solid var(--brd);border-radius:10px;padding:12px 14px;margin-bottom:10px;display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}
 .phead{width:100%;font-size:10px;color:var(--fg2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:2px;display:flex;align-items:center;gap:8px}
 .phead span{opacity:.5;font-weight:400}
@@ -22,33 +19,27 @@ body{background:var(--bg);color:var(--fg);font-family:'Segoe UI',system-ui,sans-
 .cl{font-size:10px;color:var(--fg2);text-transform:uppercase;letter-spacing:.06em}
 input[type=number],select{background:var(--bg);color:var(--fg);border:.5px solid var(--brd);border-radius:6px;padding:5px 7px;font-size:13px;outline:none;width:70px}
 select{width:120px}
-.modesel{width:170px;border-color:var(--acc)}
+.modesel{width:175px;border-color:var(--acc)}
 input:focus,select:focus{border-color:var(--acc)}
 .rg{display:flex;gap:8px;align-items:center}
 .rg label{display:flex;gap:4px;align-items:center;cursor:pointer}
 input[type=radio]{accent-color:var(--acc)}
 input[type=checkbox]{accent-color:var(--amb);cursor:pointer}
-
 .sw{display:flex;flex-direction:column;gap:3px;min-width:130px}
 .srow{display:flex;align-items:center;gap:7px}
 .srow input[type=range]{-webkit-appearance:none;height:4px;border-radius:2px;background:var(--brd);outline:none;flex:1;cursor:pointer;min-width:90px}
 .srow input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;height:13px;border-radius:50%;background:var(--acc)}
 .srow input[type=range]::-moz-range-thumb{width:13px;height:13px;border-radius:50%;background:var(--acc);border:none}
-.srow input[type=range].amb::-webkit-slider-thumb{background:var(--amb)}
-.srow input[type=range].amb::-moz-range-thumb{background:var(--amb)}
-.srow input[type=range].col::-webkit-slider-thumb{background:var(--col)}
-.srow input[type=range].col::-moz-range-thumb{background:var(--col)}
+.srow input[type=range].amb::-webkit-slider-thumb{background:var(--amb)} .srow input[type=range].amb::-moz-range-thumb{background:var(--amb)}
+.srow input[type=range].col::-webkit-slider-thumb{background:var(--col)} .srow input[type=range].col::-moz-range-thumb{background:var(--col)}
+.srow input[type=range].flu::-webkit-slider-thumb{background:var(--flu)} .srow input[type=range].flu::-moz-range-thumb{background:var(--flu)}
 .slbl{font-size:12px;font-weight:700;min-width:36px;text-align:right;color:var(--acc2)}
-.slbl.amb{color:var(--amb)} .slbl.col{color:var(--col)}
+.slbl.amb{color:var(--amb)} .slbl.col{color:var(--col)} .slbl.flu{color:var(--flu)}
 .sublbl{display:flex;justify-content:space-between;font-size:9px;color:var(--fg2);padding:0 1px}
-
 .btn{border:none;border-radius:8px;padding:7px 16px;font-size:13px;font-weight:600;cursor:pointer;transition:filter .15s}
-.btn:hover:not(:disabled){filter:brightness(1.2)}
-.btn:disabled{opacity:.35;cursor:not-allowed}
-.bgen{background:var(--acc);color:#fff}
-.bstp{background:var(--red);color:#fff}
+.btn:hover:not(:disabled){filter:brightness(1.2)} .btn:disabled{opacity:.35;cursor:not-allowed}
+.bgen{background:var(--acc);color:#fff} .bstp{background:var(--red);color:#fff}
 .arnd{background:var(--surf);border:.5px solid var(--amb);color:var(--amb);padding:6px 14px;font-size:12px}
-
 #top{display:flex;gap:14px;align-items:flex-start;margin-bottom:12px}
 #pvcol{flex-shrink:0}
 #cvw{background:#000;border-radius:8px;overflow:hidden;border:.5px solid var(--brd);position:relative;transition:width .2s,height .2s}
@@ -62,7 +53,6 @@ input[type=checkbox]{accent-color:var(--amb);cursor:pointer}
 #st{font-size:11px;color:var(--fg2);margin-top:4px}
 #lbox{background:var(--surf);border:.5px solid var(--brd);border-radius:8px;padding:8px 10px;height:200px;overflow-y:auto;font-family:monospace;font-size:11px;color:var(--fg2);line-height:1.6}
 .lok{color:var(--grn)}.lerr{color:var(--red)}.lhi{color:var(--acc2)}
-
 #dlsec{border-top:.5px solid var(--brd);padding-top:12px;margin-top:4px}
 .dh{font-size:10px;color:var(--fg2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;display:flex;align-items:center;gap:8px}
 .dcnt{background:var(--acc);color:#fff;border-radius:10px;padding:1px 7px;font-size:10px;font-weight:700}
@@ -71,13 +61,13 @@ input[type=checkbox]{accent-color:var(--amb);cursor:pointer}
 .dn{font-size:10px;font-family:monospace;color:var(--fg);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .dm{font-size:10px;color:var(--fg2)}
 .dli video{width:100%;display:block;border-radius:5px;background:#000}
-.dd{border:none;border-radius:6px;padding:5px 10px;font-size:11px;font-weight:600;background:var(--acc);color:#fff;cursor:pointer;width:100%}
-.dd:hover{filter:brightness(1.15)}
+.dd{border:none;border-radius:6px;padding:5px 10px;font-size:11px;font-weight:600;background:var(--acc);color:#fff;cursor:pointer;width:100%} .dd:hover{filter:brightness(1.15)}
 .empty{font-size:12px;color:var(--fg2);text-align:center;padding:20px;grid-column:1/-1}
 .fmt{font-size:10px;color:var(--fg2);margin-top:8px}
 .tip{border-radius:8px;padding:8px 12px;margin-bottom:10px;font-size:11px;color:var(--fg2);line-height:1.5}
 .tip.s{background:rgba(127,119,221,.08);border:.5px solid var(--acc)}
 .tip.l{background:rgba(46,196,182,.08);border:.5px solid var(--col)}
+.tip.f{background:rgba(76,201,240,.08);border:.5px solid var(--flu)}
 .tip b{color:var(--acc2)}
 .hidden{display:none}
 </style>
@@ -85,627 +75,462 @@ input[type=checkbox]{accent-color:var(--amb);cursor:pointer}
 <body>
 
 <div id="tabs">
-  <button class="tab active" data-tab="shorts">▶ Shorts &nbsp;9:16</button>
-  <button class="tab" data-tab="long">▦ Long-form &nbsp;16:9</button>
+  <button class="tab active" data-tab="shorts">▶ Shorts 9:16</button>
+  <button class="tab" data-tab="long">▦ Long-form 16:9</button>
+  <button class="tab" data-tab="fluid">🌊 Fluid</button>
 </div>
 
-<!-- ════════════════ SHORTS TAB ════════════════ -->
+<!-- ════════ SHORTS ════════ -->
 <div id="tab-shorts">
-  <div class="tip s">
-    <b>Shorts-optimised:</b> opens on peak motion, favours aggressive wobble, and every clip is a <b>seamless loop</b>. Use <b>Mode</b> to pick a style or vary per video.
-  </div>
-
+  <div class="tip s"><b>Shorts-optimised:</b> opens on peak motion, aggressive wobble, every clip a <b>seamless loop</b>.</div>
   <div class="panel">
     <div class="phead">Visual</div>
     <div class="cg"><span class="cl">Mode</span>
-      <select id="S_mode" class="modesel">
-        <option value="wobble" selected>Wobble (high-motion) ★</option>
-        <option value="multimorph">Multi-morph (variety)</option>
-        <option value="koch">Koch / fractal forms</option>
-        <option value="mixed">Mixed — random per video</option>
-      </select>
-    </div>
+      <select id="S_mode" class="modesel"><option value="wobble" selected>Wobble (high-motion) ★</option><option value="multimorph">Multi-morph (variety)</option><option value="koch">Koch / fractal forms</option><option value="mixed">Mixed — random per video</option></select></div>
     <div class="cg"><span class="cl">Videos</span><input type="number" id="S_n" value="30" min="1" max="100"></div>
     <div class="cg"><span class="cl">Duration (s)</span><input type="number" id="S_dur" value="30" min="5" max="120"></div>
-    <div class="cg"><span class="cl">FPS</span>
-      <select id="S_fps"><option value="12">12 fps</option><option value="24" selected>24 fps</option><option value="30">30 fps</option></select>
-    </div>
-    <div class="cg"><span class="cl">Resolution</span>
-      <select id="S_res"><option value="720x1280">720 × 1280</option><option value="1080x1920" selected>1080 × 1920 ★</option></select>
-    </div>
+    <div class="cg"><span class="cl">FPS</span><select id="S_fps"><option value="12">12 fps</option><option value="24" selected>24 fps</option><option value="30">30 fps</option></select></div>
+    <div class="cg"><span class="cl">Resolution</span><select id="S_res"><option value="720x1280">720 × 1280</option><option value="1080x1920" selected>1080 × 1920 ★</option></select></div>
     <div class="cg"><span class="cl">Shapes / group</span><input type="number" id="S_shapes" value="3" min="1" max="12"></div>
-    <div class="sw">
-      <span class="cl">Randomness</span>
-      <div class="srow"><input type="range" id="S_rnd" min="1" max="10" value="7"><span class="slbl" id="S_rndlbl">7</span></div>
-      <div class="sublbl"><span>Calm</span><span>Chaotic</span></div>
-    </div>
-    <div class="cg"><span class="cl">Seed</span>
-      <div class="rg">
-        <label><input type="radio" name="S_sm" value="rnd" checked>Random</label>
-        <label><input type="radio" name="S_sm" value="fix">Fixed</label>
-        <input type="number" id="S_seed" value="42000" style="width:76px">
-      </div>
-    </div>
-    <div style="display:flex;gap:8px;align-items:center;margin-left:auto">
-      <button class="btn bgen" id="S_gen">▶ Generate</button>
-      <button class="btn bstp" id="S_stp" disabled>■ Stop</button>
-    </div>
+    <div class="sw"><span class="cl">Randomness</span><div class="srow"><input type="range" id="S_rnd" min="1" max="10" value="7"><span class="slbl" id="S_rndlbl">7</span></div><div class="sublbl"><span>Calm</span><span>Chaotic</span></div></div>
+    <div class="cg"><span class="cl">Seed</span><div class="rg"><label><input type="radio" name="S_sm" value="rnd" checked>Random</label><label><input type="radio" name="S_sm" value="fix">Fixed</label><input type="number" id="S_seed" value="42000" style="width:76px"></div></div>
+    <div style="display:flex;gap:8px;align-items:center;margin-left:auto"><button class="btn bgen" id="S_gen">▶ Generate</button><button class="btn bstp" id="S_stp" disabled>■ Stop</button></div>
   </div>
-
   <div class="panel">
     <div class="phead">Audio <span>— loops seamlessly</span></div>
-    <div class="sw"><span class="cl">BPM &nbsp;<label style="font-weight:400;color:var(--amb)"><input type="checkbox" id="S_abpmrnd" checked> vary</label></span>
-      <div class="srow"><input type="range" id="S_abpm" min="60" max="160" value="110" class="amb"><span class="slbl amb" id="S_abpmlbl">110</span></div></div>
-    <div class="sw"><span class="cl">Drone pitch</span>
-      <div class="srow"><input type="range" id="S_apitch" min="40" max="220" value="100" class="amb"><span class="slbl amb" id="S_apitchlbl">100</span></div>
-      <div class="sublbl"><span>Bass</span><span>Treble</span></div></div>
-    <div class="sw"><span class="cl">Beat strength</span>
-      <div class="srow"><input type="range" id="S_abeat" min="0" max="10" value="6" class="amb"><span class="slbl amb" id="S_abeatlbl">6</span></div></div>
-    <div class="cg"><span class="cl">Waveform</span>
-      <select id="S_awav"><option value="sine" selected>Sine</option><option value="triangle">Triangle</option><option value="sawtooth">Sawtooth</option><option value="square">Square</option><option value="random">Random</option></select></div>
-    <div class="sw"><span class="cl">Ambient ↔ Beat</span>
-      <div class="srow"><input type="range" id="S_amix" min="0" max="10" value="5" class="amb"><span class="slbl amb" id="S_amixlbl">5</span></div></div>
-    <div class="sw"><span class="cl">Reverb / decay</span>
-      <div class="srow"><input type="range" id="S_arev" min="0" max="10" value="3" class="amb"><span class="slbl amb" id="S_arevlbl">3</span></div></div>
+    <div class="sw"><span class="cl">BPM <label style="font-weight:400;color:var(--amb)"><input type="checkbox" id="S_abpmrnd" checked> vary</label></span><div class="srow"><input type="range" id="S_abpm" min="60" max="160" value="110" class="amb"><span class="slbl amb" id="S_abpmlbl">110</span></div></div>
+    <div class="sw"><span class="cl">Drone pitch</span><div class="srow"><input type="range" id="S_apitch" min="40" max="220" value="100" class="amb"><span class="slbl amb" id="S_apitchlbl">100</span></div><div class="sublbl"><span>Bass</span><span>Treble</span></div></div>
+    <div class="sw"><span class="cl">Beat strength</span><div class="srow"><input type="range" id="S_abeat" min="0" max="10" value="6" class="amb"><span class="slbl amb" id="S_abeatlbl">6</span></div></div>
+    <div class="cg"><span class="cl">Waveform</span><select id="S_awav"><option value="sine" selected>Sine</option><option value="triangle">Triangle</option><option value="sawtooth">Sawtooth</option><option value="square">Square</option><option value="random">Random</option></select></div>
+    <div class="sw"><span class="cl">Ambient ↔ Beat</span><div class="srow"><input type="range" id="S_amix" min="0" max="10" value="5" class="amb"><span class="slbl amb" id="S_amixlbl">5</span></div></div>
+    <div class="sw"><span class="cl">Reverb / decay</span><div class="srow"><input type="range" id="S_arev" min="0" max="10" value="3" class="amb"><span class="slbl amb" id="S_arevlbl">3</span></div></div>
     <button class="btn arnd" id="S_arnd">⚄ Randomise audio</button>
   </div>
 </div>
 
-<!-- ════════════════ LONG-FORM TAB ════════════════ -->
+<!-- ════════ LONG-FORM ════════ -->
 <div id="tab-long" class="hidden">
-  <div class="tip l">
-    <b>Long-form (8–10 min, 1080p HD):</b> slow, subtle, continuously evolving motion with gradual colour morphing — designed for ambient / background viewing. <b>Note:</b> renders in real time, so a 10-minute video takes ~10 minutes to produce.
-  </div>
-
+  <div class="tip l"><b>Long-form (8–10 min, 1080p HD):</b> slow, subtle, continuously evolving with gradual colour morphing. Renders in real time (~10 min per video).</div>
   <div class="panel">
     <div class="phead">Visual</div>
-    <div class="cg"><span class="cl">Mode</span>
-      <select id="L_mode" class="modesel">
-        <option value="multimorph" selected>Multi-morph (variety)</option>
-        <option value="wobble">Wobble (gentle)</option>
-        <option value="koch">Koch / fractal forms</option>
-        <option value="mixed">Mixed — random per video</option>
-      </select>
-    </div>
+    <div class="cg"><span class="cl">Mode</span><select id="L_mode" class="modesel"><option value="multimorph" selected>Multi-morph (variety)</option><option value="wobble">Wobble (gentle)</option><option value="koch">Koch / fractal forms</option><option value="mixed">Mixed — random per video</option></select></div>
     <div class="cg"><span class="cl">Videos</span><input type="number" id="L_n" value="1" min="1" max="20"></div>
     <div class="cg"><span class="cl">Duration (min)</span><input type="number" id="L_dur" value="9" min="3" max="20"></div>
-    <div class="cg"><span class="cl">FPS</span>
-      <select id="L_fps"><option value="24">24 fps</option><option value="30" selected>30 fps</option></select>
-    </div>
-    <div class="cg"><span class="cl">Resolution</span>
-      <select id="L_res"><option value="1280x720">1280 × 720</option><option value="1920x1080" selected>1920 × 1080 ★</option></select>
-    </div>
+    <div class="cg"><span class="cl">FPS</span><select id="L_fps"><option value="24">24 fps</option><option value="30" selected>30 fps</option></select></div>
+    <div class="cg"><span class="cl">Resolution</span><select id="L_res"><option value="1280x720">1280 × 720</option><option value="1920x1080" selected>1920 × 1080 ★</option></select></div>
     <div class="cg"><span class="cl">Shapes / group</span><input type="number" id="L_shapes" value="4" min="1" max="12"></div>
-    <div class="sw">
-      <span class="cl">Randomness</span>
-      <div class="srow"><input type="range" id="L_rnd" min="1" max="10" value="3"><span class="slbl" id="L_rndlbl">3</span></div>
-      <div class="sublbl"><span>Still</span><span>Active</span></div>
-    </div>
-    <div class="cg"><span class="cl">Seed</span>
-      <div class="rg">
-        <label><input type="radio" name="L_sm" value="rnd" checked>Random</label>
-        <label><input type="radio" name="L_sm" value="fix">Fixed</label>
-        <input type="number" id="L_seed" value="71000" style="width:76px">
-      </div>
-    </div>
-    <div style="display:flex;gap:8px;align-items:center;margin-left:auto">
-      <button class="btn bgen" id="L_gen">▶ Generate</button>
-      <button class="btn bstp" id="L_stp" disabled>■ Stop</button>
-    </div>
+    <div class="sw"><span class="cl">Randomness</span><div class="srow"><input type="range" id="L_rnd" min="1" max="10" value="3"><span class="slbl" id="L_rndlbl">3</span></div><div class="sublbl"><span>Still</span><span>Active</span></div></div>
+    <div class="cg"><span class="cl">Seed</span><div class="rg"><label><input type="radio" name="L_sm" value="rnd" checked>Random</label><label><input type="radio" name="L_sm" value="fix">Fixed</label><input type="number" id="L_seed" value="71000" style="width:76px"></div></div>
+    <div style="display:flex;gap:8px;align-items:center;margin-left:auto"><button class="btn bgen" id="L_gen">▶ Generate</button><button class="btn bstp" id="L_stp" disabled>■ Stop</button></div>
   </div>
-
   <div class="panel">
-    <div class="phead" style="color:var(--col)">Colour evolution <span>— morphs slowly across the full runtime</span></div>
-    <div class="sw"><span class="cl">Palette morph speed</span>
-      <div class="srow"><input type="range" id="L_cmorph" min="1" max="10" value="3" class="col"><span class="slbl col" id="L_cmorphlbl">3</span></div>
-      <div class="sublbl"><span>Glacial</span><span>Flowing</span></div></div>
-    <div class="sw"><span class="cl">Hue rotation (over video)</span>
-      <div class="srow"><input type="range" id="L_hue" min="0" max="360" value="120" class="col"><span class="slbl col" id="L_huelbl">120°</span></div>
-      <div class="sublbl"><span>None</span><span>Full spin</span></div></div>
-    <div class="sw"><span class="cl">Saturation drift</span>
-      <div class="srow"><input type="range" id="L_sat" min="0" max="10" value="4" class="col"><span class="slbl col" id="L_satlbl">4</span></div>
-      <div class="sublbl"><span>Steady</span><span>Breathing</span></div></div>
-    <div class="sw"><span class="cl">Brightness drift</span>
-      <div class="srow"><input type="range" id="L_bri" min="0" max="10" value="3" class="col"><span class="slbl col" id="L_brilbl">3</span></div>
-      <div class="sublbl"><span>Steady</span><span>Pulsing</span></div></div>
+    <div class="phead" style="color:var(--col)">Colour evolution <span>— morphs slowly across the runtime</span></div>
+    <div class="sw"><span class="cl">Palette morph speed</span><div class="srow"><input type="range" id="L_cmorph" min="1" max="10" value="3" class="col"><span class="slbl col" id="L_cmorphlbl">3</span></div><div class="sublbl"><span>Glacial</span><span>Flowing</span></div></div>
+    <div class="sw"><span class="cl">Hue rotation</span><div class="srow"><input type="range" id="L_hue" min="0" max="360" value="120" class="col"><span class="slbl col" id="L_huelbl">120°</span></div><div class="sublbl"><span>None</span><span>Full</span></div></div>
+    <div class="sw"><span class="cl">Saturation drift</span><div class="srow"><input type="range" id="L_sat" min="0" max="10" value="4" class="col"><span class="slbl col" id="L_satlbl">4</span></div></div>
+    <div class="sw"><span class="cl">Brightness drift</span><div class="srow"><input type="range" id="L_bri" min="0" max="10" value="3" class="col"><span class="slbl col" id="L_brilbl">3</span></div></div>
   </div>
-
   <div class="panel">
-    <div class="phead">Audio <span>— retuned for long-form ambient</span></div>
-    <div class="sw"><span class="cl">BPM &nbsp;<label style="font-weight:400;color:var(--amb)"><input type="checkbox" id="L_abpmrnd"> vary</label></span>
-      <div class="srow"><input type="range" id="L_abpm" min="40" max="120" value="64" class="amb"><span class="slbl amb" id="L_abpmlbl">64</span></div></div>
-    <div class="sw"><span class="cl">Drone pitch</span>
-      <div class="srow"><input type="range" id="L_apitch" min="40" max="220" value="80" class="amb"><span class="slbl amb" id="L_apitchlbl">80</span></div>
-      <div class="sublbl"><span>Bass</span><span>Treble</span></div></div>
-    <div class="sw"><span class="cl">Beat strength</span>
-      <div class="srow"><input type="range" id="L_abeat" min="0" max="10" value="3" class="amb"><span class="slbl amb" id="L_abeatlbl">3</span></div></div>
-    <div class="cg"><span class="cl">Waveform</span>
-      <select id="L_awav"><option value="sine" selected>Sine</option><option value="triangle">Triangle</option><option value="sawtooth">Sawtooth</option><option value="square">Square</option><option value="random">Random</option></select></div>
-    <div class="sw"><span class="cl">Ambient ↔ Beat</span>
-      <div class="srow"><input type="range" id="L_amix" min="0" max="10" value="3" class="amb"><span class="slbl amb" id="L_amixlbl">3</span></div></div>
-    <div class="sw"><span class="cl">Reverb / decay</span>
-      <div class="srow"><input type="range" id="L_arev" min="0" max="10" value="6" class="amb"><span class="slbl amb" id="L_arevlbl">6</span></div></div>
+    <div class="phead">Audio <span>— retuned for ambient</span></div>
+    <div class="sw"><span class="cl">BPM <label style="font-weight:400;color:var(--amb)"><input type="checkbox" id="L_abpmrnd"> vary</label></span><div class="srow"><input type="range" id="L_abpm" min="40" max="120" value="64" class="amb"><span class="slbl amb" id="L_abpmlbl">64</span></div></div>
+    <div class="sw"><span class="cl">Drone pitch</span><div class="srow"><input type="range" id="L_apitch" min="40" max="220" value="80" class="amb"><span class="slbl amb" id="L_apitchlbl">80</span></div><div class="sublbl"><span>Bass</span><span>Treble</span></div></div>
+    <div class="sw"><span class="cl">Beat strength</span><div class="srow"><input type="range" id="L_abeat" min="0" max="10" value="3" class="amb"><span class="slbl amb" id="L_abeatlbl">3</span></div></div>
+    <div class="cg"><span class="cl">Waveform</span><select id="L_awav"><option value="sine" selected>Sine</option><option value="triangle">Triangle</option><option value="sawtooth">Sawtooth</option><option value="square">Square</option><option value="random">Random</option></select></div>
+    <div class="sw"><span class="cl">Ambient ↔ Beat</span><div class="srow"><input type="range" id="L_amix" min="0" max="10" value="3" class="amb"><span class="slbl amb" id="L_amixlbl">3</span></div></div>
+    <div class="sw"><span class="cl">Reverb / decay</span><div class="srow"><input type="range" id="L_arev" min="0" max="10" value="6" class="amb"><span class="slbl amb" id="L_arevlbl">6</span></div></div>
     <button class="btn arnd" id="L_arnd">⚄ Randomise audio</button>
   </div>
 </div>
 
-<!-- ════════════════ SHARED PREVIEW / LOG / DOWNLOADS ════════════════ -->
-<div id="top">
-  <div id="pvcol">
-    <div id="cvw" style="width:160px;height:284px">
-      <canvas id="cv" width="160" height="284"></canvas>
-      <div id="ov">
-        <span>Configure &amp; click<br>▶ Generate</span>
-        <div class="badge" id="ovbadge">9 : 16 · Seamless loop</div>
-        <small style="font-size:10px;opacity:.55">Chrome / Edge / Firefox</small>
-      </div>
-    </div>
+<!-- ════════ FLUID ════════ -->
+<div id="tab-fluid" class="hidden">
+  <div class="tip f"><b>Fluid dynamics:</b> GPU shader flow fields — domain-warped turbulence rendered at full resolution for high quality. Loops seamlessly. Choose Shorts (9:16) or HD (16:9).</div>
+  <div class="panel">
+    <div class="phead">Fluid</div>
+    <div class="cg"><span class="cl">Engine</span><select id="F_engine" class="modesel" style="border-color:var(--flu)">
+      <option value="procedural" selected>Procedural flow (loops)</option>
+      <option value="stam">True fluid (Navier–Stokes)</option>
+      <option value="dye">Dye flow (coloured emitters)</option>
+      <option value="curl">Curl particles (65k)</option>
+    </select></div>
+    <div class="cg"><span class="cl">Style</span><select id="F_mode" class="modesel"><option value="plasma" selected>Plasma flow</option><option value="smoke">Smoke / curl</option><option value="marble">Marble / ink</option><option value="nebula">Nebula</option><option value="mixed">Mixed — random per video</option></select></div>
+    <div class="cg"><span class="cl">Emitters</span><input type="number" id="F_emit" value="4" min="1" max="8"></div>
+    <div class="cg"><span class="cl">Videos</span><input type="number" id="F_n" value="10" min="1" max="100"></div>
+    <div class="cg"><span class="cl">Duration (s)</span><input type="number" id="F_dur" value="30" min="5" max="600"></div>
+    <div class="cg"><span class="cl">FPS</span><select id="F_fps"><option value="24">24 fps</option><option value="30" selected>30 fps</option><option value="60">60 fps</option></select></div>
+    <div class="cg"><span class="cl">Resolution</span><select id="F_res"><option value="1080x1920">1080 × 1920 (Shorts)</option><option value="1920x1080" selected>1920 × 1080 (HD) ★</option></select></div>
+    <div class="sw"><span class="cl">Detail (octaves)</span><div class="srow"><input type="range" id="F_detail" min="3" max="8" value="6" class="flu"><span class="slbl flu" id="F_detaillbl">6</span></div><div class="sublbl"><span>Soft</span><span>Intricate</span></div></div>
+    <div class="sw"><span class="cl">Flow speed</span><div class="srow"><input type="range" id="F_flow" min="1" max="10" value="5" class="flu"><span class="slbl flu" id="F_flowlbl">5</span></div><div class="sublbl"><span>Slow</span><span>Fast</span></div></div>
+    <div class="sw"><span class="cl">Turbulence</span><div class="srow"><input type="range" id="F_turb" min="1" max="10" value="5" class="flu"><span class="slbl flu" id="F_turblbl">5</span></div><div class="sublbl"><span>Smooth</span><span>Chaotic</span></div></div>
+    <div class="sw"><span class="cl">Swirl</span><div class="srow"><input type="range" id="F_swirl" min="0" max="10" value="3" class="flu"><span class="slbl flu" id="F_swirllbl">3</span></div><div class="sublbl"><span>None</span><span>Vortex</span></div></div>
+    <div class="sw"><span class="cl">Scale (zoom)</span><div class="srow"><input type="range" id="F_scale" min="1" max="10" value="4" class="flu"><span class="slbl flu" id="F_scalelbl">4</span></div><div class="sublbl"><span>Macro</span><span>Fine</span></div></div>
+    <div class="cg"><span class="cl">Randomness</span><div class="sw" style="min-width:120px"><div class="srow"><input type="range" id="F_rnd" min="0" max="10" value="4" class="flu"><span class="slbl flu" id="F_rndlbl">4</span></div></div></div>
+    <div class="cg"><span class="cl">Seed</span><div class="rg"><label><input type="radio" name="F_sm" value="rnd" checked>Random</label><label><input type="radio" name="F_sm" value="fix">Fixed</label><input type="number" id="F_seed" value="90000" style="width:76px"></div></div>
+    <div style="display:flex;gap:8px;align-items:center;margin-left:auto"><button class="btn bgen" id="F_gen">▶ Generate</button><button class="btn bstp" id="F_stp" disabled>■ Stop</button></div>
   </div>
-  <div id="statcol">
-    <div><div id="pgbar"><div id="pgfill"></div></div><div id="st">Ready</div></div>
-    <div id="lbox"></div>
+  <div class="panel">
+    <div class="phead" style="color:var(--col)">Colour <span>— palette is randomised; these shape it</span></div>
+    <div class="sw"><span class="cl">Hue rotation</span><div class="srow"><input type="range" id="F_hue" min="0" max="360" value="90" class="col"><span class="slbl col" id="F_huelbl">90°</span></div><div class="sublbl"><span>None</span><span>Full</span></div></div>
+    <div class="sw"><span class="cl">Saturation</span><div class="srow"><input type="range" id="F_sat" min="0" max="10" value="6" class="col"><span class="slbl col" id="F_satlbl">6</span></div><div class="sublbl"><span>Muted</span><span>Vivid</span></div></div>
+    <div class="sw"><span class="cl">Brightness contrast</span><div class="srow"><input type="range" id="F_bri" min="0" max="10" value="4" class="col"><span class="slbl col" id="F_brilbl">4</span></div></div>
+  </div>
+  <div class="panel">
+    <div class="phead">Audio</div>
+    <div class="sw"><span class="cl">BPM <label style="font-weight:400;color:var(--amb)"><input type="checkbox" id="F_abpmrnd" checked> vary</label></span><div class="srow"><input type="range" id="F_abpm" min="50" max="140" value="80" class="amb"><span class="slbl amb" id="F_abpmlbl">80</span></div></div>
+    <div class="sw"><span class="cl">Drone pitch</span><div class="srow"><input type="range" id="F_apitch" min="40" max="220" value="90" class="amb"><span class="slbl amb" id="F_apitchlbl">90</span></div><div class="sublbl"><span>Bass</span><span>Treble</span></div></div>
+    <div class="sw"><span class="cl">Beat strength</span><div class="srow"><input type="range" id="F_abeat" min="0" max="10" value="4" class="amb"><span class="slbl amb" id="F_abeatlbl">4</span></div></div>
+    <div class="cg"><span class="cl">Waveform</span><select id="F_awav"><option value="sine" selected>Sine</option><option value="triangle">Triangle</option><option value="sawtooth">Sawtooth</option><option value="square">Square</option><option value="random">Random</option></select></div>
+    <div class="sw"><span class="cl">Ambient ↔ Beat</span><div class="srow"><input type="range" id="F_amix" min="0" max="10" value="4" class="amb"><span class="slbl amb" id="F_amixlbl">4</span></div></div>
+    <div class="sw"><span class="cl">Reverb / decay</span><div class="srow"><input type="range" id="F_arev" min="0" max="10" value="5" class="amb"><span class="slbl amb" id="F_arevlbl">5</span></div></div>
+    <button class="btn arnd" id="F_arnd">⚄ Randomise audio</button>
   </div>
 </div>
 
-<div id="dlsec">
-  <div class="dh">Downloads <span class="dcnt" id="dlcnt">0</span></div>
-  <div id="dlgrid"><div class="empty">Generated videos will appear here</div></div>
-  <div class="fmt">Format: WebM · convert: <code>ffmpeg -i in.webm out.mp4</code></div>
+<!-- ════════ SHARED ════════ -->
+<div id="top">
+  <div id="pvcol"><div id="cvw" style="width:160px;height:284px"><canvas id="cv" width="160" height="284"></canvas>
+    <div id="ov"><span>Configure &amp; click<br>▶ Generate</span><div class="badge" id="ovbadge">9 : 16 · Seamless loop</div><small style="font-size:10px;opacity:.55">Chrome / Edge / Firefox</small></div></div></div>
+  <div id="statcol"><div><div id="pgbar"><div id="pgfill"></div></div><div id="st">Ready</div></div><div id="lbox"></div></div>
 </div>
+<div id="dlsec"><div class="dh">Downloads <span class="dcnt" id="dlcnt">0</span></div><div id="dlgrid"><div class="empty">Generated videos will appear here</div></div><div class="fmt">Format: WebM · convert: <code>ffmpeg -i in.webm out.mp4</code></div></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 const $=id=>document.getElementById(id);
 const TAU=Math.PI*2;
+const mkRng=s0=>{let s=s0>>>0;return()=>{s=(s+0x6D2B79F5)>>>0;let t=Math.imul(s^s>>>15,1|s);t=(t+Math.imul(t^t>>>7,61|t))^t;return((t^t>>>14)>>>0)/4294967296;};};
+const PALS=[[0xFF6B6B,0xFFE66D,0x4ECDC4,0x1A535C],[0xE63946,0x457B9D,0xA8DADC,0xF1FAEE],[0xF72585,0x7209B7,0x3A0CA3,0x4CC9F0],[0xFFBE0B,0xFB5607,0xFF006E,0x8338EC],[0x06D6A0,0x118AB2,0xFFD166,0xEF476F],[0x2D00F7,0x6A00F4,0xBC00DD,0xF20089],[0xFF9F1C,0xFFBF69,0x2EC4B6,0x073B4C]];
+const GEOMS=[r=>new THREE.TetrahedronGeometry(r,0),r=>new THREE.OctahedronGeometry(r,0),r=>new THREE.IcosahedronGeometry(r,0),r=>new THREE.DodecahedronGeometry(r,0),r=>new THREE.IcosahedronGeometry(r,1),r=>new THREE.TorusKnotGeometry(r*.7,r*.25,20,5),r=>new THREE.TorusGeometry(r*.7,r*.3,8,10),r=>new THREE.CylinderGeometry(r*.3,r*.8,r*1.6,6),r=>new THREE.SphereGeometry(r,5,4)];
 
-const mkRng = s0 => {
-  let s = s0 >>> 0;
-  return () => { s=(s+0x6D2B79F5)>>>0; let t=Math.imul(s^s>>>15,1|s);
-    t=(t+Math.imul(t^t>>>7,61|t))^t; return ((t^t>>>14)>>>0)/4294967296; };
-};
+function kochGeometry(r,it){let pts=[];const A={x:0,y:r},B={x:-r*0.866,y:-r*0.5},C={x:r*0.866,y:-r*0.5};
+  function k(p1,p2,d){if(d===0){pts.push(p1);return;}const dx=(p2.x-p1.x)/3,dy=(p2.y-p1.y)/3;const a={x:p1.x+dx,y:p1.y+dy},b={x:p1.x+2*dx,y:p1.y+2*dy};const ang=Math.atan2(dy,dx)-Math.PI/3,len=Math.hypot(dx,dy);const pk={x:a.x+Math.cos(ang)*len,y:a.y+Math.sin(ang)*len};k(p1,a,d-1);k(a,pk,d-1);k(pk,b,d-1);k(b,p2,d-1);}
+  k(A,B,it);k(B,C,it);k(C,A,it);const sh=new THREE.Shape();sh.moveTo(pts[0].x,pts[0].y);for(let i=1;i<pts.length;i++)sh.lineTo(pts[i].x,pts[i].y);sh.closePath();return new THREE.ExtrudeGeometry(sh,{depth:r*0.4,bevelEnabled:false});}
 
-const PALS = [
-  [0xFF6B6B,0xFFE66D,0x4ECDC4,0x1A535C],[0xE63946,0x457B9D,0xA8DADC,0xF1FAEE],
-  [0xF72585,0x7209B7,0x3A0CA3,0x4CC9F0],[0xFFBE0B,0xFB5607,0xFF006E,0x8338EC],
-  [0x06D6A0,0x118AB2,0xFFD166,0xEF476F],[0x2D00F7,0x6A00F4,0xBC00DD,0xF20089],
-  [0xFF9F1C,0xFFBF69,0x2EC4B6,0x073B4C],
-];
-const GEOMS = [
-  r=>new THREE.TetrahedronGeometry(r,0), r=>new THREE.OctahedronGeometry(r,0),
-  r=>new THREE.IcosahedronGeometry(r,0), r=>new THREE.DodecahedronGeometry(r,0),
-  r=>new THREE.IcosahedronGeometry(r,1), r=>new THREE.TorusKnotGeometry(r*.7,r*.25,20,5),
-  r=>new THREE.TorusGeometry(r*.7,r*.3,8,10), r=>new THREE.CylinderGeometry(r*.3,r*.8,r*1.6,6),
-  r=>new THREE.SphereGeometry(r,5,4),
-];
+function resolveStyle(mode,rng,list){return mode==='mixed'?list[Math.floor(rng()*list.length)]:mode;}
 
-function kochGeometry(r, iterations){
-  let pts=[];
-  const A={x:0,y:r},B={x:-r*0.866,y:-r*0.5},C={x:r*0.866,y:-r*0.5};
-  function koch(p1,p2,d){
-    if(d===0){pts.push(p1);return;}
-    const dx=(p2.x-p1.x)/3,dy=(p2.y-p1.y)/3;
-    const a={x:p1.x+dx,y:p1.y+dy},b={x:p1.x+2*dx,y:p1.y+2*dy};
-    const ang=Math.atan2(dy,dx)-Math.PI/3,len=Math.hypot(dx,dy);
-    const peak={x:a.x+Math.cos(ang)*len,y:a.y+Math.sin(ang)*len};
-    koch(p1,a,d-1);koch(a,peak,d-1);koch(peak,b,d-1);koch(b,p2,d-1);
-  }
-  koch(A,B,iterations);koch(B,C,iterations);koch(C,A,iterations);
-  const shape=new THREE.Shape();
-  shape.moveTo(pts[0].x,pts[0].y);
-  for(let i=1;i<pts.length;i++)shape.lineTo(pts[i].x,pts[i].y);
-  shape.closePath();
-  return new THREE.ExtrudeGeometry(shape,{depth:r*0.4,bevelEnabled:false});
-}
-
-function resolveStyle(mode,rng){
-  return mode==='mixed'?['wobble','multimorph','koch'][Math.floor(rng()*3)]:mode;
-}
-
-function buildScene(rng, scene, numShapes, aspect, style){
+function build3DScene(rng,scene,numShapes,aspect,style){
   const pal=PALS[Math.floor(rng()*PALS.length)];
   scene.add(new THREE.AmbientLight(0xffffff,0.4));
-  const p1=new THREE.PointLight(0xffffff,1.3,100); p1.position.set(6,8,5);
-  const p2=new THREE.PointLight(0x5577ff,0.9,100); p2.position.set(-6,-4,8);
-  scene.add(p1,p2);
-  const sX=aspect<1?3.2:3.4, sY=aspect<1?5.0:2.4;
-  const useKoch=style==='koch', shapeScale=useKoch?1.4:1;
-  const makeGeom=r=>useKoch?kochGeometry(r*shapeScale,Math.floor(rng()*2)+1):GEOMS[Math.floor(rng()*GEOMS.length)](r*shapeScale);
-  const makeGroup=(ox,oy)=>{
-    const grp=new THREE.Group(),mats=[],meshes=[];
-    for(let i=0;i<numShapes;i++){
-      const r=1.0+rng()*1.4, g=makeGeom(r);
-      const m=new THREE.MeshPhongMaterial({color:pal[Math.floor(rng()*pal.length)],emissive:0x0a0a18,flatShading:true,transparent:true,opacity:0.62+rng()*0.32,shininess:45});
-      const mesh=new THREE.Mesh(g,m);
-      mesh.position.set((rng()-.5)*sX,(rng()-.5)*sY,(rng()-.5)*1.5);
-      mesh.userData.baseRot=new THREE.Euler(rng()*TAU,rng()*TAU,rng()*TAU);
-      mesh.userData.wobblePhase=rng()*TAU;
-      mesh.userData.axis=Math.floor(rng()*3);
-      mesh.rotation.copy(mesh.userData.baseRot);
-      grp.add(mesh);mats.push(m);meshes.push(mesh);
-    }
-    grp.position.set(ox,oy,0);grp.userData.bx=ox;grp.userData.by=oy;
-    grp.userData.driftPhase=rng()*TAU;
-    scene.add(grp);return{grp,mats,meshes,pal,baseHex:pal.slice()};
-  };
-  const ox=(rng()-.5)*sX,oy=(rng()-.5)*sY;
-  return{gA:makeGroup(0,0),gB:makeGroup(ox,oy)};
+  const p1=new THREE.PointLight(0xffffff,1.3,100);p1.position.set(6,8,5);
+  const p2=new THREE.PointLight(0x5577ff,0.9,100);p2.position.set(-6,-4,8);scene.add(p1,p2);
+  const sX=aspect<1?3.2:3.4,sY=aspect<1?5.0:2.4;
+  const useKoch=style==='koch',ss=useKoch?1.4:1;
+  const mg=r=>useKoch?kochGeometry(r*ss,Math.floor(rng()*2)+1):GEOMS[Math.floor(rng()*GEOMS.length)](r*ss);
+  const grp=(ox,oy)=>{const g=new THREE.Group(),mats=[],meshes=[];for(let i=0;i<numShapes;i++){const r=1.0+rng()*1.4,geo=mg(r);const m=new THREE.MeshPhongMaterial({color:pal[Math.floor(rng()*pal.length)],emissive:0x0a0a18,flatShading:true,transparent:true,opacity:0.62+rng()*0.32,shininess:45});const me=new THREE.Mesh(geo,m);me.position.set((rng()-.5)*sX,(rng()-.5)*sY,(rng()-.5)*1.5);me.userData.baseRot=new THREE.Euler(rng()*TAU,rng()*TAU,rng()*TAU);me.userData.wobblePhase=rng()*TAU;me.userData.axis=Math.floor(rng()*3);me.rotation.copy(me.userData.baseRot);g.add(me);mats.push(m);meshes.push(me);}g.position.set(ox,oy,0);g.userData.bx=ox;g.userData.by=oy;g.userData.driftPhase=rng()*TAU;scene.add(g);return{grp:g,mats,meshes,pal};};
+  const ox=(rng()-.5)*sX,oy=(rng()-.5)*sY;return{gA:grp(0,0),gB:grp(ox,oy)};
+}
+function disposeScene(scene){scene.traverse(o=>{if(o.geometry)o.geometry.dispose();if(o.material)[].concat(o.material).forEach(m=>m.dispose());});while(scene.children.length)scene.remove(scene.children[0]);}
+function lerpPal(pal,pos){const p=((pos%pal.length)+pal.length)%pal.length;const a=Math.floor(p)%pal.length,b=(a+1)%pal.length,f=p-Math.floor(p);const ca=new THREE.Color(pal[a]),cb=new THREE.Color(pal[b]);return new THREE.Color(ca.r+(cb.r-ca.r)*f,ca.g+(cb.g-ca.g)*f,ca.b+(cb.b-ca.b)*f);}
+
+// ── Fluid shader ──────────────────────────────────────────────
+const FLUID_VERT=`varying vec2 vUv;void main(){vUv=uv;gl_Position=vec4(position.xy,0.0,1.0);}`;
+const FLUID_FRAG=`precision highp float;varying vec2 vUv;
+uniform float uPhase,uFlow,uTurb,uSwirl,uScale,uContrast,uHue,uSat,uBri,uAspect;uniform int uOct;
+uniform vec3 uC0,uC1,uC2,uC3;
+float hash(vec2 p){p=fract(p*vec2(123.34,456.21));p+=dot(p,p+45.32);return fract(p.x*p.y);}
+float noise(vec2 p){vec2 i=floor(p),f=fract(p);vec2 u=f*f*(3.0-2.0*f);float a=hash(i),b=hash(i+vec2(1.,0.)),c=hash(i+vec2(0.,1.)),d=hash(i+vec2(1.,1.));return mix(mix(a,b,u.x),mix(c,d,u.x),u.y);}
+float fbm(vec2 p){float v=0.0,a=0.5;mat2 m=mat2(1.6,1.2,-1.2,1.6);for(int i=0;i<8;i++){if(i>=uOct)break;v+=a*noise(p);p=m*p;a*=0.5;}return v;}
+vec3 hueShift(vec3 c,float a){const vec3 k=vec3(0.57735);float cs=cos(a),sn=sin(a);return c*cs+cross(k,c)*sn+k*dot(k,c)*(1.0-cs);}
+vec3 ramp(float t){t=clamp(t,0.0,1.0);vec3 a=mix(uC0,uC1,smoothstep(0.0,0.34,t));vec3 b=mix(a,uC2,smoothstep(0.34,0.67,t));return mix(b,uC3,smoothstep(0.67,1.0,t));}
+void main(){vec2 uv=vUv;uv.x*=uAspect;vec2 p=uv*uScale;
+ float ang=6.28318*uPhase;
+ vec2 t1=vec2(cos(ang),sin(ang))*uFlow;
+ vec2 t2=vec2(cos(ang*2.0+1.7),sin(ang*2.0+0.5))*uFlow*0.5;
+ vec2 ctr=uv-vec2(uAspect*0.5,0.5);float r=length(ctr);
+ float sw=uSwirl*sin(ang)*exp(-r*1.5);float ca=cos(sw),sa=sin(sw);p=mat2(ca,-sa,sa,ca)*p;
+ vec2 q=vec2(fbm(p+t1),fbm(p+vec2(5.2,1.3)+t2));
+ vec2 rr=vec2(fbm(p+uTurb*q+vec2(1.7,9.2)+t2),fbm(p+uTurb*q+vec2(8.3,2.8)+t1));
+ float f=fbm(p+uTurb*rr);
+ f=pow(clamp(f*1.2,0.0,1.0),uContrast);
+ vec3 col=ramp(f);col=hueShift(col,uHue);
+ float l=dot(col,vec3(0.299,0.587,0.114));col=mix(vec3(l),col,1.0+uSat);
+ col*=1.0+uBri*(f-0.5);col*=1.0-0.22*r;col+=0.06*pow(f,3.0);
+ gl_FragColor=vec4(clamp(col,0.0,1.0),1.0);}`;
+
+function hexToVec3(hex){const c=new THREE.Color(hex);return new THREE.Vector3(c.r,c.g,c.b);}
+
+// ════════ GPU simulation infrastructure (Stam fluid + curl particles) ════════
+const SIMQUAD=new THREE.PlaneGeometry(2,2);
+function makeRT(w,h){return new THREE.WebGLRenderTarget(w,h,{type:THREE.HalfFloatType,minFilter:THREE.LinearFilter,magFilter:THREE.LinearFilter,wrapS:THREE.ClampToEdgeWrapping,wrapT:THREE.ClampToEdgeWrapping,depthBuffer:false,stencilBuffer:false});}
+function dbl(w,h){return {a:makeRT(w,h),b:makeRT(w,h),get read(){return this.a;},get write(){return this.b;},swap(){const t=this.a;this.a=this.b;this.b=t;}};}
+function Passer(){this.cam=new THREE.OrthographicCamera(-1,1,1,-1,0,1);this.scene=new THREE.Scene();this.mesh=new THREE.Mesh(SIMQUAD,null);this.scene.add(this.mesh);}
+Passer.prototype.run=function(renderer,mat,target){this.mesh.material=mat;renderer.setRenderTarget(target||null);renderer.render(this.scene,this.cam);};
+const SIM_VERT=`varying vec2 vUv;void main(){vUv=uv;gl_Position=vec4(position.xy,0.0,1.0);}`;
+function simMat(frag,uniforms){return new THREE.ShaderMaterial({vertexShader:SIM_VERT,fragmentShader:frag,uniforms,depthTest:false,depthWrite:false});}
+
+// ── Stam stable-fluids solver (also powers Dye flow) ──────────
+function buildStamFluid(renderer,rng,w,h,opts,dyeMode){
+  const aspect=w/h;
+  const SIMW=aspect>=1?256:Math.round(256*aspect), SIMH=aspect>=1?Math.round(256/aspect):256;
+  const tex=new THREE.Vector2(1/SIMW,1/SIMH);
+  const fp=opts.fluidParams, R=fp.rnd/10;
+  const vel=dbl(SIMW,SIMH),dye=dbl(SIMW,SIMH),prs=dbl(SIMW,SIMH),div=makeRT(SIMW,SIMH);
+  const passer=new Passer();
+  const clear=rt=>{renderer.setRenderTarget(rt);renderer.setClearColor(0x000000,1);renderer.clear();};
+  [vel.a,vel.b,dye.a,dye.b,prs.a,prs.b,div].forEach(clear);renderer.setRenderTarget(null);
+
+  const advect=simMat(`precision highp float;varying vec2 vUv;uniform sampler2D uVelocity,uSource;uniform vec2 texelSize;uniform float dt,diss;void main(){vec2 v=texture2D(uVelocity,vUv).xy;vec2 coord=vUv-dt*v*texelSize;vec4 r=texture2D(uSource,coord);gl_FragColor=r/(1.0+diss*dt);}`,
+    {uVelocity:{value:null},uSource:{value:null},texelSize:{value:tex},dt:{value:0.016},diss:{value:0.2}});
+  const diverg=simMat(`precision highp float;varying vec2 vUv;uniform sampler2D uVelocity;uniform vec2 texelSize;void main(){float L=texture2D(uVelocity,vUv-vec2(texelSize.x,0.)).x;float Rr=texture2D(uVelocity,vUv+vec2(texelSize.x,0.)).x;float T=texture2D(uVelocity,vUv+vec2(0.,texelSize.y)).y;float B=texture2D(uVelocity,vUv-vec2(0.,texelSize.y)).y;gl_FragColor=vec4(0.5*(Rr-L+T-B),0.,0.,1.);}`,
+    {uVelocity:{value:null},texelSize:{value:tex}});
+  const pressure=simMat(`precision highp float;varying vec2 vUv;uniform sampler2D uP,uDiv;uniform vec2 texelSize;void main(){float L=texture2D(uP,vUv-vec2(texelSize.x,0.)).x;float Rr=texture2D(uP,vUv+vec2(texelSize.x,0.)).x;float T=texture2D(uP,vUv+vec2(0.,texelSize.y)).x;float B=texture2D(uP,vUv-vec2(0.,texelSize.y)).x;float d=texture2D(uDiv,vUv).x;gl_FragColor=vec4((L+Rr+T+B-d)*0.25,0.,0.,1.);}`,
+    {uP:{value:null},uDiv:{value:null},texelSize:{value:tex}});
+  const gradient=simMat(`precision highp float;varying vec2 vUv;uniform sampler2D uP,uVelocity;uniform vec2 texelSize;void main(){float L=texture2D(uP,vUv-vec2(texelSize.x,0.)).x;float Rr=texture2D(uP,vUv+vec2(texelSize.x,0.)).x;float T=texture2D(uP,vUv+vec2(0.,texelSize.y)).x;float B=texture2D(uP,vUv-vec2(0.,texelSize.y)).x;vec2 v=texture2D(uVelocity,vUv).xy;v-=0.5*vec2(Rr-L,T-B);gl_FragColor=vec4(v,0.,1.);}`,
+    {uP:{value:null},uVelocity:{value:null},texelSize:{value:tex}});
+  const splat=simMat(`precision highp float;varying vec2 vUv;uniform sampler2D uTarget;uniform float aspect,radius;uniform vec3 color;uniform vec2 point;void main(){vec2 p=vUv-point;p.x*=aspect;vec3 s=exp(-dot(p,p)/radius)*color;gl_FragColor=vec4(texture2D(uTarget,vUv).xyz+s,1.0);}`,
+    {uTarget:{value:null},aspect:{value:aspect},radius:{value:0.0006},color:{value:new THREE.Vector3()},point:{value:new THREE.Vector2()}});
+  const display=simMat(`precision highp float;varying vec2 vUv;uniform sampler2D uTexture;uniform float uHue;vec3 hs(vec3 c,float a){const vec3 k=vec3(0.57735);float cs=cos(a),sn=sin(a);return c*cs+cross(k,c)*sn+k*dot(k,c)*(1.0-cs);}void main(){vec3 c=texture2D(uTexture,vUv).rgb;c=hs(c,uHue);c=c/(c+vec3(0.55))*1.35;gl_FragColor=vec4(clamp(c,0.,1.),1.0);}`,
+    {uTexture:{value:null},uHue:{value:0}});
+
+  const dispScene=new THREE.Scene(),dispCam=new THREE.OrthographicCamera(-1,1,1,-1,0,1);
+  const dispMesh=new THREE.Mesh(SIMQUAD,display);dispScene.add(dispMesh);
+
+  const pal=PALS[Math.floor(rng()*PALS.length)].map(hexToVec3);
+  const nEmit=dyeMode?(opts.emit||4):Math.max(2,Math.round((opts.emit||4)*0.6));
+  const emitters=[];
+  for(let i=0;i<nEmit;i++){emitters.push({col:pal[i%pal.length],cx:0.3+rng()*0.4,cy:0.3+rng()*0.4,rx:0.12+rng()*0.22,ry:0.12+rng()*0.22,ph:rng()*TAU,loops:1+Math.floor(rng()*3),sp:(rng()<0.5?1:-1)});}
+  const posAt=(e,p)=>new THREE.Vector2(e.cx+e.rx*Math.cos(e.sp*TAU*e.loops*p+e.ph),e.cy+e.ry*Math.sin(e.sp*TAU*e.loops*p+e.ph));
+
+  const force=2000+(fp.flow/10)*9000;
+  const velDiss=0.05+(fp.turb/10)*0.6;
+  const dyeDiss=0.1+(1-fp.scale/10)*0.4;
+  const iters=20;
+  const hueRange=opts.colour.hue/360*TAU, baseHue=rng()*TAU;
+  splat.uniforms.radius.value=0.0003+(fp.scale/10)*0.0012;
+
+  return {scene:dispScene,cam:dispCam,
+    update(p){
+      const dt=0.016;
+      advect.uniforms.uVelocity.value=vel.read;advect.uniforms.uSource.value=vel.read;advect.uniforms.diss.value=velDiss;
+      passer.run(renderer,advect,vel.write);vel.swap();
+      emitters.forEach(e=>{
+        const pos=posAt(e,p),pp=posAt(e,p-0.003);
+        const dir=new THREE.Vector2(pos.x-pp.x,pos.y-pp.y);if(dir.length()>0)dir.normalize();
+        splat.uniforms.uTarget.value=vel.read;splat.uniforms.point.value.copy(pos);
+        splat.uniforms.color.value.set(dir.x*force,dir.y*force,0);
+        passer.run(renderer,splat,vel.write);vel.swap();
+        splat.uniforms.uTarget.value=dye.read;
+        splat.uniforms.color.value.set(e.col.x*0.4,e.col.y*0.4,e.col.z*0.4);
+        passer.run(renderer,splat,dye.write);dye.swap();
+      });
+      diverg.uniforms.uVelocity.value=vel.read;passer.run(renderer,diverg,div);
+      for(let i=0;i<iters;i++){pressure.uniforms.uP.value=prs.read;pressure.uniforms.uDiv.value=div;passer.run(renderer,pressure,prs.write);prs.swap();}
+      gradient.uniforms.uP.value=prs.read;gradient.uniforms.uVelocity.value=vel.read;passer.run(renderer,gradient,vel.write);vel.swap();
+      advect.uniforms.uVelocity.value=vel.read;advect.uniforms.uSource.value=dye.read;advect.uniforms.diss.value=dyeDiss;
+      passer.run(renderer,advect,dye.write);dye.swap();
+      display.uniforms.uTexture.value=dye.read;display.uniforms.uHue.value=baseHue+hueRange*p;
+      renderer.setRenderTarget(null);
+    },
+    cleanup(){[vel.a,vel.b,dye.a,dye.b,prs.a,prs.b,div].forEach(rt=>rt.dispose());
+      [advect,diverg,pressure,gradient,splat,display].forEach(m=>m.dispose());}};
 }
 
-function disposeScene(scene){
-  scene.traverse(o=>{ if(o.geometry)o.geometry.dispose();
-    if(o.material)[].concat(o.material).forEach(m=>m.dispose()); });
-  while(scene.children.length)scene.remove(scene.children[0]);
+// ── Curl-noise particle system (65k GPU particles + trails) ───
+function buildCurlParticles(renderer,rng,w,h,opts){
+  const aspect=w/h, fp=opts.fluidParams, R=fp.rnd/10;
+  const PTS=256, COUNT=PTS*PTS;
+  const pos=dbl(PTS,PTS);
+  const passer=new Passer();
+  const seed=Math.floor(rng()*9999);
+
+  const NOISE=`float hash(vec2 p){p=fract(p*vec2(123.34,456.21));p+=dot(p,p+45.32);return fract(p.x*p.y);}
+float noise(vec2 p){vec2 i=floor(p),f=fract(p);vec2 u=f*f*(3.-2.*f);float a=hash(i),b=hash(i+vec2(1,0)),c=hash(i+vec2(0,1)),d=hash(i+vec2(1,1));return mix(mix(a,b,u.x),mix(c,d,u.x),u.y);}
+float fbm(vec2 p){float v=0.,a=.5;mat2 m=mat2(1.6,1.2,-1.2,1.6);for(int i=0;i<5;i++){v+=a*noise(p);p=m*p;a*=.5;}return v;}`;
+
+  const init=simMat(`precision highp float;varying vec2 vUv;uniform float uSeed;${NOISE}
+void main(){float x=hash(vUv+uSeed);float y=hash(vUv+uSeed+7.7);float life=hash(vUv+uSeed+3.3);gl_FragColor=vec4(x,y,0.,life);}`,{uSeed:{value:seed}});
+  passer.run(renderer,init,pos.a);passer.run(renderer,init,pos.b);renderer.setRenderTarget(null);
+
+  const scale=1.0+fp.scale*0.5, speed=0.02+(fp.flow/10)*0.12, flowAmt=(fp.turb/10)*0.6;
+  const sim=simMat(`precision highp float;varying vec2 vUv;uniform sampler2D uPos;uniform float uPhase,uDt,uScale,uSpeed,uFlow,uSeed;${NOISE}
+vec2 curl(vec2 p){float e=0.01;float n1=fbm(p+vec2(0.,e));float n2=fbm(p-vec2(0.,e));float n3=fbm(p+vec2(e,0.));float n4=fbm(p-vec2(e,0.));return vec2((n1-n2),-(n3-n4))/(2.*e);}
+void main(){vec4 d=texture2D(uPos,vUv);vec2 pos=d.xy;float life=d.w;
+ vec2 off=vec2(cos(6.2831*uPhase),sin(6.2831*uPhase))*uFlow;
+ vec2 v=curl(pos*uScale+off+uSeed);
+ pos+=v*uDt*uSpeed; life-=uDt*0.25;
+ if(life<=0.||pos.x<-.05||pos.x>1.05||pos.y<-.05||pos.y>1.05){pos=vec2(hash(vUv+uSeed+uPhase),hash(vUv+uSeed+uPhase+9.1));life=1.0;}
+ gl_FragColor=vec4(pos,0.,life);}`,
+    {uPos:{value:null},uPhase:{value:0},uDt:{value:0.016},uScale:{value:scale},uSpeed:{value:speed},uFlow:{value:flowAmt},uSeed:{value:seed}});
+
+  // Points geometry with ref attribute
+  const refs=new Float32Array(COUNT*2);
+  for(let i=0;i<COUNT;i++){refs[i*2]=(i%PTS)/PTS;refs[i*2+1]=Math.floor(i/PTS)/PTS;}
+  const geo=new THREE.BufferGeometry();
+  geo.setAttribute('position',new THREE.BufferAttribute(new Float32Array(COUNT*3),3));
+  geo.setAttribute('ref',new THREE.BufferAttribute(refs,2));
+  const pal=PALS[Math.floor(rng()*PALS.length)].map(hexToVec3);
+  const baseHue=rng()*TAU, hueRange=opts.colour.hue/360*TAU;
+  const ptMat=new THREE.ShaderMaterial({transparent:true,depthTest:false,depthWrite:false,blending:THREE.AdditiveBlending,
+    uniforms:{uPos:{value:null},uAspect:{value:aspect},uSize:{value:Math.max(1.2,h/700)},
+      uC0:{value:pal[0]},uC1:{value:pal[1]},uC2:{value:pal[2]},uC3:{value:pal[3]},uHue:{value:0},uSat:{value:opts.colour.sat/10}},
+    vertexShader:`uniform sampler2D uPos;uniform float uAspect,uSize;attribute vec2 ref;varying float vSeed,vAge;
+void main(){vec4 d=texture2D(uPos,ref);vec2 pos=d.xy;vAge=d.w;vSeed=ref.x*0.37+ref.y*0.63;
+ vec2 cl=pos*2.0-1.0;gl_Position=vec4(cl,0.0,1.0);gl_PointSize=uSize;}`,
+    fragmentShader:`precision highp float;varying float vSeed,vAge;uniform vec3 uC0,uC1,uC2,uC3;uniform float uHue,uSat;
+vec3 ramp(float t){t=fract(t);vec3 a=mix(uC0,uC1,smoothstep(0.,.34,t));vec3 b=mix(a,uC2,smoothstep(.34,.67,t));return mix(b,uC3,smoothstep(.67,1.,t));}
+vec3 hs(vec3 c,float a){const vec3 k=vec3(0.57735);float cs=cos(a),sn=sin(a);return c*cs+cross(k,c)*sn+k*dot(k,c)*(1.-cs);}
+void main(){vec2 c=gl_PointCoord-0.5;float d=length(c);if(d>0.5)discard;float al=smoothstep(0.5,0.0,d)*0.45*clamp(vAge,0.0,1.0);vec3 col=hs(ramp(vSeed),uHue);float l=dot(col,vec3(.299,.587,.114));col=mix(vec3(l),col,1.0+uSat);gl_FragColor=vec4(col,al);}`});
+  const ptScene=new THREE.Scene(),ptCam=new THREE.OrthographicCamera(-1,1,1,-1,0,1);
+  ptScene.add(new THREE.Points(geo,ptMat));
+
+  // Trail feedback
+  const trail=dbl(w,h);
+  const cl=rt=>{renderer.setRenderTarget(rt);renderer.setClearColor(0x000000,1);renderer.clear();};
+  cl(trail.a);cl(trail.b);renderer.setRenderTarget(null);
+  const fade=simMat(`precision highp float;varying vec2 vUv;uniform sampler2D uTex;uniform float uFade;void main(){gl_FragColor=vec4(texture2D(uTex,vUv).rgb*uFade,1.0);}`,
+    {uTex:{value:null},uFade:{value:0.94}});
+  const show=simMat(`precision highp float;varying vec2 vUv;uniform sampler2D uTex;void main(){vec3 c=texture2D(uTex,vUv).rgb;c=c/(c+vec3(0.4))*1.3;gl_FragColor=vec4(clamp(c,0.,1.),1.0);}`,
+    {uTex:{value:null}});
+  const dispScene=new THREE.Scene(),dispCam=new THREE.OrthographicCamera(-1,1,1,-1,0,1);
+  const dispMesh=new THREE.Mesh(SIMQUAD,show);dispScene.add(dispMesh);
+
+  return {scene:dispScene,cam:dispCam,
+    update(p){
+      sim.uniforms.uPos.value=pos.read;sim.uniforms.uPhase.value=p;
+      passer.run(renderer,sim,pos.write);pos.swap();
+      ptMat.uniforms.uPos.value=pos.read;ptMat.uniforms.uHue.value=baseHue+hueRange*p;
+      fade.uniforms.uTex.value=trail.read;passer.run(renderer,fade,trail.write);
+      const ac=renderer.autoClear;renderer.autoClear=false;
+      renderer.setRenderTarget(trail.write);renderer.render(ptScene,ptCam);renderer.autoClear=ac;
+      trail.swap();
+      show.uniforms.uTex.value=trail.read;renderer.setRenderTarget(null);
+    },
+    cleanup(){[pos.a,pos.b,trail.a,trail.b].forEach(rt=>rt.dispose());geo.dispose();ptMat.dispose();
+      [init,sim,fade,show].forEach(m=>m.dispose());}};
 }
 
-function buildAudio(rng, ap, ctx, dest){
-  const{bpm,rootFreq,beatStrength,waveform,ambientMix,reverbAmt}=ap;
-  const tone=80+rng()*500;
-  const master=ctx.createGain();master.gain.value=0.6;
-  master.connect(dest);master.connect(ctx.destination);
-  const reverbWet=ctx.createGain();reverbWet.gain.value=reverbAmt*0.55;
-  const reverbDry=ctx.createGain();reverbDry.gain.value=1.0;
-  reverbWet.connect(master);reverbDry.connect(master);
-  function makeDelay(dt,fb){const d=ctx.createDelay(2.0),f=ctx.createGain();
-    d.delayTime.value=dt;f.gain.value=fb;d.connect(f);f.connect(d);d.connect(reverbWet);return d;}
-  const dl1=makeDelay(0.03+reverbAmt*0.08,reverbAmt*0.55);
-  const dl2=makeDelay(0.05+reverbAmt*0.11,reverbAmt*0.45);
-  function toReverb(n){n.connect(reverbDry);n.connect(dl1);n.connect(dl2);}
-  const ambGain=ctx.createGain();ambGain.gain.value=1-ambientMix*0.88;
-  const beatGain=ctx.createGain();beatGain.gain.value=beatStrength*(0.1+ambientMix*0.9);
-  toReverb(ambGain);toReverb(beatGain);
-  const oscs=[];
-  for(let i=0;i<5;i++){
-    const osc=ctx.createOscillator(),g=ctx.createGain();
-    const lfo=ctx.createOscillator(),lg=ctx.createGain();
-    osc.type=waveform==='random'?['sine','triangle','sawtooth','square'][Math.floor(rng()*4)]:waveform;
-    osc.frequency.value=rootFreq*(i+1)*(0.985+rng()*.03);
-    g.gain.value=(0.07+rng()*.13)/(i+1);
-    lfo.type='sine';lfo.frequency.value=0.08+rng()*.42;lg.gain.value=g.gain.value*.5;
-    lfo.connect(lg);lg.connect(g.gain);osc.connect(g);g.connect(ambGain);
-    osc.start();lfo.start();oscs.push(osc,lfo);
-  }
-  const bsec=60/bpm,decayT=0.08+reverbAmt*0.35;
-  let nxt=ctx.currentTime+0.05;
-  const sched=()=>{
-    while(nxt<ctx.currentTime+0.3){
-      const v=0.3+Math.random()*.55;
-      const o=ctx.createOscillator(),e=ctx.createGain();
-      o.type='sine';o.frequency.value=tone;
-      e.gain.setValueAtTime(v,nxt);e.gain.exponentialRampToValueAtTime(0.001,nxt+decayT);
-      o.connect(e);e.connect(beatGain);o.start(nxt);o.stop(nxt+decayT+0.05);
-      if(Math.random()<.35){
-        const t2=nxt+bsec/2,o2=ctx.createOscillator(),e2=ctx.createGain();
-        o2.type='sine';o2.frequency.value=tone*1.5;
-        e2.gain.setValueAtTime(v*.4,t2);e2.gain.exponentialRampToValueAtTime(0.001,t2+decayT*.7);
-        o2.connect(e2);e2.connect(beatGain);o2.start(t2);o2.stop(t2+decayT+0.05);
-      }
-      nxt+=bsec;
-    }
-  };
-  sched();
-  const tid=setInterval(sched,100);
-  return{stop(){clearInterval(tid);oscs.forEach(o=>{try{o.stop()}catch(_){}});master.disconnect();}};
+function buildFluid(renderer,rng,w,h,style,fp,colour){
+  const aspect=w/h;
+  const scene=new THREE.Scene();
+  const cam=new THREE.OrthographicCamera(-1,1,1,-1,0,1);
+  const pal=PALS[Math.floor(rng()*PALS.length)];
+  const R=fp.rnd/10;
+  const jit=(b,amt)=>b*(1+(rng()-0.5)*amt*R);
+  // style presets
+  let oct=fp.detail, scale=1.5+fp.scale*0.6, flow=0.15+fp.flow/10*1.1, turb=0.8+fp.turb/10*4.0, swirl=fp.swirl/10*2.2, contrast=1.2;
+  if(style==='smoke'){oct=Math.min(8,oct+1);turb*=1.3;contrast=1.5;}
+  else if(style==='marble'){contrast=2.3;turb*=0.8;flow*=0.7;}
+  else if(style==='nebula'){scale*=0.8;contrast=1.7;swirl+=0.5;}
+  scale=jit(scale,0.4);flow=jit(flow,0.5);turb=jit(turb,0.4);
+  const baseHue=rng()*TAU;
+  const mat=new THREE.ShaderMaterial({vertexShader:FLUID_VERT,fragmentShader:FLUID_FRAG,uniforms:{
+    uPhase:{value:0},uFlow:{value:flow},uTurb:{value:turb},uSwirl:{value:swirl},uScale:{value:scale},
+    uContrast:{value:contrast},uHue:{value:baseHue},uSat:{value:0},uBri:{value:0},uAspect:{value:aspect},uOct:{value:Math.round(oct)},
+    uC0:{value:hexToVec3(pal[0])},uC1:{value:hexToVec3(pal[1])},uC2:{value:hexToVec3(pal[2])},uC3:{value:hexToVec3(pal[3])}
+  }});
+  const mesh=new THREE.Mesh(new THREE.PlaneGeometry(2,2),mat);scene.add(mesh);
+  const hueRange=colour.hue/360*TAU, satBase=colour.sat/10*0.7, briBase=colour.bri/10*0.6;
+  return{scene,cam,
+    update(p){mat.uniforms.uPhase.value=p;mat.uniforms.uHue.value=baseHue+hueRange*p;
+      mat.uniforms.uSat.value=satBase+(colour.sat/10)*0.25*Math.sin(TAU*1.5*p);
+      mat.uniforms.uBri.value=briBase+(colour.bri/10)*0.3*Math.sin(TAU*2.2*p+1.0);},
+    cleanup(){mesh.geometry.dispose();mat.dispose();disposeScene(scene);}};
 }
 
-// Shared renderer + audio context
+function build3D(renderer,rng,w,h,opts,rstyle){
+  const{numShapes,randLevel,longForm,colour}=opts;const R=randLevel/10,aspect=w/h;
+  let spinRate,wobbleAmp,wobbleFreq,driftCycA,driftCycB,driftAmp,colLoops,hueRot=0,satD=0,briD=0;
+  if(longForm){spinRate=0.25+R*1.0;wobbleAmp=(rstyle==='wobble'?0.25:0.15)+R*0.4;wobbleFreq=0.5+R*2.5;driftCycA=0.5+R*1.5;driftCycB=0.4+R*1.3;driftAmp=R*(aspect>1?1.4:1.6)*(rstyle==='koch'?0.7:1);colLoops=0.15+(colour.morph/10)*1.6;hueRot=colour.hue/360;satD=colour.sat/10;briD=colour.bri/10;}
+  else{let spin=Math.round(1+R*2),wA=0.4,wF=Math.round(1+R*3);if(rstyle==='wobble'){wA=0.8+R*1.6;wF=Math.round(2+R*4);}else if(rstyle==='multimorph'){wA=0.4+R*1.0;}else if(rstyle==='koch'){wA=0.5+R*1.2;wF=Math.round(1+R*3);spin=Math.round(1+R*1);}spinRate=spin;wobbleAmp=wA;wobbleFreq=wF;driftCycA=Math.max(1,Math.round(1+R*2));driftCycB=Math.max(1,Math.round(1+R*2));driftAmp=R*(aspect<1?2.6:1.8)*(rstyle==='koch'?0.7:1);colLoops=Math.max(1,Math.round(1+R*3));}
+  const scene=new THREE.Scene();const cam=new THREE.PerspectiveCamera(60,aspect,0.1,100);cam.position.z=aspect<1?13:(longForm?10:9);
+  const{gA,gB}=build3DScene(rng,scene,numShapes,aspect,rstyle);
+  function colourFor(pal,off,p){const c=lerpPal(pal,p*colLoops*pal.length+off);if(longForm){const sd=satD*0.25*Math.sin(TAU*1.5*p);const bd=briD*0.18*Math.sin(TAU*2.2*p+1.0);c.offsetHSL(hueRot*p,sd,bd);}return c;}
+  function applyMotion(group,p,dir){const{grp,meshes}=group;grp.rotation.y=dir*spinRate*TAU*p;meshes.forEach(me=>{const wob=wobbleAmp*Math.sin(TAU*wobbleFreq*p+me.userData.wobblePhase);const b=me.userData.baseRot;me.rotation.set(b.x,b.y,b.z);if(me.userData.axis===0)me.rotation.x=b.x+wob;else if(me.userData.axis===1)me.rotation.y=b.y+wob;else me.rotation.z=b.z+wob;});const dph=grp.userData.driftPhase,cyc=dir>0?driftCycA:driftCycB;grp.position.x=grp.userData.bx+driftAmp*Math.sin(TAU*cyc*p+dph);grp.position.y=grp.userData.by+driftAmp*Math.cos(TAU*cyc*p+dph);}
+  const lvl=longForm?7:10;
+  return{scene,cam,update(p){const br=Math.round(6+lvl*(.5+.5*Math.sin(TAU*p))),bg=Math.round(6+lvl*(.5+.5*Math.sin(TAU*p+2.1))),bb=Math.round(6+lvl*(.5+.5*Math.sin(TAU*p+4.2)));renderer.setClearColor(new THREE.Color(`rgb(${br},${bg},${bb})`),1);applyMotion(gA,p,1);applyMotion(gB,p,-1);gA.mats.forEach((m,i)=>m.color.copy(colourFor(gA.pal,i,p)));gB.mats.forEach((m,i)=>m.color.copy(colourFor(gB.pal,i+2,p)));},cleanup(){disposeScene(scene);}};
+}
+
+function buildAudio(rng,ap,ctx,dest){const{bpm,rootFreq,beatStrength,waveform,ambientMix,reverbAmt}=ap;const tone=80+rng()*500;const master=ctx.createGain();master.gain.value=0.6;master.connect(dest);master.connect(ctx.destination);const rw=ctx.createGain();rw.gain.value=reverbAmt*0.55;const rd=ctx.createGain();rd.gain.value=1.0;rw.connect(master);rd.connect(master);function md(dt,fb){const d=ctx.createDelay(2.0),f=ctx.createGain();d.delayTime.value=dt;f.gain.value=fb;d.connect(f);f.connect(d);d.connect(rw);return d;}const d1=md(0.03+reverbAmt*0.08,reverbAmt*0.55),d2=md(0.05+reverbAmt*0.11,reverbAmt*0.45);function tr(n){n.connect(rd);n.connect(d1);n.connect(d2);}const ag=ctx.createGain();ag.gain.value=1-ambientMix*0.88;const bgn=ctx.createGain();bgn.gain.value=beatStrength*(0.1+ambientMix*0.9);tr(ag);tr(bgn);const oscs=[];for(let i=0;i<5;i++){const osc=ctx.createOscillator(),g=ctx.createGain();const lfo=ctx.createOscillator(),lg=ctx.createGain();osc.type=waveform==='random'?['sine','triangle','sawtooth','square'][Math.floor(rng()*4)]:waveform;osc.frequency.value=rootFreq*(i+1)*(0.985+rng()*.03);g.gain.value=(0.07+rng()*.13)/(i+1);lfo.type='sine';lfo.frequency.value=0.08+rng()*.42;lg.gain.value=g.gain.value*.5;lfo.connect(lg);lg.connect(g.gain);osc.connect(g);g.connect(ag);osc.start();lfo.start();oscs.push(osc,lfo);}const bsec=60/bpm,decayT=0.08+reverbAmt*0.35;let nxt=ctx.currentTime+0.05;const sched=()=>{while(nxt<ctx.currentTime+0.3){const v=0.3+Math.random()*.55;const o=ctx.createOscillator(),e=ctx.createGain();o.type='sine';o.frequency.value=tone;e.gain.setValueAtTime(v,nxt);e.gain.exponentialRampToValueAtTime(0.001,nxt+decayT);o.connect(e);e.connect(bgn);o.start(nxt);o.stop(nxt+decayT+0.05);if(Math.random()<.35){const t2=nxt+bsec/2,o2=ctx.createOscillator(),e2=ctx.createGain();o2.type='sine';o2.frequency.value=tone*1.5;e2.gain.setValueAtTime(v*.4,t2);e2.gain.exponentialRampToValueAtTime(0.001,t2+decayT*.7);o2.connect(e2);e2.connect(bgn);o2.start(t2);o2.stop(t2+decayT+0.05);}nxt+=bsec;}};sched();const tid=setInterval(sched,100);return{stop(){clearInterval(tid);oscs.forEach(o=>{try{o.stop()}catch(_){}});master.disconnect();}};}
+
 const renderCanvas=document.createElement('canvas');
 let sharedRenderer=null;
-function getRenderer(w,h){
-  renderCanvas.width=w;renderCanvas.height=h;
-  if(!sharedRenderer){sharedRenderer=new THREE.WebGLRenderer({canvas:renderCanvas,antialias:true});sharedRenderer.setPixelRatio(1);}
-  sharedRenderer.setSize(w,h,false);return sharedRenderer;
-}
+function getRenderer(w,h){renderCanvas.width=w;renderCanvas.height=h;if(!sharedRenderer){sharedRenderer=new THREE.WebGLRenderer({canvas:renderCanvas,antialias:true,preserveDrawingBuffer:true});sharedRenderer.setPixelRatio(1);}sharedRenderer.setSize(w,h,false);return sharedRenderer;}
 let sharedAudioCtx=null;
-function getAudioCtx(){
-  if(!sharedAudioCtx)sharedAudioCtx=new(window.AudioContext||window.webkitAudioContext)();
-  if(sharedAudioCtx.state==='suspended')sharedAudioCtx.resume();
-  return sharedAudioCtx;
-}
-
-const MIME=['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm']
-  .find(t=>MediaRecorder.isTypeSupported(t))||'video/webm';
-
-function lerpPal(pal,pos){
-  const p=((pos%pal.length)+pal.length)%pal.length;
-  const a=Math.floor(p)%pal.length,b=(a+1)%pal.length,f=p-Math.floor(p);
-  const ca=new THREE.Color(pal[a]),cb=new THREE.Color(pal[b]);
-  return new THREE.Color(ca.r+(cb.r-ca.r)*f,ca.g+(cb.g-ca.g)*f,ca.b+(cb.b-ca.b)*f);
-}
+function getAudioCtx(){if(!sharedAudioCtx)sharedAudioCtx=new(window.AudioContext||window.webkitAudioContext)();if(sharedAudioCtx.state==='suspended')sharedAudioCtx.resume();return sharedAudioCtx;}
+const MIME=['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'].find(t=>MediaRecorder.isTypeSupported(t))||'video/webm';
 
 let stopReq=false;
 
-// opts: {seed,dur,fps,w,h,numShapes,randLevel,style,longForm,colour,audio}
 async function genVideo(opts){
-  const{seed,dur,fps,w,h,numShapes,randLevel,style,longForm,colour,audio:ap}=opts;
-  const R=randLevel/10, aspect=w/h;
+  const{seed,dur,fps,w,h}=opts;
   const rng=mkRng(seed);
-  const rstyle=resolveStyle(style,rng);
-
-  // ── Motion params ──────────────────────────────────────────
-  let spinRate, wobbleAmp, wobbleFreq, driftCycA, driftCycB, driftAmp, colLoops;
-  let hueRot=0, satDriftAmt=0, briDriftAmt=0;
-
-  if(longForm){
-    // Slow, subtle, fractional cycles over the whole runtime
-    spinRate   = 0.25 + R*1.0;                  // total turns over video
-    wobbleAmp  = (rstyle==='wobble'?0.25:0.15) + R*0.4;
-    wobbleFreq = 0.5 + R*2.5;                    // few gentle swings
-    driftCycA  = 0.5 + R*1.5;
-    driftCycB  = 0.4 + R*1.3;
-    driftAmp   = R*(aspect>1?1.4:1.6)*(rstyle==='koch'?0.7:1);
-    colLoops   = 0.15 + (colour.morph/10)*1.6;  // glacial → flowing
-    hueRot     = colour.hue/360;                // full-video hue turn
-    satDriftAmt= colour.sat/10;
-    briDriftAmt= colour.bri/10;
-  } else {
-    // Shorts — integer cycles for seamless looping
-    const mp=(()=>{
-      const o={spin:Math.round(1+R*2),wobAmp:0.4,wobFreq:Math.round(1+R*3)};
-      if(rstyle==='wobble'){o.wobAmp=0.8+R*1.6;o.wobFreq=Math.round(2+R*4);o.spin=Math.round(1+R*2);}
-      else if(rstyle==='multimorph'){o.wobAmp=0.4+R*1.0;o.wobFreq=Math.round(1+R*3);}
-      else if(rstyle==='koch'){o.wobAmp=0.5+R*1.2;o.wobFreq=Math.round(1+R*3);o.spin=Math.round(1+R*1);}
-      return o;
-    })();
-    spinRate=mp.spin; wobbleAmp=mp.wobAmp; wobbleFreq=mp.wobFreq;
-    driftCycA=Math.max(1,Math.round(1+R*2)); driftCycB=Math.max(1,Math.round(1+R*2));
-    driftAmp=R*(aspect<1?2.6:1.8)*(rstyle==='koch'?0.7:1);
-    colLoops=Math.max(1,Math.round(1+R*3));
-  }
-
   const renderer=getRenderer(w,h);
-  const rc=renderCanvas;
-  const pc=$('cv');
-  const pctx=pc.getContext('2d');
+  const rc=renderCanvas,pc=$('cv'),pctx=pc.getContext('2d');
 
-  const scene=new THREE.Scene();
-  const cam=new THREE.PerspectiveCamera(60,aspect,0.1,100);
-  cam.position.z=aspect<1?13:(longForm?10:9);
-  const{gA,gB}=buildScene(rng,scene,numShapes,aspect,rstyle);
-
-  const actx=getAudioCtx();
-  const aDest=actx.createMediaStreamDestination();
-  const aud=buildAudio(rng,ap,actx,aDest);
-
-  const vs=rc.captureStream(fps);
-  const vTracks=vs.getVideoTracks(), aTracks=aDest.stream.getAudioTracks();
-  let stream;
-  try{stream=new MediaStream([...vTracks,...aTracks]);}catch(e){stream=vs;}
-  const rec=new MediaRecorder(stream,{mimeType:MIME});
-  const chunks=[];
-  rec.ondataavailable=e=>{if(e.data.size>0)chunks.push(e.data);};
-
-  const fMs=1000/fps, totalFrames=Math.round(dur*fps);
-  let frameIdx=0;
-  rec.start(1000);
-
-  function applyMotion(group,p,dir){
-    const{grp,meshes}=group;
-    grp.rotation.y=dir*spinRate*TAU*p;
-    meshes.forEach(mesh=>{
-      const wob=wobbleAmp*Math.sin(TAU*wobbleFreq*p+mesh.userData.wobblePhase);
-      const b=mesh.userData.baseRot;
-      mesh.rotation.set(b.x,b.y,b.z);
-      if(mesh.userData.axis===0)mesh.rotation.x=b.x+wob;
-      else if(mesh.userData.axis===1)mesh.rotation.y=b.y+wob;
-      else mesh.rotation.z=b.z+wob;
-    });
-    const dph=grp.userData.driftPhase, cyc=dir>0?driftCycA:driftCycB;
-    grp.position.x=grp.userData.bx+driftAmp*Math.sin(TAU*cyc*p+dph);
-    grp.position.y=grp.userData.by+driftAmp*Math.cos(TAU*cyc*p+dph);
+  let setup, resolvedStyle;
+  if(opts.fluid){
+    const eng=opts.fluidEngine||'procedural';
+    try{
+      if(eng==='stam'){setup=buildStamFluid(renderer,rng,w,h,opts,false);resolvedStyle='navierstokes';}
+      else if(eng==='dye'){setup=buildStamFluid(renderer,rng,w,h,opts,true);resolvedStyle='dyeflow';}
+      else if(eng==='curl'){setup=buildCurlParticles(renderer,rng,w,h,opts);resolvedStyle='curlparticles';}
+      else{resolvedStyle=resolveStyle(opts.style,rng,['plasma','smoke','marble','nebula']);setup=buildFluid(renderer,rng,w,h,resolvedStyle,opts.fluidParams,opts.colour);}
+    }catch(err){
+      log(`⚠ ${eng} engine failed (${err.message}) — using procedural`,'lerr');
+      resolvedStyle=resolveStyle(opts.style,rng,['plasma','smoke','marble','nebula']);
+      setup=buildFluid(renderer,rng,w,h,resolvedStyle,opts.fluidParams,opts.colour);
+    }
+  } else {
+    resolvedStyle=resolveStyle(opts.style,rng,['wobble','multimorph','koch']);
+    setup=build3D(renderer,rng,w,h,opts,resolvedStyle);
   }
 
-  // Long-form colour: palette lerp + slow hue rotation + sat/bri breathing
-  function colourFor(pal,baseOffset,p){
-    const c=lerpPal(pal,p*colLoops*pal.length+baseOffset);
-    if(longForm){
-      const sd=satDriftAmt*0.25*Math.sin(TAU*1.5*p);
-      const bd=briDriftAmt*0.18*Math.sin(TAU*2.2*p+1.0);
-      c.offsetHSL(hueRot*p, sd, bd);
-    }
-    return c;
-  }
+  const actx=getAudioCtx();const aDest=actx.createMediaStreamDestination();const aud=buildAudio(rng,opts.audio,actx,aDest);
+  const vs=rc.captureStream(fps);const vTracks=vs.getVideoTracks(),aTracks=aDest.stream.getAudioTracks();
+  let stream;try{stream=new MediaStream([...vTracks,...aTracks]);}catch(e){stream=vs;}
+  const rec=new MediaRecorder(stream,{mimeType:MIME});const chunks=[];rec.ondataavailable=e=>{if(e.data.size>0)chunks.push(e.data);};
+  const fMs=1000/fps,totalFrames=Math.round(dur*fps);let frameIdx=0;rec.start(1000);
 
-  await new Promise(resolve=>{
-    let done=false;
-    const finish=()=>{if(!done){done=true;resolve();}};
-    rec.onstop=finish;
-    function stopRecording(){ setTimeout(finish,2500); try{rec.stop();}catch(_){finish();} }
-    function frame(){
-      const now=performance.now();
-      if(frameIdx>=totalFrames||stopReq){stopRecording();return;}
-      const p=frameIdx/totalFrames;
-      const lvl=longForm?7:10;
-      const br=Math.round(6+lvl*(.5+.5*Math.sin(TAU*p)));
-      const bg=Math.round(6+lvl*(.5+.5*Math.sin(TAU*p+2.1)));
-      const bb=Math.round(6+lvl*(.5+.5*Math.sin(TAU*p+4.2)));
-      renderer.setClearColor(new THREE.Color(`rgb(${br},${bg},${bb})`),1);
-      applyMotion(gA,p,1); applyMotion(gB,p,-1);
-      gA.mats.forEach((m,i)=>m.color.copy(colourFor(gA.pal,i,p)));
-      gB.mats.forEach((m,i)=>m.color.copy(colourFor(gB.pal,i+2,p)));
-      renderer.render(scene,cam);
-      pctx.drawImage(rc,0,0,pc.width,pc.height);
-      frameIdx++;
-      setTimeout(frame,Math.max(0,fMs-(performance.now()-now)));
-    }
-    setTimeout(frame,0);
-  });
+  await new Promise(resolve=>{let done=false;const finish=()=>{if(!done){done=true;resolve();}};rec.onstop=finish;
+    function stopRec(){setTimeout(finish,2500);try{rec.stop();}catch(_){finish();}}
+    function frame(){const now=performance.now();if(frameIdx>=totalFrames||stopReq){stopRec();return;}const p=frameIdx/totalFrames;setup.update(p);renderer.render(setup.scene,setup.cam);pctx.drawImage(rc,0,0,pc.width,pc.height);frameIdx++;setTimeout(frame,Math.max(0,fMs-(performance.now()-now)));}
+    setTimeout(frame,0);});
 
-  aud.stop();
-  vTracks.forEach(t=>t.stop()); aTracks.forEach(t=>t.stop());
-  try{aDest.disconnect();}catch(_){}
-  disposeScene(scene);
-  await new Promise(r=>setTimeout(r,250));
-  return {blob:new Blob(chunks,{type:MIME}), resolvedStyle:rstyle};
+  aud.stop();vTracks.forEach(t=>t.stop());aTracks.forEach(t=>t.stop());try{aDest.disconnect();}catch(_){}
+  setup.cleanup();await new Promise(r=>setTimeout(r,250));
+  return{blob:new Blob(chunks,{type:MIME}),resolvedStyle};
 }
 
 // ── Tabs ──────────────────────────────────────────────────────
 let activeTab='shorts';
-document.querySelectorAll('.tab').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    if(busy)return;
-    activeTab=btn.dataset.tab;
-    document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b===btn));
-    $('tab-shorts').classList.toggle('hidden',activeTab!=='shorts');
-    $('tab-long').classList.toggle('hidden',activeTab!=='long');
-    // Resize preview to match aspect
-    const cvw=$('cvw'),cv=$('cv');
-    if(activeTab==='shorts'){cvw.style.width='160px';cvw.style.height='284px';cv.width=160;cv.height=284;$('ovbadge').textContent='9 : 16 · Seamless loop';}
-    else{cvw.style.width='320px';cvw.style.height='180px';cv.width=320;cv.height=180;$('ovbadge').textContent='16 : 9 · 1080p HD';}
-    drawPreview();
-  });
-});
+document.querySelectorAll('.tab').forEach(btn=>{btn.addEventListener('click',()=>{if(busy)return;activeTab=btn.dataset.tab;document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b===btn));$('tab-shorts').classList.toggle('hidden',activeTab!=='shorts');$('tab-long').classList.toggle('hidden',activeTab!=='long');$('tab-fluid').classList.toggle('hidden',activeTab!=='fluid');const cvw=$('cvw'),cv=$('cv');let portrait=activeTab==='shorts';if(activeTab==='fluid')portrait=$('F_res').value.startsWith('1080');if(portrait){cvw.style.width='160px';cvw.style.height='284px';cv.width=160;cv.height=284;}else{cvw.style.width='320px';cvw.style.height='180px';cv.width=320;cv.height=180;}$('ovbadge').textContent=activeTab==='shorts'?'9 : 16 · Seamless loop':activeTab==='long'?'16 : 9 · 1080p HD':'Fluid · '+(portrait?'9:16':'16:9');drawPreview();});});
 
 // ── Slider labels ─────────────────────────────────────────────
-[['S_rnd','S_rndlbl',v=>v],['S_abpm','S_abpmlbl',v=>v],['S_apitch','S_apitchlbl',v=>v],
- ['S_abeat','S_abeatlbl',v=>v],['S_amix','S_amixlbl',v=>v],['S_arev','S_arevlbl',v=>v],
- ['L_rnd','L_rndlbl',v=>v],['L_abpm','L_abpmlbl',v=>v],['L_apitch','L_apitchlbl',v=>v],
- ['L_abeat','L_abeatlbl',v=>v],['L_amix','L_amixlbl',v=>v],['L_arev','L_arevlbl',v=>v],
- ['L_cmorph','L_cmorphlbl',v=>v],['L_hue','L_huelbl',v=>v+'°'],['L_sat','L_satlbl',v=>v],['L_bri','L_brilbl',v=>v]]
+[['S_rnd','S_rndlbl',v=>v],['S_abpm','S_abpmlbl',v=>v],['S_apitch','S_apitchlbl',v=>v],['S_abeat','S_abeatlbl',v=>v],['S_amix','S_amixlbl',v=>v],['S_arev','S_arevlbl',v=>v],
+['L_rnd','L_rndlbl',v=>v],['L_abpm','L_abpmlbl',v=>v],['L_apitch','L_apitchlbl',v=>v],['L_abeat','L_abeatlbl',v=>v],['L_amix','L_amixlbl',v=>v],['L_arev','L_arevlbl',v=>v],['L_cmorph','L_cmorphlbl',v=>v],['L_hue','L_huelbl',v=>v+'°'],['L_sat','L_satlbl',v=>v],['L_bri','L_brilbl',v=>v],
+['F_detail','F_detaillbl',v=>v],['F_flow','F_flowlbl',v=>v],['F_turb','F_turblbl',v=>v],['F_swirl','F_swirllbl',v=>v],['F_scale','F_scalelbl',v=>v],['F_rnd','F_rndlbl',v=>v],['F_hue','F_huelbl',v=>v+'°'],['F_sat','F_satlbl',v=>v],['F_bri','F_brilbl',v=>v],['F_abpm','F_abpmlbl',v=>v],['F_apitch','F_apitchlbl',v=>v],['F_abeat','F_abeatlbl',v=>v],['F_amix','F_amixlbl',v=>v],['F_arev','F_arevlbl',v=>v]]
 .forEach(([id,lbl,fmt])=>{const el=$(id);if(el)el.addEventListener('input',()=>{$(lbl).textContent=fmt(el.value);});});
+// Live fluid preview on param change
+['F_mode','F_detail','F_flow','F_turb','F_swirl','F_scale','F_rnd','F_hue','F_sat','F_bri','F_res'].forEach(id=>{const el=$(id);if(el)el.addEventListener('input',()=>{if(activeTab==='fluid'&&!busy)drawPreview();});});
 
-['S','L'].forEach(P=>{
-  const rnd=$(P+'_abpmrnd');
-  if(rnd){ const upd=()=>{$(P+'_abpm').style.opacity=rnd.checked?'0.35':'1';}; rnd.addEventListener('change',upd); upd(); }
-  $(P+'_arnd').addEventListener('click',()=>{
-    const rv=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
-    const set=(id,val,sfx='')=>{$(P+'_'+id).value=val;const l=$(P+'_'+id+'lbl');if(l)l.textContent=val+sfx;};
-    const bmax=P==='L'?120:160, bmin=P==='L'?40:60;
-    set('abpm',rv(bmin,bmax)); set('apitch',rv(40,220)); set('abeat',rv(0,10));
-    set('amix',rv(0,10)); set('arev',rv(0,10));
-    const wavs=['sine','triangle','sawtooth','square','random'];
-    $(P+'_awav').value=wavs[Math.floor(Math.random()*wavs.length)];
-    log('⚄ '+(P==='L'?'Long-form':'Shorts')+' audio randomised','lhi');
-  });
-});
+['S','L','F'].forEach(P=>{const rnd=$(P+'_abpmrnd');if(rnd){const upd=()=>{$(P+'_abpm').style.opacity=rnd.checked?'0.35':'1';};rnd.addEventListener('change',upd);upd();}$(P+'_arnd').addEventListener('click',()=>{const rv=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;const set=(id,val,sfx='')=>{$(P+'_'+id).value=val;const l=$(P+'_'+id+'lbl');if(l)l.textContent=val+sfx;};const bmax=P==='L'?120:(P==='F'?140:160),bmin=P==='L'?40:(P==='F'?50:60);set('abpm',rv(bmin,bmax));set('apitch',rv(40,220));set('abeat',rv(0,10));set('amix',rv(0,10));set('arev',rv(0,10));const wavs=['sine','triangle','sawtooth','square','random'];$(P+'_awav').value=wavs[Math.floor(Math.random()*wavs.length)];log('⚄ audio randomised','lhi');});});
 
-// ── Helpers ───────────────────────────────────────────────────
-let dlFirst=true, dlCount=0, busy=false;
+let dlFirst=true,dlCount=0,busy=false;
 function log(msg,cls){const lb=$('lbox'),d=document.createElement('div');d.textContent=msg;if(cls)d.className=cls;lb.appendChild(d);lb.scrollTop=lb.scrollHeight;}
 function setSt(txt,pct){$('st').textContent=txt;if(pct!==undefined)$('pgfill').style.width=pct+'%';}
 function triggerDownload(blob,fname){const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=fname;document.body.appendChild(a);a.click();document.body.removeChild(a);setTimeout(()=>URL.revokeObjectURL(url),5000);}
+function readAudio(P,rng){const g=id=>$(P+'_'+id);return{bpm:g('abpmrnd').checked?((P==='L'?40:P==='F'?50:60)+rng()*(P==='L'?80:P==='F'?90:100)):parseInt(g('abpm').value),rootFreq:parseInt(g('apitch').value),beatStrength:parseInt(g('abeat').value)/10,waveform:g('awav').value,ambientMix:parseInt(g('amix').value)/10,reverbAmt:parseInt(g('arev').value)/10};}
+function addDl(blob,seed,w,h,tag,meta){if(dlFirst){$('dlgrid').innerHTML='';dlFirst=false;}dlCount++;$('dlcnt').textContent=dlCount;const fname=`${tag}_seed${seed}_${w}x${h}.webm`;const mb=(blob.size/1048576).toFixed(1);const url=URL.createObjectURL(blob);const card=document.createElement('div');card.className='dli';const nm=document.createElement('div');nm.className='dn';nm.textContent=fname;const mt=document.createElement('div');mt.className='dm';mt.textContent=`${meta} · ${mb} MB`;const vid=document.createElement('video');vid.controls=true;vid.playsInline=true;vid.loop=true;vid.src=url;const btn=document.createElement('button');btn.className='dd';btn.textContent='↓ Download';btn.onclick=()=>triggerDownload(blob,fname);card.append(nm,mt,vid,btn);$('dlgrid').appendChild(card);card.scrollIntoView({behavior:'smooth',block:'nearest'});}
 
-function readAudio(P,rng){
-  const g=id=>$(P+'_'+id);
-  return{
-    bpm: g('abpmrnd').checked?( (P==='L'?40:60)+rng()*(P==='L'?80:100) ):parseInt(g('abpm').value),
-    rootFreq:parseInt(g('apitch').value), beatStrength:parseInt(g('abeat').value)/10,
-    waveform:g('awav').value, ambientMix:parseInt(g('amix').value)/10, reverbAmt:parseInt(g('arev').value)/10,
-  };
-}
+async function runShorts(){const n=Math.max(1,parseInt($('S_n').value)||30);const dur=Math.max(5,parseInt($('S_dur').value)||30);const fps=parseInt($('S_fps').value)||24;const[w,h]=$('S_res').value.split('x').map(Number);const nSh=Math.max(1,Math.min(12,parseInt($('S_shapes').value)||3));const style=$('S_mode').value;const md=document.querySelector('input[name=S_sm]:checked').value;const fixS=parseInt($('S_seed').value)||42000;const seeds=Array.from({length:n},(_,i)=>md==='fix'?fixS+i:Math.floor(Math.random()*90000)+10000);
+  for(let i=0;i<n;i++){if(stopReq){log('⚠ Stopped.','lerr');break;}const seed=seeds[i],rLvl=Math.floor(Math.random()*6)+5;const ap=readAudio('S',mkRng(seed));log(`[${i+1}/${n}] ${style} · seed ${seed} · rand ${rLvl}/10`,'lhi');const t0=Date.now();const pi=setInterval(()=>{const el=Date.now()-t0,vp=Math.min(1,el/(dur*1000));setSt(`Video ${i+1}/${n} · ${Math.max(0,dur-el/1000).toFixed(0)}s left`,((i+vp)/n)*100);},500);try{const{blob,resolvedStyle}=await genVideo({seed,dur,fps,w,h,numShapes:nSh,randLevel:rLvl,style,longForm:false,colour:{},audio:ap});clearInterval(pi);if(blob.size>0){addDl(blob,seed,w,h,`shorts_${resolvedStyle}`,`${resolvedStyle} · rand ${rLvl}/10`);log(`✅ Video ${i+1} · ${resolvedStyle} · ${(blob.size/1048576).toFixed(1)} MB`,'lok');setSt(`Video ${i+1}/${n} complete`,((i+1)/n)*100);}else log('⚠ Empty blob','lerr');}catch(e){clearInterval(pi);log(`❌ ${e.message}`,'lerr');}}}
 
-function addDl(blob,seed,w,h,tag,meta){
-  if(dlFirst){$('dlgrid').innerHTML='';dlFirst=false;}
-  dlCount++;$('dlcnt').textContent=dlCount;
-  const fname=`${tag}_seed${seed}_${w}x${h}.webm`;
-  const mb=(blob.size/1048576).toFixed(1);
-  const url=URL.createObjectURL(blob);
-  const card=document.createElement('div');card.className='dli';
-  const nm=document.createElement('div');nm.className='dn';nm.textContent=fname;
-  const mt=document.createElement('div');mt.className='dm';mt.textContent=`${meta} · ${mb} MB`;
-  const vid=document.createElement('video');vid.controls=true;vid.playsInline=true;vid.loop=true;vid.src=url;
-  const btn=document.createElement('button');btn.className='dd';btn.textContent='↓ Download';btn.onclick=()=>triggerDownload(blob,fname);
-  card.append(nm,mt,vid,btn);$('dlgrid').appendChild(card);
-  card.scrollIntoView({behavior:'smooth',block:'nearest'});
-}
+async function runLong(){const n=Math.max(1,parseInt($('L_n').value)||1);const durMin=Math.max(3,Math.min(20,parseInt($('L_dur').value)||9));const dur=durMin*60;const fps=parseInt($('L_fps').value)||30;const[w,h]=$('L_res').value.split('x').map(Number);const nSh=Math.max(1,Math.min(12,parseInt($('L_shapes').value)||4));const style=$('L_mode').value;const md=document.querySelector('input[name=L_sm]:checked').value;const fixS=parseInt($('L_seed').value)||71000;const colour={morph:parseInt($('L_cmorph').value),hue:parseInt($('L_hue').value),sat:parseInt($('L_sat').value),bri:parseInt($('L_bri').value)};const seeds=Array.from({length:n},(_,i)=>md==='fix'?fixS+i:Math.floor(Math.random()*90000)+10000);log(`⏳ Long-form renders in real time — ~${durMin} min per video.`,'lhi');
+  for(let i=0;i<n;i++){if(stopReq){log('⚠ Stopped.','lerr');break;}const seed=seeds[i],rLvl=parseInt($('L_rnd').value);const ap=readAudio('L',mkRng(seed));log(`[${i+1}/${n}] ${style} · seed ${seed} · ${durMin}min · ${w}×${h}`,'lhi');const t0=Date.now();const pi=setInterval(()=>{const el=Date.now()-t0,vp=Math.min(1,el/(dur*1000));const rem=Math.max(0,dur-el/1000);setSt(`Video ${i+1}/${n} · ${Math.floor(rem/60)}m ${Math.floor(rem%60)}s left`,((i+vp)/n)*100);},1000);try{const{blob,resolvedStyle}=await genVideo({seed,dur,fps,w,h,numShapes:nSh,randLevel:rLvl,style,longForm:true,colour,audio:ap});clearInterval(pi);if(blob.size>0){addDl(blob,seed,w,h,`long_${resolvedStyle}`,`${resolvedStyle} · ${durMin}min`);log(`✅ Video ${i+1} · ${(blob.size/1048576).toFixed(1)} MB`,'lok');setSt(`Video ${i+1}/${n} complete`,((i+1)/n)*100);}else log('⚠ Empty blob','lerr');}catch(e){clearInterval(pi);log(`❌ ${e.message}`,'lerr');}}}
 
-// ── Run ───────────────────────────────────────────────────────
-async function runShorts(){
-  const n=Math.max(1,parseInt($('S_n').value)||30);
-  const dur=Math.max(5,parseInt($('S_dur').value)||30);
-  const fps=parseInt($('S_fps').value)||24;
-  const[w,h]=$('S_res').value.split('x').map(Number);
-  const nSh=Math.max(1,Math.min(12,parseInt($('S_shapes').value)||3));
-  const style=$('S_mode').value;
-  const md=document.querySelector('input[name=S_sm]:checked').value;
-  const fixS=parseInt($('S_seed').value)||42000;
-  const seeds=Array.from({length:n},(_,i)=>md==='fix'?fixS+i:Math.floor(Math.random()*90000)+10000);
+async function runFluid(){const n=Math.max(1,parseInt($('F_n').value)||10);const dur=Math.max(5,parseInt($('F_dur').value)||30);const fps=parseInt($('F_fps').value)||30;const[w,h]=$('F_res').value.split('x').map(Number);const style=$('F_mode').value;const engine=$('F_engine').value;const emit=parseInt($('F_emit').value)||4;const md=document.querySelector('input[name=F_sm]:checked').value;const fixS=parseInt($('F_seed').value)||90000;const fluidParams={detail:parseInt($('F_detail').value),flow:parseInt($('F_flow').value),turb:parseInt($('F_turb').value),swirl:parseInt($('F_swirl').value),scale:parseInt($('F_scale').value),rnd:parseInt($('F_rnd').value)};const colour={hue:parseInt($('F_hue').value),sat:parseInt($('F_sat').value),bri:parseInt($('F_bri').value)};const seeds=Array.from({length:n},(_,i)=>md==='fix'?fixS+i:Math.floor(Math.random()*90000)+10000);
+  if(engine!=='procedural')log(`ℹ ${engine} is a live simulation — won't loop perfectly; best for HD.`,'lhi');
+  for(let i=0;i<n;i++){if(stopReq){log('⚠ Stopped.','lerr');break;}const seed=seeds[i];const ap=readAudio('F',mkRng(seed));log(`[${i+1}/${n}] ${engine}:${style} · seed ${seed} · ${w}×${h}`,'lhi');const t0=Date.now();const pi=setInterval(()=>{const el=Date.now()-t0,vp=Math.min(1,el/(dur*1000));setSt(`Video ${i+1}/${n} · ${Math.max(0,dur-el/1000).toFixed(0)}s left`,((i+vp)/n)*100);},500);try{const{blob,resolvedStyle}=await genVideo({seed,dur,fps,w,h,fluid:true,fluidEngine:engine,style,fluidParams,colour,emit,audio:ap});clearInterval(pi);if(blob.size>0){addDl(blob,seed,w,h,`fluid_${resolvedStyle}`,`${resolvedStyle} · ${w}×${h}`);log(`✅ Video ${i+1} · ${resolvedStyle} · ${(blob.size/1048576).toFixed(1)} MB`,'lok');setSt(`Video ${i+1}/${n} complete`,((i+1)/n)*100);}else log('⚠ Empty blob','lerr');}catch(e){clearInterval(pi);log(`❌ ${e.message}`,'lerr');}}}
 
-  for(let i=0;i<n;i++){
-    if(stopReq){log('⚠ Stopped.','lerr');break;}
-    const seed=seeds[i], rLvl=Math.floor(Math.random()*6)+5;
-    const ap=readAudio('S',mkRng(seed));
-    log(`[${i+1}/${n}] ${style} · seed ${seed} · rand ${rLvl}/10 · ${ap.bpm.toFixed(0)}bpm`,'lhi');
-    const t0=Date.now();
-    const pi=setInterval(()=>{const el=Date.now()-t0,vp=Math.min(1,el/(dur*1000));setSt(`Video ${i+1}/${n} · ${Math.max(0,dur-el/1000).toFixed(0)}s left`,((i+vp)/n)*100);},500);
-    try{
-      const{blob,resolvedStyle}=await genVideo({seed,dur,fps,w,h,numShapes:nSh,randLevel:rLvl,style,longForm:false,colour:{},audio:ap});
-      clearInterval(pi);
-      if(blob.size>0){addDl(blob,seed,w,h,`shorts_${resolvedStyle}`,`${resolvedStyle} · rand ${rLvl}/10 · ${ap.bpm.toFixed(0)}bpm`);
-        log(`✅ Video ${i+1} · ${resolvedStyle} · ${(blob.size/1048576).toFixed(1)} MB`,'lok');
-        setSt(`Video ${i+1}/${n} complete`,((i+1)/n)*100);}
-      else log('⚠ Empty blob — use Chrome/Edge','lerr');
-    }catch(e){clearInterval(pi);log(`❌ ${e.message}`,'lerr');}
-  }
-}
+async function startRun(which){if(busy)return;busy=true;stopReq=false;const P=which==='shorts'?'S':which==='long'?'L':'F';$(P+'_gen').disabled=true;$(P+'_stp').disabled=false;$('ov').classList.add('hidden');try{if(which==='shorts')await runShorts();else if(which==='long')await runLong();else await runFluid();}finally{busy=false;$(P+'_gen').disabled=false;$(P+'_stp').disabled=true;$('ov').innerHTML=`<span>${stopReq?'⚠ Stopped':'✅ Done!'}</span><div class="badge" id="ovbadge">complete</div>`;$('ov').classList.remove('hidden');setSt(stopReq?'Stopped':'Complete',100);log('✨ Generation complete.','lok');}}
 
-async function runLong(){
-  const n=Math.max(1,parseInt($('L_n').value)||1);
-  const durMin=Math.max(3,Math.min(20,parseInt($('L_dur').value)||9));
-  const dur=durMin*60;
-  const fps=parseInt($('L_fps').value)||30;
-  const[w,h]=$('L_res').value.split('x').map(Number);
-  const nSh=Math.max(1,Math.min(12,parseInt($('L_shapes').value)||4));
-  const style=$('L_mode').value;
-  const md=document.querySelector('input[name=L_sm]:checked').value;
-  const fixS=parseInt($('L_seed').value)||71000;
-  const colour={morph:parseInt($('L_cmorph').value),hue:parseInt($('L_hue').value),sat:parseInt($('L_sat').value),bri:parseInt($('L_bri').value)};
-  const seeds=Array.from({length:n},(_,i)=>md==='fix'?fixS+i:Math.floor(Math.random()*90000)+10000);
-
-  log(`⏳ Long-form renders in real time — ~${durMin} min per video.`,'lhi');
-
-  for(let i=0;i<n;i++){
-    if(stopReq){log('⚠ Stopped.','lerr');break;}
-    const seed=seeds[i], rLvl=parseInt($('L_rnd').value);
-    const ap=readAudio('L',mkRng(seed));
-    log(`[${i+1}/${n}] ${style} · seed ${seed} · ${durMin}min · ${w}×${h} · hue ${colour.hue}°`,'lhi');
-    const t0=Date.now();
-    const pi=setInterval(()=>{const el=Date.now()-t0,vp=Math.min(1,el/(dur*1000));const rem=Math.max(0,dur-el/1000);setSt(`Video ${i+1}/${n} · ${Math.floor(rem/60)}m ${Math.floor(rem%60)}s left`,((i+vp)/n)*100);},1000);
-    try{
-      const{blob,resolvedStyle}=await genVideo({seed,dur,fps,w,h,numShapes:nSh,randLevel:rLvl,style,longForm:true,colour,audio:ap});
-      clearInterval(pi);
-      if(blob.size>0){addDl(blob,seed,w,h,`long_${resolvedStyle}`,`${resolvedStyle} · ${durMin}min · ${w}×${h}`);
-        log(`✅ Video ${i+1} · ${resolvedStyle} · ${(blob.size/1048576).toFixed(1)} MB`,'lok');
-        setSt(`Video ${i+1}/${n} complete`,((i+1)/n)*100);}
-      else log('⚠ Empty blob — use Chrome/Edge','lerr');
-    }catch(e){clearInterval(pi);log(`❌ ${e.message}`,'lerr');}
-  }
-}
-
-async function startRun(which){
-  if(busy)return; busy=true; stopReq=false;
-  const P=which==='shorts'?'S':'L';
-  $(P+'_gen').disabled=true; $(P+'_stp').disabled=false; $('ov').classList.add('hidden');
-  try{ if(which==='shorts')await runShorts(); else await runLong(); }
-  finally{
-    busy=false;
-    $(P+'_gen').disabled=false; $(P+'_stp').disabled=true;
-    $('ov').innerHTML=`<span>${stopReq?'⚠ Stopped':'✅ Done!'}</span><div class="badge" id="ovbadge">${which==='shorts'?'9 : 16 · Seamless loop':'16 : 9 · 1080p HD'}</div>`;
-    $('ov').classList.remove('hidden');
-    setSt(stopReq?'Stopped':'Complete',100);
-    log('✨ Generation complete.','lok');
-  }
-}
-
-$('S_gen').addEventListener('click',()=>startRun('shorts'));
-$('L_gen').addEventListener('click',()=>startRun('long'));
-$('S_stp').addEventListener('click',()=>{stopReq=true;$('S_stp').disabled=true;setSt('Stopping…');});
-$('L_stp').addEventListener('click',()=>{stopReq=true;$('L_stp').disabled=true;setSt('Stopping…');});
+$('S_gen').addEventListener('click',()=>startRun('shorts'));$('L_gen').addEventListener('click',()=>startRun('long'));$('F_gen').addEventListener('click',()=>startRun('fluid'));
+$('S_stp').addEventListener('click',()=>{stopReq=true;$('S_stp').disabled=true;setSt('Stopping…');});$('L_stp').addEventListener('click',()=>{stopReq=true;$('L_stp').disabled=true;setSt('Stopping…');});$('F_stp').addEventListener('click',()=>{stopReq=true;$('F_stp').disabled=true;setSt('Stopping…');});
 
 // ── Preview ───────────────────────────────────────────────────
-function drawPreview(){
-  const pc=$('cv');
-  const rc=document.createElement('canvas');rc.width=pc.width;rc.height=pc.height;
-  const rng=mkRng(activeTab==='shorts'?42000:71000);
-  const ren=new THREE.WebGLRenderer({canvas:rc,antialias:true});
-  ren.setSize(rc.width,rc.height,false);
-  const sc=new THREE.Scene(),cam=new THREE.PerspectiveCamera(60,rc.width/rc.height,0.1,100);
-  cam.position.z=activeTab==='shorts'?13:10;
-  buildScene(rng,sc,activeTab==='shorts'?3:4,rc.width/rc.height,activeTab==='shorts'?'wobble':'multimorph');
-  ren.setClearColor(new THREE.Color('rgb(10,8,20)'),1);
-  ren.render(sc,cam);
-  pc.getContext('2d').drawImage(rc,0,0,pc.width,pc.height);
-  disposeScene(sc);ren.dispose();
-}
+function drawPreview(){const pc=$('cv');const rc=document.createElement('canvas');rc.width=pc.width;rc.height=pc.height;const ren=new THREE.WebGLRenderer({canvas:rc,antialias:true});ren.setSize(rc.width,rc.height,false);
+  if(activeTab==='fluid'){const seed=parseInt($('F_seed').value)||90000;const rng=mkRng(document.querySelector('input[name=F_sm]:checked').value==='fix'?seed:42000);const fp={detail:parseInt($('F_detail').value),flow:parseInt($('F_flow').value),turb:parseInt($('F_turb').value),swirl:parseInt($('F_swirl').value),scale:parseInt($('F_scale').value),rnd:parseInt($('F_rnd').value)};const col={hue:parseInt($('F_hue').value),sat:parseInt($('F_sat').value),bri:parseInt($('F_bri').value)};const style=$('F_mode').value;const rs=style==='mixed'?'plasma':style;const s=buildFluid(ren,rng,rc.width,rc.height,rs,fp,col);s.update(0.15);ren.render(s.scene,s.cam);pc.getContext('2d').drawImage(rc,0,0,pc.width,pc.height);s.cleanup();ren.dispose();return;}
+  const rng=mkRng(activeTab==='shorts'?42000:71000);const sc=new THREE.Scene(),cam=new THREE.PerspectiveCamera(60,rc.width/rc.height,0.1,100);cam.position.z=activeTab==='shorts'?13:10;build3DScene(rng,sc,activeTab==='shorts'?3:4,rc.width/rc.height,activeTab==='shorts'?'wobble':'multimorph');ren.setClearColor(new THREE.Color('rgb(10,8,20)'),1);ren.render(sc,cam);pc.getContext('2d').drawImage(rc,0,0,pc.width,pc.height);disposeScene(sc);ren.dispose();}
 window.addEventListener('load',drawPreview);
 </script>
 </body>
